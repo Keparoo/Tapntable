@@ -6,14 +6,19 @@ import LoginForm from '../auth/LoginForm';
 import Servers from '../servers/Servers';
 import Kitchen from '../kitchen/Kitchen';
 import Bar from '../bar/Bar';
+import ItemsList from '../items/ItemsList';
 
 const Routes = () => {
-	console.debug('Routes');
+	console.debug('AppRoutes');
 
 	return (
 		<Switch>
 			<Route exact path="/">
 				<Homepage />
+			</Route>
+
+			<Route exact path="/items">
+				<ItemsList />
 			</Route>
 
 			<Route exact path="/login">

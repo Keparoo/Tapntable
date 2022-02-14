@@ -15,7 +15,7 @@ const ItemCard = ({
 	count,
 	isActive
 }) => {
-	console.debug('CompanyCard');
+	console.debug('ItemCard');
 
 	return (
 		<div className="ItemCard card">

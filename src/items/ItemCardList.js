@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import ItemCard from './ItemCard';
 
-/* Render a list of cards containing CompanyCards
+/* Render a list of cards containing ItemCards
 
     Called by ItemList, Calls ItemCard
 */

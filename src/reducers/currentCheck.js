@@ -1,9 +1,12 @@
-const INITIAL_STATE = { checks: [] };
-export default function currentCheckReducer(state = INITIAL_STATE, action) {
+import { ADD_TO_CHECK, REMOVE_FROM_CHECK } from '../actions/types';
+
+const INITIAL_STATE = { items: [] };
+export default function currentCheck(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'ADD_ITEM':
-      return state;
-    case 'DELETE_ITEM':
+    case ADD_TO_CHECK:
+      console.log('In reducer', action.item);
+      return { ...state, items: [ ...state.items, action.item ] };
+    case REMOVE_FROM_CHECK:
       return state;
     default:
       return state;

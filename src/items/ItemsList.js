@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
 
-import TapntableApi from '../api/api';
+// import TapntableApi from '../api/api';
 // import SearchForm from '../common/SearchForm';
 import ItemCardList from './ItemCardList';
 import Spinner from '../common/Spinner';
@@ -29,6 +29,7 @@ const ItemList = () => {
   useEffect(
     () => {
       console.debug('ItemList useEffect on Mount');
+
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
         setIsLoading(false);

@@ -36,7 +36,7 @@ const Routes = () => {
 			<Route exact path="/kitchen">
 				<Kitchen />
 			</Route>
-			<Route render={() => <Redirect to="/login" />} />
+			<Route render={() => <Redirect to="/servers" />} />
 		</Switch>
 	);
 };

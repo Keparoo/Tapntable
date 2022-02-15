@@ -1,17 +1,20 @@
 import React from 'react';
 import './App.css';
-import CssBaseline from '@mui/material/CssBaseline';
+// import CssBaseline from '@mui/material/CssBaseline';
+import { Typography, CssBaseline } from '@mui/material';
 
 import Routes from './routes/Routes';
 
-function App() {
+const App = () => {
 	return (
+    <>
 		<div className="App">
 			<CssBaseline />
-			<h1>Tapntable App</h1>
+			<Typography variant="h1">Tapntable App</Typography>
 			<Routes />
 		</div>
+    </>
 	);
-}
+};
 
 export default App;

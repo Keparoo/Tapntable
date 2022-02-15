@@ -1,20 +1,32 @@
 import React from 'react';
 import './App.css';
 // import CssBaseline from '@mui/material/CssBaseline';
-import { Typography, CssBaseline } from '@mui/material';
+import {
+  Typography,
+  CssBaseline,
+  Container,
+  AppBar,
+  Grid,
+  Button
+} from '@mui/material';
 
 import Routes from './routes/Routes';
 
 const App = () => {
-	return (
-    <>
-		<div className="App">
-			<CssBaseline />
-			<Typography variant="h1">Tapntable App</Typography>
-			<Routes />
-		</div>
-    </>
-	);
+  return (
+    <div className="App">
+      <CssBaseline />
+      <AppBar position="relative">
+        <Typography variant="h6" style={{ margin: '10px' }} gutterBottom>
+          Tapntable
+        </Typography>
+      </AppBar>
+      <main>
+        <Container maxWidth="lg" />
+      </main>
+      <Routes />
+    </div>
+  );
 };
 
 export default App;

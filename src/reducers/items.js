@@ -1,7 +1,11 @@
-const INITIAL_STATE = { items: [] };
+import { FETCH_ITEMS } from '../actions/types';
+
+const INITIAL_STATE = [];
 export default function itemsReducer(state = INITIAL_STATE, action) {
-	switch (action.type) {
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case FETCH_ITEMS:
+      return [ ...action.items ];
+    default:
+      return state;
+  }
 }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchItemsFromAPI } from '../actions/items';
 
 import TapntableApi from '../api/api';
 // import SearchForm from '../common/SearchForm';
@@ -17,35 +19,52 @@ import Spinner from '../common/Spinner';
 */
 
 const ItemList = () => {
-	console.debug('ItemList');
+  console.debug('ItemList');
 
-	const [ items, setItems ] = useState([]);
+  // const [ items, setItems ] = useState([]);
+  const items = useSelector((st) => st.items);
+  const dispatch = useDispatch();
+  const [ isLoading, setIsLoading ] = useState(true);
 
-	useEffect(() => {
-		console.debug('ItemList useEffect on Mount');
-		search();
-	}, []);
+  useEffect(
+    () => {
+      console.debug('ItemList useEffect on Mount');
+      async function fetchItem() {
+        await dispatch(fetchItemsFromAPI());
+        setIsLoading(false);
+      }
+      if (isLoading) {
+        fetchItem();
+      }
+      // search();
+    },
+    [ dispatch, isLoading ]
+  );
 
-	// Run on search form submit: reloads companies with filtered results
-	const search = async (query) => {
-		let items = await TapntableApi.getItems(query);
-		setItems(items);
-	};
+  // Run on search form submit: reloads companies with filtered results
+  // const search = async (query) => {
+  //   let items = await TapntableApi.getItems(query);
+  //   setItems(items);
+  // };
 
-	if (!items) return <Spinner />;
+  if (isLoading) return <Spinner />;
 
-	// <SearchForm setQuery={search} />
+  if (!isLoading && items.length === 0) {
+    return <b>No items in database</b>;
+  }
 
-	return (
-		<div className="ItemList col-md-8 offset-md-2">
-			<h1 className="lead-1">Items List</h1>
-			{items.length ? (
-				<ItemCardList items={items} />
-			) : (
-				<p className="lead">Sorry, no results were found!</p>
-			)}
-		</div>
-	);
+  // <SearchForm setQuery={search} />
+
+  return (
+    <div className="ItemList col-md-8 offset-md-2">
+      <h1 className="lead-1">Items List</h1>
+      {items.length ? (
+        <ItemCardList items={items} />
+      ) : (
+        <p className="lead">Sorry, no results were found!</p>
+      )}
+    </div>
+  );
 };
 
 export default ItemList;

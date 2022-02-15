@@ -1,4 +1,26 @@
-# Getting Started with Create React App
+# Tapntable
+## Front-end
+* Using React and Redux to create the user interface
+
+### Components
+* Servers
+* OrderCategories
+* OpenChecks
+* CurrentCheck
+
+* Spinner
+* ItemList
+* ItemCardList
+* ItemCard
+
+### Redux store:
+* items
+* checks
+* currentCheck
+
+---
+
+# Create React App Info
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

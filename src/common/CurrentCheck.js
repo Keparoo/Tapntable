@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { useSelector } from 'react-redux';
 import { Typography, Container } from '@mui/material';
 
@@ -39,7 +40,7 @@ const CurrentCheck = () => {
         </Typography>
 
         {check.items.map((i) => (
-          <p key={i.id}>
+          <p key={uuid()}>
             <strong>{i.name}</strong> ${i.price}
           </p>
         ))}

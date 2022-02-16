@@ -36,6 +36,7 @@ const Servers = () => {
     console.log(tableNum, numGuests);
     setShowCheckForm(false);
     dispatch(newCheck({ tableNum, numGuests }));
+    setIsAddingItems(true);
   };
 
   const cancel = () => {

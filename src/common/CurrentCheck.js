@@ -19,6 +19,7 @@ const CurrentCheck = () => {
         : check.createdAt.getHours();
     hours = hours === 0 ? 12 : hours;
     minutes = check.createdAt.getMinutes();
+    minutes = minutes < 10 ? '0' + minutes.toString() : minutes;
     console.log(`Hours-Minutes ${hours}:${minutes}`);
   }
 
@@ -34,6 +35,21 @@ const CurrentCheck = () => {
         <Typography variant="h5" align="center">
           Current Check
         </Typography>
+
+        <Typography variant="p">
+          {check.tableNum && (
+            <span>
+              Table Num: <strong>{check.tableNum}</strong>
+            </span>
+          )}
+          {check.createdAt && (
+            <span style={{ float: 'right' }}>
+              Num Guests: <strong>{check.numGuests}</strong>
+            </span>
+          )}
+        </Typography>
+        <br />
+        <br />
 
         {check.items.map((i) => (
           <p key={uuid()}>
@@ -57,6 +73,7 @@ const CurrentCheck = () => {
             </span>
           )}
         </Typography>
+        <br />
 
         <br />
         <Button onClick={sendOrder} variant="contained">

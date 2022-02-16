@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useSelector } from 'react-redux';
-import { Typography, Container } from '@mui/material';
+import { Typography, Container, Button } from '@mui/material';
 
 const CurrentCheck = () => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.newCheck);
   console.log('Check items', check.items, check.createdAt);
+
   let hours;
   let minutes;
   if (check.createdAt) {
@@ -17,11 +18,12 @@ const CurrentCheck = () => {
         : check.createdAt.getHours();
     minutes = check.createdAt.getMinutes();
   }
-  const time = check.createdAt ? check.createdAt.toString() : 'none';
-  // const hour =
-  //   check.createdAt.getHours() > 12
-  //     ? check.createdAt.getHours() - 12
-  //     : check.createdAt.getHours();
+
+  const sendOrder = () => {
+    // Create ordered_items objects for each item
+    // Write them to db
+    // Go to server main screen
+  };
 
   return (
     <Container>
@@ -30,20 +32,30 @@ const CurrentCheck = () => {
           Current Check
         </Typography>
 
+        {check.items.map((i) => (
+          <p key={uuid()}>
+            <strong>{i.name}</strong> ${i.price}
+          </p>
+        ))}
+      </div>
+      <div>
         <Typography variant="p">
-          Subtotal: <strong>${check.subtotal}</strong> ----- Created At:
+          {check.subtotal && (
+            <span>
+              Subtotal: <strong>${check.subtotal.toFixed(2)}</strong> -----
+              Created At:
+            </span>
+          )}
           {hours && (
             <span>
               {hours}:{minutes}
             </span>
           )}
         </Typography>
-
-        {check.items.map((i) => (
-          <p key={uuid()}>
-            <strong>{i.name}</strong> ${i.price}
-          </p>
-        ))}
+        <br />
+        <Button onClick={sendOrder} variant="contained">
+          Send Order
+        </Button>
       </div>
     </Container>
   );

@@ -56,9 +56,6 @@ const Servers = () => {
 
   return (
     <div className="Servers">
-      <Typography variant="h4" align="center">
-        Servers
-      </Typography>
       <Grid container>
         <Grid item xs={9}>
           <OpenChecks />

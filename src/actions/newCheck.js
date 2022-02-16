@@ -15,18 +15,3 @@ export function addItemToCheck(item) {
     item
   };
 }
-
-export function createOrderedItems(items) {
-  return async function(dispatch) {
-    // const order = await TapntableApi.createOrder();
-    items.map();
-    return dispatch(newOrder(items));
-  };
-}
-
-function newOrder(order) {
-  return {
-    type: CREATE_ORDER,
-    order
-  };
-}

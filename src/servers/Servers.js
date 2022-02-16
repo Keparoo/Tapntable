@@ -71,7 +71,7 @@ const Servers = () => {
           <OrderCategories />
         </Grid>
         <Grid item xs={3}>
-          <CurrentCheck />
+          <CurrentCheck sent={setIsAddingItems} />
         </Grid>
       </Grid>
     );

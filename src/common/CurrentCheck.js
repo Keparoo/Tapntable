@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TapntableApi from '../api/api';
-import { createOrderedItems } from '../actions/newCheck';
+// import formatTime from '../helpers/helpers';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button } from '@mui/material';
 
-const CurrentCheck = () => {
+const CurrentCheck = ({ sent }) => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.newCheck);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // console.log('Check items', check.items, check.createdAt);
 
+  // Format time: Move to helper file
   let hours;
   let minutes;
   if (check.createdAt) {
@@ -26,11 +27,17 @@ const CurrentCheck = () => {
     minutes = minutes < 10 ? '0' + minutes.toString() : minutes;
     console.log(`Hours-Minutes ${hours}:${minutes}`);
   }
+  // const time = formatTime(check)
 
   const sendOrder = async () => {
+    console.debug('sendOrder');
+
+    // Create order in db: get order id
+    // Hard code userId=1
     const order = await TapntableApi.createOrder(1);
     console.log('order', order, check.items);
 
+    // Create Check in db, get Check Id,
     // hard code userId=1, ignore customer field
     const checkRes = await TapntableApi.createCheck(
       1,
@@ -38,11 +45,10 @@ const CurrentCheck = () => {
       check.numGuests
     );
     console.log('check', checkRes);
-    // Create Check, get Check Id, dispatch to newCheck
 
     // Create ordered_items objects for each item
-    // Hard-code seat-num
-    // Hard-code itemNote
+    // Hard-code seat-num=1
+    // Hard-code itemNote="Well Done"
     for (const item of check.items) {
       const ordItem = await TapntableApi.createOrdItem(
         item.id,
@@ -53,9 +59,8 @@ const CurrentCheck = () => {
       );
       console.log('ordItem', ordItem);
     }
-    // await dispatch(createOrderedItems(check.items));
-    // Write them to db
-    // Go to server main screen
+    // Return to server page (show open checks)
+    sent(false);
   };
 
   return (

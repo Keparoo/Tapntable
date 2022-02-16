@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import './App.css';
 // import CssBaseline from '@mui/material/CssBaseline';
 import {
@@ -8,7 +8,9 @@ import {
   Container,
   AppBar,
   Grid,
-  Button
+  Button,
+  Toolbar,
+  Link
 } from '@mui/material';
 
 import Routes from './routes/Routes';
@@ -17,10 +19,43 @@ const App = () => {
   return (
     <div className="App">
       <CssBaseline />
-      <AppBar position="relative">
-        <Typography variant="h6" style={{ margin: '10px' }} gutterBottom>
-          Tapntable
-        </Typography>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            style={{ margin: '10px' }}
+            sx={{ flexGrow: 1 }}
+            gutterBottom
+          >
+            Tapntable
+          </Typography>
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/"
+            underline="none"
+          >
+            Home
+          </Link>
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/servers"
+            underline="none"
+          >
+            Servers
+          </Link>
+          <Link
+            color="inherit"
+            component={RouterLink}
+            to="/items"
+            underline="none"
+          >
+            Items
+          </Link>
+        </Toolbar>
       </AppBar>
       <main>
         <Container maxWidth="lg" />

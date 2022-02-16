@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Typography, Link, Button } from '@mui/material';
 
 const Homepage = () => {
   return (
@@ -10,7 +10,9 @@ const Homepage = () => {
       </Typography>
 
       <Typography variant="h4" align="center">
-        <Link to="/servers">Server Order Page</Link>
+        <Button variant="contained" component={RouterLink} to="/server">
+          Server Page
+        </Button>
       </Typography>
     </div>
   );

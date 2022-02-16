@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
 import { newCheck } from '../actions/newCheck';
 import OpenChecks from '../common/OpenChecks';
+import CheckForm from '../common/CheckForm';
 import CurrentCheck from '../common/CurrentCheck';
 import Spinner from '../common/Spinner';
 import OrderCategories from '../common/OrderCategories';
@@ -15,6 +16,7 @@ const Servers = () => {
   const dispatch = useDispatch();
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isAddingItems, setIsAddingItems ] = useState(false);
+  // const [ showCheckForm, setShowCheckForm ] = useState(false);
 
   useEffect(
     () => {
@@ -30,8 +32,17 @@ const Servers = () => {
     [ dispatch, isLoading ]
   );
 
+  // const newCheck = () => {
+  //   // stuff
+  // };
+
+  // const cancel = () => {
+  //   // stuff
+  // };
+
   const createNewCheck = () => {
     //Ask what table & how many customers
+    // setShowCheckForm(true);
     dispatch(newCheck());
     setIsAddingItems(true);
   };
@@ -41,6 +52,10 @@ const Servers = () => {
   if (!isLoading && items.length === 0) {
     return <b>No items in database</b>;
   }
+
+  // if (showCheckForm) {
+  //   return <CheckForm save={newCheck} cancel={cancel} />;
+  // }
 
   if (isAddingItems)
     return (

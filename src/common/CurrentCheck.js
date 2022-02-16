@@ -12,11 +12,13 @@ const CurrentCheck = () => {
   let hours;
   let minutes;
   if (check.createdAt) {
+    console.log('Time', check.createdAt);
     hours =
       check.createdAt.getHours() > 12
         ? check.createdAt.getHours() - 12
         : check.createdAt.getHours();
     minutes = check.createdAt.getMinutes();
+    console.log(`Hours-Minutes ${hours}:${minutes}`);
   }
 
   const sendOrder = () => {
@@ -42,16 +44,16 @@ const CurrentCheck = () => {
         <Typography variant="p">
           {check.subtotal && (
             <span>
-              Subtotal: <strong>${check.subtotal.toFixed(2)}</strong> -----
-              Created At:
+              Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
             </span>
           )}
-          {hours && (
-            <span>
-              {hours}:{minutes}
+          {check.createdAt && (
+            <span style={{ float: 'right' }}>
+              Created At: {hours}:{minutes}
             </span>
           )}
         </Typography>
+
         <br />
         <Button onClick={sendOrder} variant="contained">
           Send Order

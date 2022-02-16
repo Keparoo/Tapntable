@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Typography, Container } from '@mui/material';
 
 const CurrentCheck = () => {
-  const items = useSelector((st) => st.currentCheck);
-  console.log('Check items', items.items);
+  console.debug('CurrentCheck');
+
+  const check = useSelector((st) => st.newCheck);
+  console.log('Check items', check.items, check.createdAt);
+  let hours;
+  let minutes;
+  if (check.createdAt) {
+    hours =
+      check.createdAt.getHours() > 12
+        ? check.createdAt.getHours() - 12
+        : check.createdAt.getHours();
+    minutes = check.createdAt.getMinutes();
+  }
+  const time = check.createdAt ? check.createdAt.toString() : 'none';
+  // const hour =
+  //   check.createdAt.getHours() > 12
+  //     ? check.createdAt.getHours() - 12
+  //     : check.createdAt.getHours();
 
   return (
     <Container>
@@ -12,9 +28,19 @@ const CurrentCheck = () => {
         <Typography variant="h5" align="center">
           Current Check
         </Typography>
-        {items.items.map((i) => (
+
+        <Typography variant="p">
+          Subtotal: <strong>${check.subtotal}</strong> ----- Created At:
+          {hours && (
+            <span>
+              {hours}:{minutes}
+            </span>
+          )}
+        </Typography>
+
+        {check.items.map((i) => (
           <p key={i.id}>
-            {i.name} {i.price}
+            <strong>{i.name}</strong> ${i.price}
           </p>
         ))}
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItemToCheck } from '../actions/currentCheck';
+import { addItemToCheck } from '../actions/newCheck';
 import { Typography, Button, Stack } from '@mui/material';
 
 const OrderCategories = () => {

@@ -1,10 +1,10 @@
 import items from './items';
 import checks from './checks';
-import currentCheck from './currentCheck';
+import newCheck from './newCheck';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
   items,
   checks,
-  currentCheck
+  newCheck
 });

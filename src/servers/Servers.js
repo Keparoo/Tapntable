@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
+import { newCheck } from '../actions/newCheck';
 import OpenChecks from '../common/OpenChecks';
 import CurrentCheck from '../common/CurrentCheck';
 import Spinner from '../common/Spinner';
@@ -28,6 +29,12 @@ const Servers = () => {
     },
     [ dispatch, isLoading ]
   );
+
+  const createNewCheck = () => {
+    //Ask what table & how many customers
+    dispatch(newCheck());
+    setIsAddingItems(true);
+  };
 
   if (isLoading) return <Spinner />;
 
@@ -62,7 +69,7 @@ const Servers = () => {
       </Grid>
       <div className="Servers-ActionArea">
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={() => setIsAddingItems(true)} variant="contained">
+          <Button onClick={createNewCheck} variant="contained">
             New Check
           </Button>
           <Button variant="contained">Cash Out</Button>

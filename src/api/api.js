@@ -11,39 +11,63 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
  */
 
 class TapntableApi {
-	// the token for interactive with the API will be stored here.
-	static token;
+  // the token for interactive with the API will be stored here.
+  static token;
 
-	static async request(endpoint, data = {}, method = 'get') {
-		console.debug('API Call:', endpoint, data, method);
+  static async request(endpoint, data = {}, method = 'get') {
+    console.debug('API Call:', endpoint, data, method);
 
-		//there are multiple ways to pass an authorization token, this is how you pass it in the header.
-		//this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
-		const url = `${BASE_URL}/${endpoint}`;
-		const headers = { Authorization: `Bearer ${TapntableApi.token}` };
-		const params = method === 'get' ? data : {};
+    //there are multiple ways to pass an authorization token, this is how you pass it in the header.
+    //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
+    const url = `${BASE_URL}/${endpoint}`;
+    const headers = { Authorization: `Bearer ${TapntableApi.token}` };
+    const params = method === 'get' ? data : {};
 
-		try {
-			return (await axios({ url, method, data, params, headers })).data;
-		} catch (err) {
-			console.error('API Error:', err.response);
-			let message = err.response.data.error.message;
-			throw Array.isArray(message) ? message : [ message ];
-		}
-	}
+    try {
+      return (await axios({ url, method, data, params, headers })).data;
+    } catch (err) {
+      console.error('API Error:', err.response);
+      let message = err.response.data.error.message;
+      throw Array.isArray(message) ? message : [ message ];
+    }
+  }
 
-	// Individual API routes
+  // Individual API routes
 
-	/** Get list of items filtered by query if query is not undefined */
+  /** Get list of items filtered by query if query is not undefined */
 
-	static async getItems(query) {
-		let res = await this.request(`items`, { name: query });
-		return res.items;
-	}
+  static async getItems(query) {
+    let res = await this.request(`items`, { name: query });
+    return res.items;
+  }
+
+  static async createOrder(userId) {
+    let res = await this.request(`orders`, { userId }, 'post');
+    return res.order;
+  }
+
+  // ignore customer field
+  static async createCheck(userId, tableNum, numGuests) {
+    let res = await this.request(
+      `checks`,
+      { userId, tableNum, numGuests },
+      'post'
+    );
+    return res.check;
+  }
+
+  static async createOrdItem(itemId, orderId, checkId, seatNum, itemNote) {
+    let res = await this.request(
+      `ordered`,
+      { itemId, orderId, checkId, seatNum, itemNote },
+      'post'
+    );
+    return res.ordItem;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)
 TapntableApi.token =
-	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlSWQiOjEwLCJpYXQiOjE2NDQzNTYzNjN9.EcgASVCSRs2LGS3uG27KJ6Rr7nlKxi0CvtSfO6pVzIg';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlSWQiOjEwLCJpYXQiOjE2NDQzNTYzNjN9.EcgASVCSRs2LGS3uG27KJ6Rr7nlKxi0CvtSfO6pVzIg';
 
 export default TapntableApi;

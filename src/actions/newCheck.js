@@ -1,4 +1,4 @@
-import { ADD_TO_CHECK, CREATE_CHECK } from './types';
+import { ADD_TO_CHECK, CREATE_CHECK, CREATE_ORDER } from './types';
 
 // Handle async API call for list of blog titles
 
@@ -13,5 +13,20 @@ export function addItemToCheck(item) {
   return {
     type: ADD_TO_CHECK,
     item
+  };
+}
+
+export function createOrderedItems(items) {
+  return async function(dispatch) {
+    // const order = await TapntableApi.createOrder();
+    items.map();
+    return dispatch(newOrder(items));
+  };
+}
+
+function newOrder(order) {
+  return {
+    type: CREATE_ORDER,
+    order
   };
 }

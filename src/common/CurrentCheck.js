@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import TapntableApi from '../api/api';
+import { createOrderedItems } from '../actions/newCheck';
 import { v4 as uuid } from 'uuid';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button } from '@mui/material';
 
 const CurrentCheck = () => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.newCheck);
-  console.log('Check items', check.items, check.createdAt);
+  const dispatch = useDispatch();
+
+  // console.log('Check items', check.items, check.createdAt);
 
   let hours;
   let minutes;
@@ -23,8 +27,33 @@ const CurrentCheck = () => {
     console.log(`Hours-Minutes ${hours}:${minutes}`);
   }
 
-  const sendOrder = () => {
+  const sendOrder = async () => {
+    const order = await TapntableApi.createOrder(1);
+    console.log('order', order, check.items);
+
+    // hard code userId=1, ignore customer field
+    const checkRes = await TapntableApi.createCheck(
+      1,
+      check.tableNum,
+      check.numGuests
+    );
+    console.log('check', checkRes);
+    // Create Check, get Check Id, dispatch to newCheck
+
     // Create ordered_items objects for each item
+    // Hard-code seat-num
+    // Hard-code itemNote
+    for (const item of check.items) {
+      const ordItem = await TapntableApi.createOrdItem(
+        item.id,
+        order.id,
+        checkRes.id,
+        1,
+        'Well Done'
+      );
+      console.log('ordItem', ordItem);
+    }
+    // await dispatch(createOrderedItems(check.items));
     // Write them to db
     // Go to server main screen
   };
@@ -42,7 +71,7 @@ const CurrentCheck = () => {
               Table Num: <strong>{check.tableNum}</strong>
             </span>
           )}
-          {check.createdAt && (
+          {check.numGuests && (
             <span style={{ float: 'right' }}>
               Num Guests: <strong>{check.numGuests}</strong>
             </span>

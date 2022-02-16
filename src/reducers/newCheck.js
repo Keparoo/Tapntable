@@ -9,7 +9,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CREATE_CHECK:
       const date = new Date();
-      console.log('tn ng', action);
+      console.log('tn ng', action.check);
       // Handle customer if bar order
       return {
         ...state,

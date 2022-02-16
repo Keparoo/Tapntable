@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
 import { newCheck } from '../actions/newCheck';
+
 import OpenChecks from '../common/OpenChecks';
 import CheckForm from '../common/CheckForm';
 import CurrentCheck from '../common/CurrentCheck';
@@ -33,20 +34,23 @@ const Servers = () => {
   );
 
   const addCheckInfo = (tableNum, numGuests) => {
-    console.log(tableNum, numGuests);
+    console.debug('AddCheckInfo');
+
     setShowCheckForm(false);
     dispatch(newCheck({ tableNum, numGuests }));
     setIsAddingItems(true);
   };
 
   const cancel = () => {
+    console.debug('Cancel NewCheck Form');
     setShowCheckForm(false);
   };
 
   const createNewCheck = () => {
+    console.debug('createNewCheck');
+
     //Ask what table & how many customers
     setShowCheckForm(true);
-    dispatch(newCheck());
     setIsAddingItems(true);
   };
 

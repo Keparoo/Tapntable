@@ -16,7 +16,7 @@ const Servers = () => {
   const dispatch = useDispatch();
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isAddingItems, setIsAddingItems ] = useState(false);
-  // const [ showCheckForm, setShowCheckForm ] = useState(false);
+  const [ showCheckForm, setShowCheckForm ] = useState(false);
 
   useEffect(
     () => {
@@ -32,17 +32,19 @@ const Servers = () => {
     [ dispatch, isLoading ]
   );
 
-  // const newCheck = () => {
-  //   // stuff
-  // };
+  const addCheckInfo = (tableNum, numGuests) => {
+    console.log(tableNum, numGuests);
+    setShowCheckForm(false);
+    dispatch(newCheck({ tableNum, numGuests }));
+  };
 
-  // const cancel = () => {
-  //   // stuff
-  // };
+  const cancel = () => {
+    setShowCheckForm(false);
+  };
 
   const createNewCheck = () => {
     //Ask what table & how many customers
-    // setShowCheckForm(true);
+    setShowCheckForm(true);
     dispatch(newCheck());
     setIsAddingItems(true);
   };
@@ -53,9 +55,9 @@ const Servers = () => {
     return <b>No items in database</b>;
   }
 
-  // if (showCheckForm) {
-  //   return <CheckForm save={newCheck} cancel={cancel} />;
-  // }
+  if (showCheckForm) {
+    return <CheckForm save={addCheckInfo} cancel={cancel} />;
+  }
 
   if (isAddingItems)
     return (
@@ -91,7 +93,5 @@ const Servers = () => {
     </div>
   );
 };
-
-// <Stack direction="row" spacing={2} sx={{ mx: 'auto', width: 600 }}></Stack>
 
 export default Servers;

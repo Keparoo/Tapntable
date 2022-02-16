@@ -57,9 +57,11 @@ const App = () => {
           </Link>
         </Toolbar>
       </AppBar>
+
       <main>
         <Container maxWidth="lg" />
       </main>
+
       <Routes />
     </div>
   );

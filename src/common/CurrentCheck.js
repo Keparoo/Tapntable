@@ -17,6 +17,7 @@ const CurrentCheck = () => {
       check.createdAt.getHours() > 12
         ? check.createdAt.getHours() - 12
         : check.createdAt.getHours();
+    hours = hours === 0 ? 12 : hours;
     minutes = check.createdAt.getMinutes();
     console.log(`Hours-Minutes ${hours}:${minutes}`);
   }
@@ -49,7 +50,10 @@ const CurrentCheck = () => {
           )}
           {check.createdAt && (
             <span style={{ float: 'right' }}>
-              Created At: {hours}:{minutes}
+              Created At:{' '}
+              <strong>
+                {hours}:{minutes}
+              </strong>
             </span>
           )}
         </Typography>

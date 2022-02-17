@@ -68,8 +68,6 @@ const Servers = () => {
     //Get ord items for check
     const items = await TapntableApi.getOrderedItems(check.id);
     //Send to current check
-    const test = { check: { ...check, items } };
-    console.log(`TEST  ${test}`);
     dispatch(getOpenCheck({ check: { ...check, items } }));
     setShowCurrentCheck(true);
     setIsAddingItems(true);
@@ -92,7 +90,7 @@ const Servers = () => {
           <OrderCategories />
         </Grid>
         <Grid item xs={3}>
-          <CurrentCheck sent={setIsAddingItems} />
+          <CurrentCheck sent={setIsAddingItems} reload={setIsLoading} />
         </Grid>
       </Grid>
     );

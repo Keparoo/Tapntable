@@ -1,4 +1,9 @@
-import { ADD_TO_CHECK, CREATE_CHECK, LOAD_CURRENT_CHECK } from './types';
+import {
+  ADD_TO_CHECK,
+  CREATE_CHECK,
+  LOAD_CURRENT_CHECK,
+  CLEAR_CURRENT_CHECK
+} from './types';
 
 // Handle async API call for list of blog titles
 
@@ -20,5 +25,11 @@ export function getOpenCheck(check) {
   return {
     type: LOAD_CURRENT_CHECK,
     check
+  };
+}
+
+export function clearCurrentCheck() {
+  return {
+    type: CLEAR_CURRENT_CHECK
   };
 }

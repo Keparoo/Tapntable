@@ -1,15 +1,16 @@
 import React from 'react';
 import moment from 'moment';
 import TapntableApi from '../api/api';
+import { clearCurrentCheck } from '../actions/currentCheck';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
 
-const CurrentCheck = ({ sent }) => {
+const CurrentCheck = ({ sent, reload }) => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.currentCheck);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // console.log('Check items', check.items, check.createdAt);
 
@@ -60,11 +61,17 @@ const CurrentCheck = ({ sent }) => {
       }
     }
 
+    // Clear current check
+    dispatch(clearCurrentCheck());
     // Return to server page (show open checks)
+    reload(true);
     sent(false);
+    console.log('reload=true');
   };
 
+  // Go back to OpenCheck
   const cancel = () => {
+    dispatch(clearCurrentCheck());
     sent(false);
   };
 
@@ -100,8 +107,8 @@ const CurrentCheck = ({ sent }) => {
             <strong>{i.name}</strong> ${i.price}
           </p>
         ))}
-        {check.newItems.map}
       </div>
+
       <div>
         <Typography variant="p">
           {(check.subtotal || check.subtotal === 0) && (

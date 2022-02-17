@@ -2,10 +2,11 @@ import {
   CREATE_CHECK,
   ADD_TO_CHECK,
   REMOVE_FROM_CHECK,
-  LOAD_CURRENT_CHECK
+  LOAD_CURRENT_CHECK,
+  CLEAR_CURRENT_CHECK
 } from '../actions/types';
 
-const INITIAL_STATE = { items: [] };
+const INITIAL_STATE = { items: [], newItems: [] };
 export default function newCheck(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CREATE_CHECK:
@@ -37,6 +38,9 @@ export default function newCheck(state = INITIAL_STATE, action) {
         0
       );
       return { ...action.check.check, subtotal, newItems: [] };
+
+    case CLEAR_CURRENT_CHECK:
+      return INITIAL_STATE;
 
     default:
       return state;

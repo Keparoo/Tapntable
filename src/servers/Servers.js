@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
+import { getOpenChecksFromAPI } from '../actions/checks';
 import { newCheck } from '../actions/newCheck';
 
 import OpenChecks from '../common/OpenChecks';
@@ -24,6 +25,8 @@ const Servers = () => {
       console.debug('ItemList useEffect on Mount');
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
+        // Hardcode userId=1
+        await dispatch(getOpenChecksFromAPI(1));
         setIsLoading(false);
       }
       if (isLoading) {

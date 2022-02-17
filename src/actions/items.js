@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import TapntableApi from '../api/api';
 import { FETCH_ITEMS } from './types';
 

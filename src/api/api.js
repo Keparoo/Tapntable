@@ -64,6 +64,11 @@ class TapntableApi {
     );
     return res.ordItem;
   }
+
+  static async getChecks(query) {
+    let res = await this.request(`checks`, { userId: query });
+    return res.checks;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)

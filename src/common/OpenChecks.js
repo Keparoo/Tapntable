@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Container } from '@mui/material';
+import { useSelector } from 'react-redux';
+import {
+  Typography,
+  Container,
+  Button,
+  Card,
+  CardActions,
+  CardActionArea,
+  CardContent
+} from '@mui/material';
 import './OpenChecks.css';
 
 const OpenChecks = () => {
   console.debug('CurrentChecks');
+
+  const checks = useSelector((st) => st.checks);
 
   return (
     <div className="CurrentChecks">
@@ -11,6 +22,37 @@ const OpenChecks = () => {
         <Typography variant="h4" align="center">
           Open Checks
         </Typography>
+
+        {checks.map((c) => (
+          <Card
+            key={c.id}
+            sx={{
+              width: 275,
+              float: 'left',
+              marginBottom: '2em',
+              marginRight: '1em'
+            }}
+          >
+            <CardActionArea>
+              <CardContent>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Table: {c.tableNum}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  Num Guests: {c.numGuests}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  {checks.createdAt}
+                </Typography>
+                <Typography variant="body2">more text here!</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
       </Container>
     </div>
   );

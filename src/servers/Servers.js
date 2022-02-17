@@ -19,6 +19,7 @@ const Servers = () => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isAddingItems, setIsAddingItems ] = useState(false);
   const [ showCheckForm, setShowCheckForm ] = useState(false);
+  const [ showCurrentCheck, setShowCurrentCheck ] = useState(false);
 
   useEffect(
     () => {
@@ -36,7 +37,7 @@ const Servers = () => {
     [ dispatch, isLoading ]
   );
 
-  const addCheckInfo = (tableNum, numGuests) => {
+  const openNewCheck = (tableNum, numGuests) => {
     console.debug('AddCheckInfo');
 
     setShowCheckForm(false);
@@ -54,6 +55,7 @@ const Servers = () => {
 
     //Ask what table & how many customers
     setShowCheckForm(true);
+    setShowCurrentCheck(true);
     setIsAddingItems(true);
   };
 
@@ -64,7 +66,7 @@ const Servers = () => {
   }
 
   if (showCheckForm) {
-    return <CheckForm save={addCheckInfo} cancel={cancel} />;
+    return <CheckForm save={openNewCheck} cancel={cancel} />;
   }
 
   if (isAddingItems)
@@ -82,11 +84,8 @@ const Servers = () => {
   return (
     <div className="Servers">
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <OpenChecks />
-        </Grid>
-        <Grid item xs={3}>
-          <CurrentCheck />
         </Grid>
       </Grid>
       <div className="Servers-ActionArea">
@@ -95,7 +94,7 @@ const Servers = () => {
             New Check
           </Button>
           <Button variant="contained">Cash Out</Button>
-          <Button variant="contained">New Check</Button>
+          <Button variant="contained">Clock Out</Button>
         </Stack>
       </div>
     </div>

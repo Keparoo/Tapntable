@@ -1,6 +1,6 @@
 import React from 'react';
 import TapntableApi from '../api/api';
-// import formatTime from '../helpers/helpers';
+import formatTime from '../utils/helpers';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button } from '@mui/material';
@@ -13,21 +13,8 @@ const CurrentCheck = ({ sent }) => {
 
   // console.log('Check items', check.items, check.createdAt);
 
-  // Format time: Move to helper file
-  let hours;
-  let minutes;
-  if (check.createdAt) {
-    console.log('Time', check.createdAt);
-    hours =
-      check.createdAt.getHours() > 12
-        ? check.createdAt.getHours() - 12
-        : check.createdAt.getHours();
-    hours = hours === 0 ? 12 : hours;
-    minutes = check.createdAt.getMinutes();
-    minutes = minutes < 10 ? '0' + minutes.toString() : minutes;
-    console.log(`Hours-Minutes ${hours}:${minutes}`);
-  }
-  // const time = formatTime(check)
+  // Format time to 12 hour
+  const time = formatTime(check.createdAt);
 
   const sendOrder = async () => {
     console.debug('sendOrder');
@@ -100,10 +87,7 @@ const CurrentCheck = ({ sent }) => {
           )}
           {check.createdAt && (
             <span style={{ float: 'right' }}>
-              Created At:{' '}
-              <strong>
-                {hours}:{minutes}
-              </strong>
+              Created At: <strong>{time}</strong>
             </span>
           )}
         </Typography>

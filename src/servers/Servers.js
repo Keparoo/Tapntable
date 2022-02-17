@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
-import { newCheck } from '../actions/newCheck';
+import { newCheck, getOpenCheck } from '../actions/newCheck';
+import TapntableApi from '../api/api';
 
 import OpenChecks from '../common/OpenChecks';
 import CheckForm from '../common/CheckForm';
@@ -61,8 +62,16 @@ const Servers = () => {
     setIsAddingItems(true);
   };
 
-  const openCheck = (checkId) => {
-    console.debug('openCheck', checkId);
+  const openCheck = async (check) => {
+    console.debug('openCheck', check);
+
+    //Get ord items for check
+    const items = await TapntableApi.getOrderedItems(check.id);
+    //Send to current check
+    const test = { check: { ...check, items } };
+    console.log(`TEST  ${test}`);
+    dispatch(getOpenCheck({ check: { ...check, items } }));
+    setShowCurrentCheck(true);
     setIsAddingItems(true);
   };
 

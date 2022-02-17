@@ -69,6 +69,11 @@ class TapntableApi {
     let res = await this.request(`checks`, { userId: query });
     return res.checks;
   }
+
+  static async getOrderedItems(query) {
+    let res = await this.request(`ordered`, { checkId: query });
+    return res.ordItems;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)

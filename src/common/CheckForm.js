@@ -31,7 +31,11 @@ const CheckForm = ({
   }
 
   return (
-    <form className="mb-4" onSubmit={handleSubmit}>
+    <form
+      className="mb-4"
+      style={{ width: 300, margin: 'auto', marginTop: '100px' }}
+      onSubmit={handleSubmit}
+    >
       <div className="form-group">
         <label htmlFor="tableNum">Table Number:</label>
         <input

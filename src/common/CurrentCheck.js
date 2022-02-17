@@ -28,7 +28,7 @@ const CurrentCheck = ({ sent }) => {
       check.tableNum,
       check.numGuests
     );
-    console.log('check', checkRes);
+    // console.log('check', checkRes);
 
     // Create ordered_items objects for each item
     // Hard-code seat-num=1

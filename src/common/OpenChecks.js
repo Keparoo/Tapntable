@@ -27,7 +27,7 @@ const OpenChecks = ({ open }) => {
         {checks.map((c) => (
           <Card
             key={c.id}
-            onClick={() => open(c.id)}
+            onClick={() => open(c)}
             sx={{
               width: 275,
               float: 'left',

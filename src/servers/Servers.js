@@ -14,8 +14,10 @@ import './Servers.css';
 
 const Servers = () => {
   console.debug('Servers');
+
   const items = useSelector((st) => st.items);
   const dispatch = useDispatch();
+
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isAddingItems, setIsAddingItems ] = useState(false);
   const [ showCheckForm, setShowCheckForm ] = useState(false);
@@ -59,6 +61,11 @@ const Servers = () => {
     setIsAddingItems(true);
   };
 
+  const openCheck = (checkId) => {
+    console.debug('openCheck', checkId);
+    setIsAddingItems(true);
+  };
+
   if (isLoading) return <Spinner />;
 
   if (!isLoading && items.length === 0) {
@@ -85,7 +92,7 @@ const Servers = () => {
     <div className="Servers">
       <Grid container>
         <Grid item xs={12}>
-          <OpenChecks />
+          <OpenChecks open={openCheck} />
         </Grid>
       </Grid>
       <div className="Servers-ActionArea">

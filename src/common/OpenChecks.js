@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import './OpenChecks.css';
 
-const OpenChecks = () => {
+const OpenChecks = ({ open }) => {
   console.debug('CurrentChecks');
 
   const checks = useSelector((st) => st.checks);
@@ -27,6 +27,7 @@ const OpenChecks = () => {
         {checks.map((c) => (
           <Card
             key={c.id}
+            onClick={() => open(c.id)}
             sx={{
               width: 275,
               float: 'left',

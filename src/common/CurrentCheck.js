@@ -3,12 +3,12 @@ import moment from 'moment';
 import TapntableApi from '../api/api';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Container, Button } from '@mui/material';
+import { Typography, Container, Button, Stack } from '@mui/material';
 
 const CurrentCheck = ({ sent }) => {
   console.debug('CurrentCheck');
 
-  const check = useSelector((st) => st.newCheck);
+  const check = useSelector((st) => st.currentCheck);
   // const dispatch = useDispatch();
 
   // console.log('Check items', check.items, check.createdAt);
@@ -81,7 +81,7 @@ const CurrentCheck = ({ sent }) => {
       </div>
       <div>
         <Typography variant="p">
-          {check.subtotal && (
+          {(check.subtotal || check.subtotal === 0) && (
             <span>
               Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
             </span>
@@ -96,12 +96,14 @@ const CurrentCheck = ({ sent }) => {
         <br />
 
         <br />
-        <Button onClick={sendOrder} variant="contained">
-          Send Order
-        </Button>
-        <Button onClick={cancel} variant="contained">
-          Cancel
-        </Button>
+        <Stack direction="row" spacing={2} justifyContent="center">
+          <Button onClick={sendOrder} variant="contained">
+            Send Order
+          </Button>
+          <Button onClick={cancel} color="warning" variant="contained">
+            Cancel
+          </Button>
+        </Stack>
       </div>
     </Container>
   );

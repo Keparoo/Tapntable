@@ -39,19 +39,20 @@ const CheckForm = ({
       <div className="form-group">
         <label htmlFor="tableNum">Table Number:</label>
         <input
-          className="form-control"
-          type="text"
+          className="form-control active"
+          type="number"
           name="tableNum"
           id="tableNum"
           onChange={handleChange}
           value={form.tableNum}
+          autoFocus={true}
         />
       </div>
       <div className="form-group">
         <label htmlFor="numGuests">Number of Guests:</label>
         <input
           className="form-control"
-          type="text"
+          type="number"
           name="numGuests"
           id="numGuests"
           onChange={handleChange}

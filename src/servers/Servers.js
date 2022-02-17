@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
-import { newCheck, getOpenCheck } from '../actions/newCheck';
+import { newCheck, getOpenCheck } from '../actions/currentCheck';
 import TapntableApi from '../api/api';
 
 import OpenChecks from '../common/OpenChecks';

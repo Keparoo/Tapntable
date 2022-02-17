@@ -13,18 +13,19 @@ export default function newCheck(state = INITIAL_STATE, action) {
       console.log('tn ng', action.check);
       // Handle customer if bar order
       return {
-        ...state,
         tableNum: +action.check.tableNum.tableNum,
         numGuests: +action.check.tableNum.numGuests,
         subtotal: 0,
-        createdAt: date
+        createdAt: date,
+        items: [],
+        newItems: []
       };
 
     case ADD_TO_CHECK:
       return {
         ...state,
         subtotal: +state.subtotal + +action.item.price,
-        items: [ ...state.items, action.item ]
+        newItems: [ ...state.newItems, action.item ]
       };
 
     case REMOVE_FROM_CHECK:
@@ -35,7 +36,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
         (a, b) => +a + (+b.price || 0),
         0
       );
-      return { ...action.check.check, subtotal };
+      return { ...action.check.check, subtotal, newItems: [] };
 
     default:
       return state;

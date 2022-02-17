@@ -19,30 +19,47 @@ const CurrentCheck = ({ sent }) => {
     // Create order in db: get order id
     // Hard code userId=1
     const order = await TapntableApi.createOrder(1);
-    console.log('order', order, check.items);
+    console.log('order', order, check.newItems);
 
-    // Create Check in db, get Check Id,
-    // hard code userId=1, ignore customer field
-    const checkRes = await TapntableApi.createCheck(
-      1,
-      check.tableNum,
-      check.numGuests
-    );
-    // console.log('check', checkRes);
-
-    // Create ordered_items objects for each item
-    // Hard-code seat-num=1
-    // Hard-code itemNote="Well Done"
-    for (const item of check.items) {
-      const ordItem = await TapntableApi.createOrdItem(
-        item.id,
-        order.id,
-        checkRes.id,
+    if (check.id) {
+      // Create ordered_items objects for each item
+      // Hard-code seat-num=1
+      // Hard-code itemNote="Well Done"
+      for (const item of check.newItems) {
+        const ordItem = await TapntableApi.createOrdItem(
+          item.id,
+          order.id,
+          check.id,
+          1,
+          'Well Done'
+        );
+        console.log('ordItem', ordItem);
+      }
+    } else {
+      // Create Check in db, get Check Id,
+      // hard code userId=1, ignore customer field
+      const checkRes = await TapntableApi.createCheck(
         1,
-        'Well Done'
+        check.tableNum,
+        check.numGuests
       );
-      console.log('ordItem', ordItem);
+      // console.log('check', checkRes);
+
+      // Create ordered_items objects for each item
+      // Hard-code seat-num=1
+      // Hard-code itemNote="Well Done"
+      for (const item of check.newItems) {
+        const ordItem = await TapntableApi.createOrdItem(
+          item.id,
+          order.id,
+          checkRes.id,
+          1,
+          'Well Done'
+        );
+        console.log('ordItem', ordItem);
+      }
     }
+
     // Return to server page (show open checks)
     sent(false);
   };
@@ -78,6 +95,12 @@ const CurrentCheck = ({ sent }) => {
             <strong>{i.name}</strong> ${i.price}
           </p>
         ))}
+        {check.newItems.map((i) => (
+          <p key={uuid()}>
+            <strong>{i.name}</strong> ${i.price}
+          </p>
+        ))}
+        {check.newItems.map}
       </div>
       <div>
         <Typography variant="p">

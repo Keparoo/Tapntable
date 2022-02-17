@@ -31,8 +31,11 @@ export default function newCheck(state = INITIAL_STATE, action) {
       return { ...state };
 
     case LOAD_CURRENT_CHECK:
-      console.log('**action.check', action.check.check);
-      return { ...action.check.check };
+      const subtotal = action.check.check.items.reduce(
+        (a, b) => +a + (+b.price || 0),
+        0
+      );
+      return { ...action.check.check, subtotal };
 
     default:
       return state;

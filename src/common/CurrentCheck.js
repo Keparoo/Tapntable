@@ -47,6 +47,10 @@ const CurrentCheck = ({ sent }) => {
     sent(false);
   };
 
+  const cancel = () => {
+    sent(false);
+  };
+
   return (
     <Container>
       <div style={{ background: 'lightgray', height: '80vh' }}>
@@ -94,6 +98,9 @@ const CurrentCheck = ({ sent }) => {
         <br />
         <Button onClick={sendOrder} variant="contained">
           Send Order
+        </Button>
+        <Button onClick={cancel} variant="contained">
+          Cancel
         </Button>
       </div>
     </Container>

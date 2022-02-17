@@ -1,6 +1,6 @@
 import React from 'react';
+import moment from 'moment';
 import TapntableApi from '../api/api';
-import formatTime from '../utils/helpers';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button } from '@mui/material';
@@ -12,9 +12,6 @@ const CurrentCheck = ({ sent }) => {
   // const dispatch = useDispatch();
 
   // console.log('Check items', check.items, check.createdAt);
-
-  // Format time to 12 hour
-  const time = formatTime(check.createdAt);
 
   const sendOrder = async () => {
     console.debug('sendOrder');
@@ -87,7 +84,8 @@ const CurrentCheck = ({ sent }) => {
           )}
           {check.createdAt && (
             <span style={{ float: 'right' }}>
-              Created At: <strong>{time}</strong>
+              Created At:{' '}
+              <strong>{moment(check.createdAt).format('LT')}</strong>
             </span>
           )}
         </Typography>

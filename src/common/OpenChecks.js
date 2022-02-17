@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import {
   Typography,
@@ -46,7 +47,7 @@ const OpenChecks = () => {
                   Num Guests: {c.numGuests}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  {checks.createdAt}
+                  Check Created: {moment(c.createdAt).format('LT')}
                 </Typography>
                 <Typography variant="body2">more text here!</Typography>
               </CardContent>

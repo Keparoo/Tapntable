@@ -1,4 +1,5 @@
 const formatTime = (time) => {
+  console.log(time);
   let hours;
   let minutes;
   let pm = false;

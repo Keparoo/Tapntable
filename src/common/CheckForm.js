@@ -59,7 +59,7 @@ const CheckForm = ({
           value={form.numGuests}
         />
       </div>
-      <button className="btn btn-primary mr-2">Save</button>
+      <button className="btn btn-primary mr-2">Create New Check</button>
       <button onClick={cancel} className="btn btn-secondary">
         Cancel
       </button>

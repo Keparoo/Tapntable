@@ -22,7 +22,7 @@ const Servers = () => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isAddingItems, setIsAddingItems ] = useState(false);
   const [ showCheckForm, setShowCheckForm ] = useState(false);
-  const [ showCurrentCheck, setShowCurrentCheck ] = useState(false);
+  // const [ showCurrentCheck, setShowCurrentCheck ] = useState(false);
 
   useEffect(
     () => {
@@ -58,7 +58,6 @@ const Servers = () => {
 
     //Ask what table & how many customers
     setShowCheckForm(true);
-    setShowCurrentCheck(true);
     setIsAddingItems(true);
   };
 
@@ -69,7 +68,6 @@ const Servers = () => {
     const items = await TapntableApi.getOrderedItems(check.id);
     //Send to current check
     dispatch(getOpenCheck({ check: { ...check, items } }));
-    setShowCurrentCheck(true);
     setIsAddingItems(true);
   };
 
@@ -90,7 +88,7 @@ const Servers = () => {
           <OrderCategories />
         </Grid>
         <Grid item xs={3}>
-          <CurrentCheck sent={setIsAddingItems} reload={setIsLoading} />
+          <CurrentCheck orderCatsOff={setIsAddingItems} reload={setIsLoading} />
         </Grid>
       </Grid>
     );

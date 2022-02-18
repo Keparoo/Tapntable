@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
 
-const CurrentCheck = ({ sent, reload }) => {
+const CurrentCheck = ({ orderCatsOff, reload }) => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.currentCheck);
@@ -65,19 +65,27 @@ const CurrentCheck = ({ sent, reload }) => {
     dispatch(clearCurrentCheck());
     // Return to server page (show open checks)
     reload(true);
-    sent(false);
+    orderCatsOff(false);
     console.log('reload=true');
   };
 
   // Go back to OpenCheck
   const cancel = () => {
     dispatch(clearCurrentCheck());
-    sent(false);
+    orderCatsOff(false);
+  };
+
+  const pay = () => {
+    //Show Pay Screen
+    // Get type, Amount
+    // insert into payments
+    // add all payments
+    //if totalpayments  >= total: allow close check
   };
 
   return (
-    <Container>
-      <div style={{ background: 'lightgray', height: '80vh' }}>
+    <Container sx={{ padding: '8px' }}>
+      <div style={{ background: 'lightgray', height: '80vh', padding: '8px' }}>
         <Typography variant="h5" align="center">
           Current Check
         </Typography>
@@ -132,6 +140,9 @@ const CurrentCheck = ({ sent, reload }) => {
           </Button>
           <Button onClick={cancel} color="warning" variant="contained">
             Cancel
+          </Button>
+          <Button onClick={pay} variant="contained">
+            Pay
           </Button>
         </Stack>
       </div>

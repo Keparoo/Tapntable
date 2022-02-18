@@ -7,12 +7,12 @@ import {
 } from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
-const PayAmountForm = ({ payment = { amount: '', tip: 0 }, save, cancel }) => {
+const PayAmountForm = ({ amount, save, cancel }) => {
   console.debug('PayAmountForm');
 
   const [ form, setForm ] = useState({
-    amount: payment.amount,
-    tip: payment.tip
+    amount: amount,
+    tip: ''
   });
 
   function handleChange(e) {

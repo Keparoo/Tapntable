@@ -104,7 +104,11 @@ const Payment = () => {
           </Button>
         </Stack>
         {showPaymentAmountForm && (
-          <PayAmountForm save={savePayment} cancel={cancelPayment} />
+          <PayAmountForm
+            amount={check.subtotal.toFixed(2)}
+            save={savePayment}
+            cancel={cancelPayment}
+          />
         )}
       </Container>
     </div>

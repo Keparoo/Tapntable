@@ -134,7 +134,7 @@ const CurrentCheck = ({ orderCatsOn, reload }) => {
               </span>
             )}
             {(check.subtotal || check.subtotal === 0) && (
-              <span style={{ float: 'right', paddingRight: '8px' }}>
+              <span style={{ float: 'right', paddingRight: '6px' }}>
                 Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
               </span>
             )}

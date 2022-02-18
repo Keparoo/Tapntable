@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import TapntableApi from '../api/api';
 import { clearCurrentCheck } from '../actions/currentCheck';
@@ -6,11 +6,13 @@ import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
 
-const CurrentCheck = ({ orderCatsOff, reload }) => {
+const CurrentCheck = ({ orderCatsOn, reload }) => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.currentCheck);
   const dispatch = useDispatch();
+
+  const [ showPayScreen, setShowPayScreen ] = useState(false);
 
   // console.log('Check items', check.items, check.createdAt);
 
@@ -65,89 +67,98 @@ const CurrentCheck = ({ orderCatsOff, reload }) => {
     dispatch(clearCurrentCheck());
     // Return to server page (show open checks)
     reload(true);
-    orderCatsOff(false);
+    orderCatsOn(false);
     console.log('reload=true');
   };
 
   // Go back to OpenCheck
   const cancel = () => {
     dispatch(clearCurrentCheck());
-    orderCatsOff(false);
+    orderCatsOn(false);
   };
 
   const pay = () => {
     //Show Pay Screen
+    orderCatsOn(false);
     // Get type, Amount
     // insert into payments
     // add all payments
     //if totalpayments  >= total: allow close check
   };
 
-  return (
-    <Container sx={{ padding: '8px' }}>
-      <div style={{ background: 'lightgray', height: '80vh', padding: '8px' }}>
-        <Typography variant="h5" align="center">
-          Current Check
-        </Typography>
+  const renderCurrentCheck = () => {
+    return (
+      <Container sx={{ padding: '8px' }}>
+        <div
+          style={{ background: 'lightgray', height: '80vh', padding: '8px' }}
+        >
+          <Typography variant="h5" align="center">
+            Current Check
+          </Typography>
 
-        <Typography variant="p">
-          {check.tableNum && (
-            <span>
-              Table Num: <strong>{check.tableNum}</strong>
-            </span>
-          )}
-          {check.numGuests && (
-            <span style={{ float: 'right' }}>
-              Num Guests: <strong>{check.numGuests}</strong>
-            </span>
-          )}
-        </Typography>
-        <br />
-        <br />
+          <Typography variant="p">
+            {check.tableNum && (
+              <span>
+                Table Num: <strong>{check.tableNum}</strong>
+              </span>
+            )}
+            {check.numGuests && (
+              <span style={{ float: 'right' }}>
+                Num Guests: <strong>{check.numGuests}</strong>
+              </span>
+            )}
+          </Typography>
+          <br />
+          <br />
 
-        {check.items.map((i) => (
-          <p key={uuid()}>
-            <strong>{i.name}</strong> ${i.price}
-          </p>
-        ))}
-        {check.newItems.map((i) => (
-          <p key={uuid()}>
-            <strong>{i.name}</strong> ${i.price}
-          </p>
-        ))}
-      </div>
+          {check.items.map((i) => (
+            <p key={uuid()}>
+              <strong>{i.name}</strong>{' '}
+              <span style={{ float: 'right' }}>${i.price}</span>
+            </p>
+          ))}
+          {check.newItems.map((i) => (
+            <p key={uuid()}>
+              <strong>{i.name}</strong>{' '}
+              <span style={{ float: 'right' }}>${i.price}</span>
+            </p>
+          ))}
+        </div>
 
-      <div>
-        <Typography variant="p">
-          {(check.subtotal || check.subtotal === 0) && (
-            <span>
-              Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
-            </span>
-          )}
-          {check.createdAt && (
-            <span style={{ float: 'right' }}>
-              Created At:{' '}
-              <strong>{moment(check.createdAt).format('LT')}</strong>
-            </span>
-          )}
-        </Typography>
-        <br />
+        <div>
+          <Typography variant="p" sx={{ padding: '6px' }}>
+            {check.createdAt && (
+              <span>
+                Created At:{' '}
+                <strong>{moment(check.createdAt).format('LT')}</strong>
+              </span>
+            )}
+            {(check.subtotal || check.subtotal === 0) && (
+              <span style={{ float: 'right', paddingRight: '8px' }}>
+                Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
+              </span>
+            )}
+          </Typography>
+          <br />
 
-        <br />
-        <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={sendOrder} variant="contained">
-            Send Order
-          </Button>
-          <Button onClick={cancel} color="warning" variant="contained">
-            Cancel
-          </Button>
-          <Button onClick={pay} variant="contained">
-            Pay
-          </Button>
-        </Stack>
-      </div>
-    </Container>
-  );
+          <br />
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button onClick={sendOrder} variant="contained">
+              Send Order
+            </Button>
+            <Button onClick={cancel} color="warning" variant="contained">
+              Cancel
+            </Button>
+            <Button onClick={pay} variant="contained">
+              Pay
+            </Button>
+          </Stack>
+        </div>
+      </Container>
+    );
+  };
+
+  return renderCurrentCheck();
 };
 
 export default CurrentCheck;

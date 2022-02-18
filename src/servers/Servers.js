@@ -88,7 +88,7 @@ const Servers = () => {
           <OrderCategories />
         </Grid>
         <Grid item xs={3}>
-          <CurrentCheck orderCatsOff={setIsAddingItems} reload={setIsLoading} />
+          <CurrentCheck orderCatsOn={setIsAddingItems} reload={setIsLoading} />
         </Grid>
       </Grid>
     );

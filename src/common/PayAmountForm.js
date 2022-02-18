@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  TextField,
-  Button,
-  Box,
-  scopedCssBaselineClasses
-} from '@mui/material';
+import { TextField, Button, Box } from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
 const PayAmountForm = ({ amount, save, cancel }) => {
@@ -42,7 +37,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
         type="number"
         id="amount"
         name="amount"
-        label="Amount"
+        label="Balance"
         variant="outlined"
         value={form.amount}
         onChange={handleChange}

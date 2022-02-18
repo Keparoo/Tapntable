@@ -74,6 +74,29 @@ class TapntableApi {
     let res = await this.request(`ordered`, { checkId: query });
     return res.ordItems;
   }
+
+  static async getPayments(query) {
+    let res = await this.request(`payments`, { checkId: query });
+    return res.payments;
+  }
+
+  static async postPayment(checkId, type, tipAmt, subtotal) {
+    let res = await this.request(
+      `payments`,
+      { checkId, type, tipAmt, subtotal },
+      'post'
+    );
+    return res.payment;
+  }
+
+  static async closeCheck(checkId) {
+    let res = await this.request(
+      `checks/${checkId}`,
+      { closedAt: new Date() },
+      'patch'
+    );
+    return res.check;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)

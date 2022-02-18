@@ -50,7 +50,7 @@ const OpenChecks = ({ open }) => {
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                   Check Created: {moment(c.createdAt).format('LT')}
                 </Typography>
-                <Typography variant="body2">more text here!</Typography>
+                <Typography variant="body2">Check Id: {c.id}</Typography>
               </CardContent>
             </CardActionArea>
           </Card>

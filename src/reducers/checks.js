@@ -4,7 +4,8 @@ const INITIAL_STATE = [];
 export default function checks(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_OPEN_CHECKS:
-      return [ ...action.checks ];
+      const checks = action.checks.filter((c) => !c.closedAt && !c.isVoid);
+      return [ ...checks ];
 
     case 'ADD_ITEM':
       return state;

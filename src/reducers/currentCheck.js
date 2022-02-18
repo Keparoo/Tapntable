@@ -3,10 +3,11 @@ import {
   ADD_TO_CHECK,
   REMOVE_FROM_CHECK,
   LOAD_CURRENT_CHECK,
-  CLEAR_CURRENT_CHECK
+  CLEAR_CURRENT_CHECK,
+  ADD_PAYMENT
 } from '../actions/types';
 
-const INITIAL_STATE = { items: [], newItems: [] };
+const INITIAL_STATE = { items: [], newItems: [], payments: [] };
 export default function newCheck(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CREATE_CHECK:
@@ -19,7 +20,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
         subtotal: 0,
         createdAt: date,
         items: [],
-        newItems: []
+        newItems: [],
+        payments: []
       };
 
     case ADD_TO_CHECK:
@@ -37,10 +39,13 @@ export default function newCheck(state = INITIAL_STATE, action) {
         (a, b) => +a + (+b.price || 0),
         0
       );
-      return { ...action.check.check, subtotal, newItems: [] };
+      return { ...action.check.check, subtotal, newItems: [], payments: [] };
 
     case CLEAR_CURRENT_CHECK:
       return INITIAL_STATE;
+
+    case ADD_PAYMENT:
+      return { ...state, payments: [ ...state.payments, action.payment ] };
 
     default:
       return state;

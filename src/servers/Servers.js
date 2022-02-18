@@ -102,7 +102,7 @@ const Servers = () => {
     return (
       <Grid container>
         <Grid item xs={9}>
-          <Payment />
+          <Payment showPayment={setIsPaying} />
         </Grid>
         <Grid item xs={3}>
           <CurrentCheck

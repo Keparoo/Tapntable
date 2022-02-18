@@ -9,10 +9,29 @@ import { Typography, Container, Button, Stack } from '@mui/material';
 const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
   console.debug('CurrentCheck');
 
-  const check = useSelector((st) => st.currentCheck);
   const dispatch = useDispatch();
+  const [ checkTotal, setCheckTotal ] = useState(0);
+  // const [ showPayScreen, setShowPayScreen ] = useState(false);
 
-  const [ showPayScreen, setShowPayScreen ] = useState(false);
+  // Get current check
+  const check = useSelector((st) => st.currentCheck);
+  //Update payments
+  //Calculate Tax
+  //Calculate Discounts
+  //Calculate Subtotal
+  //Calculate check payments
+  //Calculate Amount Due
+
+  const calculateCheckTotal = () => {
+    const calculateCheck = () => {
+      let total = check.subtotal;
+      if (check.localTax) total += check.localTax;
+      if (check.stateTax) total += check.stateTax;
+      if (check.federalTax) total += check.FederalTax;
+      if (check.discountTotal) total -= check.discountTotal;
+      setCheckTotal(total);
+    };
+  };
 
   // console.log('Check items', check.items, check.createdAt);
 
@@ -125,6 +144,14 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
             </p>
           ))}
         </div>
+        <div>
+          {check.payments.map((p) => (
+            <p>
+              Payment: {p.type}{' '}
+              <span style={{ float: 'right' }}>{p.subtotal}</span>
+            </p>
+          ))}
+        </div>
 
         <div>
           <Typography variant="p" sx={{ padding: '6px' }}>
@@ -137,6 +164,13 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
             {(check.subtotal || check.subtotal === 0) && (
               <span style={{ float: 'right', paddingRight: '6px' }}>
                 Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
+              </span>
+            )}
+          </Typography>
+          <Typography variant="p" sx={{ padding: '6px' }}>
+            {(check.subtotal || check.subtotal === 0) && (
+              <span style={{ float: 'right', paddingRight: '6px' }}>
+                Amount Owed: <strong>${checkTotal.toFixed(2)}</strong>
               </span>
             )}
           </Typography>

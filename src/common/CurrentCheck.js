@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
 
-const CurrentCheck = ({ orderCatsOn, reload }) => {
+const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
   console.debug('CurrentCheck');
 
   const check = useSelector((st) => st.currentCheck);
@@ -80,6 +80,7 @@ const CurrentCheck = ({ orderCatsOn, reload }) => {
   const pay = () => {
     //Show Pay Screen
     orderCatsOn(false);
+    showPayment(true);
     // Get type, Amount
     // insert into payments
     // add all payments

@@ -10,6 +10,7 @@ import CheckForm from '../common/CheckForm';
 import CurrentCheck from '../common/CurrentCheck';
 import Spinner from '../common/Spinner';
 import OrderCategories from '../common/OrderCategories';
+import Payment from '../common/Payment';
 import { Button, Stack, Container, Typography, Grid } from '@mui/material';
 import './Servers.css';
 
@@ -22,7 +23,7 @@ const Servers = () => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isAddingItems, setIsAddingItems ] = useState(false);
   const [ showCheckForm, setShowCheckForm ] = useState(false);
-  // const [ showCurrentCheck, setShowCurrentCheck ] = useState(false);
+  const [ isPaying, setIsPaying ] = useState(false);
 
   useEffect(
     () => {
@@ -88,7 +89,27 @@ const Servers = () => {
           <OrderCategories />
         </Grid>
         <Grid item xs={3}>
-          <CurrentCheck orderCatsOn={setIsAddingItems} reload={setIsLoading} />
+          <CurrentCheck
+            orderCatsOn={setIsAddingItems}
+            reload={setIsLoading}
+            showPayment={setIsPaying}
+          />
+        </Grid>
+      </Grid>
+    );
+
+  if (isPaying)
+    return (
+      <Grid container>
+        <Grid item xs={9}>
+          <Payment />
+        </Grid>
+        <Grid item xs={3}>
+          <CurrentCheck
+            orderCatsOn={setIsAddingItems}
+            reload={setIsLoading}
+            showPayment={setIsPaying}
+          />
         </Grid>
       </Grid>
     );

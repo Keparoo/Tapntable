@@ -4,6 +4,7 @@ import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import { newCheck, getOpenCheck } from '../actions/currentCheck';
 import TapntableApi from '../api/api';
+import config from '../restaurantConfig.json';
 
 import OpenChecks from '../common/OpenChecks';
 import CheckForm from '../common/CheckForm';
@@ -41,7 +42,7 @@ const Servers = () => {
     [ dispatch, isLoading ]
   );
 
-  const openNewCheck = (tableNum, numGuests) => {
+  const saveNewCheck = (tableNum, numGuests) => {
     console.debug('AddCheckInfo');
 
     setShowCheckForm(false);
@@ -62,13 +63,37 @@ const Servers = () => {
     setIsAddingItems(true);
   };
 
+  const calculateCheck = (check, items, payments) => {
+    const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0);
+    console.log('Subtotal', subtotal, config.tax);
+    const localTax = subtotal * config.tax.localRate;
+    const stateTax = subtotal * config.tax.stateRate;
+    const federalTax = subtotal * config.tax.federalRate;
+    const totalTax = localTax + stateTax + federalTax;
+    const totalPaid = payments.reduce((a, b) => +a + (+b.price || 0), 0);
+    const amountDue = subtotal + totalTax - totalPaid - check.discountTotal;
+    return {
+      subtotal,
+      localTax,
+      stateTax,
+      federalTax,
+      totalTax,
+      totalPaid,
+      amountDue
+    };
+  };
+
   const openCheck = async (check) => {
     console.debug('openCheck', check);
 
+    //Calculate Check
     //Get ord items for check
     const items = await TapntableApi.getOrderedItems(check.id);
-    //Send to current check
-    dispatch(getOpenCheck({ check: { ...check, items } }));
+    const payments = await TapntableApi.getPayments(check.id);
+    const checkTotals = calculateCheck(check, items, payments);
+    //Update Redux with check info
+    dispatch(getOpenCheck({ check, items, payments, checkTotals }));
+
     setIsAddingItems(true);
   };
 
@@ -79,7 +104,7 @@ const Servers = () => {
   }
 
   if (showCheckForm) {
-    return <CheckForm save={openNewCheck} cancel={cancel} />;
+    return <CheckForm save={saveNewCheck} cancel={cancel} />;
   }
 
   if (isAddingItems)

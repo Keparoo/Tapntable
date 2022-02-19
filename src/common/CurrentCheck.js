@@ -15,23 +15,7 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
 
   // Get current check
   const check = useSelector((st) => st.currentCheck);
-  //Update payments
-  //Calculate Tax
-  //Calculate Discounts
-  //Calculate Subtotal
-  //Calculate check payments
-  //Calculate Amount Due
-
-  const calculateCheckTotal = () => {
-    const calculateCheck = () => {
-      let total = check.subtotal;
-      if (check.localTax) total += check.localTax;
-      if (check.stateTax) total += check.stateTax;
-      if (check.federalTax) total += check.FederalTax;
-      if (check.discountTotal) total -= check.discountTotal;
-      setCheckTotal(total);
-    };
-  };
+  console.log('Here is the check', check);
 
   // console.log('Check items', check.items, check.createdAt);
 
@@ -146,7 +130,7 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
         </div>
         <div>
           {check.payments.map((p) => (
-            <p>
+            <p key={uuid()}>
               Payment: {p.type}{' '}
               <span style={{ float: 'right' }}>{p.subtotal}</span>
             </p>
@@ -167,16 +151,24 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
               </span>
             )}
           </Typography>
+
+          <br />
           <Typography variant="p" sx={{ padding: '6px' }}>
-            {(check.subtotal || check.subtotal === 0) && (
+            {(check.amountDue || check.amountDue === 0) && (
               <span style={{ float: 'right', paddingRight: '6px' }}>
-                Amount Owed: <strong>${checkTotal.toFixed(2)}</strong>
+                Amount Due: <strong>${check.amountDue.toFixed(2)}</strong>
+              </span>
+            )}
+          </Typography>
+          <Typography variant="p" sx={{ padding: '6px' }}>
+            {(check.totalTax || check.totalTax === 0) && (
+              <span style={{ float: 'left', paddingLeft: '6px' }}>
+                Tax: <strong>${check.totalTax.toFixed(2)}</strong>
               </span>
             )}
           </Typography>
           <br />
 
-          <br />
           <Stack direction="row" spacing={2} justifyContent="center">
             <Button onClick={sendOrder} variant="contained">
               Send Order

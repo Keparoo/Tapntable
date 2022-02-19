@@ -23,6 +23,7 @@ export function addItemToCheck(item) {
 }
 
 export function getOpenCheck(check) {
+  console.log('In action', check);
   return {
     type: LOAD_CURRENT_CHECK,
     check

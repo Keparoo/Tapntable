@@ -12,10 +12,15 @@ import {
   Toolbar,
   Link
 } from '@mui/material';
+import restaurantConfig from './restaurantConfig.json';
 
 import Routes from './routes/Routes';
 
 const App = () => {
+  console.debug('App');
+
+  console.log(restaurantConfig);
+
   return (
     <div className="App">
       <CssBaseline />

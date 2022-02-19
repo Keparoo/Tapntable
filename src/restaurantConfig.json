@@ -1,0 +1,18 @@
+{
+  "tax": {
+    "localRate": 0,
+    "stateRate": 0.0625,
+    "federalRate": 0
+  },
+
+  "restaurant": {
+    "name": "The Duck Inn Pub",
+    "address": "123 Main St",
+    "city": "Hyannis",
+    "state": "MA",
+    "zip": "12345",
+    "phone": "508-555-1234",
+    "website": "www.duckinnpub.com",
+    "week_start_mon": true
+  }
+}

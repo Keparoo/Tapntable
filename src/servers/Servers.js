@@ -5,7 +5,7 @@ import { getOpenChecksFromAPI } from '../actions/checks';
 import { newCheck, getOpenCheck } from '../actions/currentCheck';
 import TapntableApi from '../api/api';
 import { calculateCheck } from '../utils/helpers';
-import config from '../restaurantConfig.json';
+// import config from '../restaurantConfig.json';
 
 import OpenChecks from '../common/OpenChecks';
 import CheckForm from '../common/CheckForm';
@@ -30,6 +30,7 @@ const Servers = () => {
   useEffect(
     () => {
       console.debug('ItemList useEffect on Mount');
+
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
         // Hardcode userId=1
@@ -44,7 +45,7 @@ const Servers = () => {
   );
 
   const saveNewCheck = (tableNum, numGuests) => {
-    console.debug('AddCheckInfo');
+    console.debug('AddCheckInfo', tableNum, numGuests);
 
     setShowCheckForm(false);
     dispatch(newCheck({ tableNum, numGuests }));
@@ -87,27 +88,12 @@ const Servers = () => {
     return <CheckForm save={saveNewCheck} cancel={cancel} />;
   }
 
-  if (showOrderCategories)
+  if (showPayment || showOrderCategories)
     return (
       <Grid container>
         <Grid item xs={9}>
-          <OrderCategories />
-        </Grid>
-        <Grid item xs={3}>
-          <CurrentCheck
-            orderCatsOn={setShowOrderCategories}
-            reload={setIsLoading}
-            showPayment={setShowPayment}
-          />
-        </Grid>
-      </Grid>
-    );
-
-  if (showPayment)
-    return (
-      <Grid container>
-        <Grid item xs={9}>
-          <Payment showPayment={setShowPayment} />
+          {showPayment && <Payment showPayment={setShowPayment} />}
+          {showOrderCategories && <OrderCategories />}
         </Grid>
         <Grid item xs={3}>
           <CurrentCheck

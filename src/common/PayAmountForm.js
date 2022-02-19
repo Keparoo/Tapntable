@@ -3,7 +3,7 @@ import { TextField, Button, Box } from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
 const PayAmountForm = ({ amount, save, cancel }) => {
-  console.debug('PayAmountForm');
+  console.debug('PayAmountForm', amount);
 
   const [ form, setForm ] = useState({
     amount: amount,

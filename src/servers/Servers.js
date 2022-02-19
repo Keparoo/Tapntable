@@ -97,7 +97,7 @@ const Servers = () => {
         </Grid>
         <Grid item xs={3}>
           <CurrentCheck
-            orderCatsOn={setShowOrderCategories}
+            showOrderCats={setShowOrderCategories}
             reload={setIsLoading}
             showPayment={setShowPayment}
           />

@@ -6,14 +6,14 @@ import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
 
-const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
+const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');
 
   const dispatch = useDispatch();
 
   // Get current check
   const check = useSelector((st) => st.currentCheck);
-  console.log('Here is the check', check);
+  console.log('CurrentCheck', check);
 
   // console.log('Check items', check.items, check.createdAt);
 
@@ -47,7 +47,7 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
         check.tableNum,
         check.numGuests
       );
-      // console.log('check', checkRes);
+      console.log('check', checkRes);
 
       // Create ordered_items objects for each item
       // Hard-code seat-num=1
@@ -68,19 +68,18 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
     dispatch(clearCurrentCheck());
     // Return to server page (show open checks)
     reload(true);
-    orderCatsOn(false);
-    console.log('reload=true');
+    showOrderCats(false);
   };
 
   // Go back to OpenCheck
   const cancel = () => {
     dispatch(clearCurrentCheck());
-    orderCatsOn(false);
+    showOrderCats(false);
   };
 
   const pay = () => {
     //Show Pay Screen
-    orderCatsOn(false);
+    showOrderCats(false);
     showPayment(true);
     // Get type, Amount
     // insert into payments

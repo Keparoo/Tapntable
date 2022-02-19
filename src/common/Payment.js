@@ -55,14 +55,16 @@ const Payment = ({ showPayment }) => {
     // const closedCheck = await TapntableApi.closeCheck(check.id);
     // console.log(closedCheck);
   };
+
   const cancelPayment = () => {
     console.debug('cancelPayment');
+
     setShowPaymentAmountForm(false);
     showPayment(false);
   };
 
   const pay = async (type) => {
-    console.debug('credit', type);
+    console.debug('pay', type);
 
     setPaymentType(type);
     setShowPaymentAmountForm(true);
@@ -115,11 +117,7 @@ const Payment = ({ showPayment }) => {
         </Stack>
         <br />
         <Stack spacing={2} justifyContent="center">
-          <Button
-            onClick={() => pay(VENMO)}
-            variant="contained"
-            color="success"
-          >
+          <Button onClick={() => pay(CASH)} variant="contained" color="success">
             Cash
           </Button>
           <Button onClick={cancelPayment}>Cancel Payment</Button>

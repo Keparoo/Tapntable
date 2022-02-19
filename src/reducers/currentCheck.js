@@ -37,8 +37,6 @@ export default function newCheck(state = INITIAL_STATE, action) {
       return { ...state };
 
     case LOAD_CURRENT_CHECK:
-      console.log('*******', action.check);
-
       return {
         ...action.check.check,
         subtotal: action.check.checkTotals.subtotal,
@@ -57,7 +55,12 @@ export default function newCheck(state = INITIAL_STATE, action) {
       return INITIAL_STATE;
 
     case ADD_PAYMENT:
-      return { ...state, payments: [ ...state.payments, action.payment ] };
+      const amountDue = state.amountDue - action.payment.subtotal;
+      return {
+        ...state,
+        amountDue,
+        payments: [ ...state.payments, action.payment ]
+      };
 
     default:
       return state;

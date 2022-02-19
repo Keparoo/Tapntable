@@ -10,8 +10,6 @@ const CurrentCheck = ({ orderCatsOn, reload, showPayment }) => {
   console.debug('CurrentCheck');
 
   const dispatch = useDispatch();
-  const [ checkTotal, setCheckTotal ] = useState(0);
-  // const [ showPayScreen, setShowPayScreen ] = useState(false);
 
   // Get current check
   const check = useSelector((st) => st.currentCheck);

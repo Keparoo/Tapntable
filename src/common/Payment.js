@@ -29,22 +29,17 @@ const Payment = ({ showPayment }) => {
   const dispatch = useDispatch();
 
   const [ showPaymentAmountForm, setShowPaymentAmountForm ] = useState(false);
-  const [ totalPayment, setTotalPayment ] = useState(0);
   const [ paymentType, setPaymentType ] = useState('');
-  const [ checkTotal, setCheckTotal ] = useState(0);
-
-  const calculateCheck = () => {
-    let total = check.subtotal;
-    if (check.localTax) total += check.localTax;
-    if (check.stateTax) total += check.stateTax;
-    if (check.federalTax) total += check.FederalTax;
-    if (check.discountTotal) total -= check.discountTotal;
-    setCheckTotal(total);
-  };
 
   const savePayment = async ({ amount, tip }) => {
-    console.debug('savePayment');
-    console.log(amount, tip);
+    console.debug('savePayment', amount, tip);
+
+    if (amount > check.amountDue) amount = check.amountDue;
+    if (amount <= 0) {
+      setShowPaymentAmountForm(false);
+      return;
+    }
+
     const newPayment = await TapntableApi.postPayment(
       check.id,
       paymentType,
@@ -52,12 +47,13 @@ const Payment = ({ showPayment }) => {
       +amount
     );
     console.log(newPayment);
+
     dispatch(addPayment(newPayment));
     setShowPaymentAmountForm(false);
-    if (totalPayment >= check.subtotal) showPayment(false);
+    if (check.amountDue === 0) showPayment(false);
     //close check
-    const closedCheck = await TapntableApi.closeCheck(check.id);
-    console.log(closedCheck);
+    // const closedCheck = await TapntableApi.closeCheck(check.id);
+    // console.log(closedCheck);
   };
   const cancelPayment = () => {
     console.debug('cancelPayment');
@@ -65,27 +61,11 @@ const Payment = ({ showPayment }) => {
     showPayment(false);
   };
 
-  const credit = async (type) => {
+  const pay = async (type) => {
     console.debug('credit', type);
 
     setPaymentType(type);
-
-    // get check total
-    calculateCheck();
-    console.log('Check Subtotal', check.subtotal);
-    console.log('Check total', checkTotal);
-
-    // get existing payments
-    const payments = await TapntableApi.getPayments(check.id);
-    setTotalPayment(payments.reduce((a, b) => +a + (+b.subtotal || 0), 0));
-    console.log('payments', payments, totalPayment);
-
-    // display unpaid balance
-    // input payment amount
     setShowPaymentAmountForm(true);
-    // validate payment not more than check
-    // create new payment
-    // check if unpaid balance is zero
   };
 
   return (
@@ -96,37 +76,37 @@ const Payment = ({ showPayment }) => {
         </Typography>
 
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={() => credit(MASTER_CARD)} variant="contained">
+          <Button onClick={() => pay(MASTER_CARD)} variant="contained">
             Master Card
           </Button>
-          <Button onClick={() => credit(VISA)} variant="contained">
+          <Button onClick={() => pay(VISA)} variant="contained">
             Visa
           </Button>
-          <Button onClick={() => credit(AMERICAN_EXPRESS)} variant="contained">
+          <Button onClick={() => pay(AMERICAN_EXPRESS)} variant="contained">
             Amex
           </Button>
-          <Button onClick={() => credit(DISCOVER)} variant="contained">
+          <Button onClick={() => pay(DISCOVER)} variant="contained">
             Discover
           </Button>
         </Stack>
         <br />
         <Stack direction="row" spacing={2} justifyContent="center">
           <Button
-            onClick={() => credit(GOOGLE_PAY)}
+            onClick={() => pay(GOOGLE_PAY)}
             variant="contained"
             color="secondary"
           >
             Google Pay
           </Button>
           <Button
-            onClick={() => credit(APPLE_PAY)}
+            onClick={() => pay(APPLE_PAY)}
             variant="contained"
             color="secondary"
           >
             Apple Pay
           </Button>
           <Button
-            onClick={() => credit(VENMO)}
+            onClick={() => pay(VENMO)}
             variant="contained"
             color="secondary"
           >
@@ -135,7 +115,11 @@ const Payment = ({ showPayment }) => {
         </Stack>
         <br />
         <Stack spacing={2} justifyContent="center">
-          <Button variant="contained" color="success">
+          <Button
+            onClick={() => pay(VENMO)}
+            variant="contained"
+            color="success"
+          >
             Cash
           </Button>
           <Button onClick={cancelPayment}>Cancel Payment</Button>
@@ -143,7 +127,7 @@ const Payment = ({ showPayment }) => {
 
         {showPaymentAmountForm && (
           <PayAmountForm
-            amount={(checkTotal - totalPayment).toFixed(2)}
+            amount={check.amountDue.toFixed(2)}
             save={savePayment}
             cancel={cancelPayment}
           />

@@ -23,9 +23,9 @@ const Servers = () => {
   const dispatch = useDispatch();
 
   const [ isLoading, setIsLoading ] = useState(true);
-  const [ isAddingItems, setIsAddingItems ] = useState(false);
+  const [ showOrderCategories, setShowOrderCategories ] = useState(false);
   const [ showCheckForm, setShowCheckForm ] = useState(false);
-  const [ isPaying, setIsPaying ] = useState(false);
+  const [ showPayment, setShowPayment ] = useState(false);
 
   useEffect(
     () => {
@@ -48,7 +48,7 @@ const Servers = () => {
 
     setShowCheckForm(false);
     dispatch(newCheck({ tableNum, numGuests }));
-    setIsAddingItems(true);
+    setShowOrderCategories(true);
   };
 
   const cancel = () => {
@@ -61,7 +61,7 @@ const Servers = () => {
 
     //Ask what table & how many customers
     setShowCheckForm(true);
-    setIsAddingItems(true);
+    setShowOrderCategories(true);
   };
 
   const openCheck = async (check) => {
@@ -74,7 +74,7 @@ const Servers = () => {
     //Update Redux with check info
     dispatch(getOpenCheck({ check, items, payments, checkTotals }));
 
-    setIsAddingItems(true);
+    setShowOrderCategories(true);
   };
 
   if (isLoading) return <Spinner />;
@@ -87,7 +87,7 @@ const Servers = () => {
     return <CheckForm save={saveNewCheck} cancel={cancel} />;
   }
 
-  if (isAddingItems)
+  if (showOrderCategories)
     return (
       <Grid container>
         <Grid item xs={9}>
@@ -95,25 +95,25 @@ const Servers = () => {
         </Grid>
         <Grid item xs={3}>
           <CurrentCheck
-            orderCatsOn={setIsAddingItems}
+            orderCatsOn={setShowOrderCategories}
             reload={setIsLoading}
-            showPayment={setIsPaying}
+            showPayment={setShowPayment}
           />
         </Grid>
       </Grid>
     );
 
-  if (isPaying)
+  if (showPayment)
     return (
       <Grid container>
         <Grid item xs={9}>
-          <Payment showPayment={setIsPaying} />
+          <Payment showPayment={setShowPayment} />
         </Grid>
         <Grid item xs={3}>
           <CurrentCheck
-            orderCatsOn={setIsAddingItems}
+            orderCatsOn={setShowOrderCategories}
             reload={setIsLoading}
-            showPayment={setIsPaying}
+            showPayment={setShowPayment}
           />
         </Grid>
       </Grid>

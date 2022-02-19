@@ -28,7 +28,7 @@ const calculateCheck = (check, items, payments) => {
   const stateTax = subtotal * config.tax.stateRate;
   const federalTax = subtotal * config.tax.federalRate;
   const totalTax = localTax + stateTax + federalTax;
-  const totalPaid = payments.reduce((a, b) => +a + (+b.price || 0), 0);
+  const totalPaid = payments.reduce((a, b) => +a + (+b.subtotal || 0), 0);
   const amountDue = subtotal + totalTax - totalPaid - check.discountTotal;
   return {
     subtotal,

@@ -1,12 +1,10 @@
-import { tooltipClasses } from '@mui/material';
 import {
   CREATE_CHECK,
   ADD_TO_CHECK,
   REMOVE_FROM_CHECK,
   LOAD_CURRENT_CHECK,
   CLEAR_CURRENT_CHECK,
-  ADD_PAYMENT,
-  UPDATE_CHECK_TOTALS
+  ADD_PAYMENT
 } from '../actions/types';
 
 const INITIAL_STATE = { items: [], newItems: [], payments: [] };
@@ -44,7 +42,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
         stateTax: action.check.checkTotals.stateTax,
         federalTax: action.check.checkTotals.federalTax,
         totalTax: action.check.checkTotals.totalTax,
-        amountPaid: action.check.checkTotals.amountPaid,
+        totalPaid: action.check.checkTotals.totalPaid,
         amountDue: action.check.checkTotals.amountDue,
         items: action.check.items,
         newItems: [],

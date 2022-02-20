@@ -93,55 +93,61 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         <div
           style={{ background: 'lightgray', height: '80vh', padding: '8px' }}
         >
-          <Typography variant="h5" align="center">
-            Current Check
-          </Typography>
+          <div className="CurrentCheck-Header">
+            <Typography variant="h6" align="center" sx={{ padding: '6px' }}>
+              {check.createdAt && (
+                <span>
+                  Created At:{' '}
+                  <strong>{moment(check.createdAt).format('LT')}</strong>
+                </span>
+              )}
+            </Typography>
 
-          <Typography variant="p">
-            {check.tableNum && (
-              <span>
-                Table Num: <strong>{check.tableNum}</strong>
-              </span>
-            )}
-            {check.numGuests && (
-              <span style={{ float: 'right' }}>
-                Num Guests: <strong>{check.numGuests}</strong>
-              </span>
-            )}
-          </Typography>
+            <Typography variant="p">
+              {check.tableNum && (
+                <span>
+                  Table Num: <strong>{check.tableNum}</strong>
+                </span>
+              )}
+              {check.numGuests && (
+                <span style={{ float: 'right' }}>
+                  Num Guests: <strong>{check.numGuests}</strong>
+                </span>
+              )}
+            </Typography>
+          </div>
           <br />
-          <br />
 
-          {check.items.map((i) => (
-            <p key={uuid()}>
-              <strong>{i.name}</strong>{' '}
-              <span style={{ float: 'right' }}>${i.price}</span>
-            </p>
-          ))}
-          {check.newItems.map((i) => (
-            <p key={uuid()}>
-              <strong>{i.name}</strong>{' '}
-              <span style={{ float: 'right' }}>${i.price}</span>
-            </p>
-          ))}
-        </div>
-        <div>
-          {check.payments.map((p) => (
-            <p key={uuid()}>
-              Payment: {p.type}{' '}
-              <span style={{ float: 'right' }}>{p.subtotal}</span>
-            </p>
-          ))}
+          <div className="CurrentCheck-Items">
+            {check.items.map((i) => (
+              <p key={uuid()}>
+                <strong>{i.name}</strong>{' '}
+                <span style={{ float: 'right' }}>${i.price}</span>
+              </p>
+            ))}
+            {check.newItems.map((i) => (
+              <p key={uuid()}>
+                <strong>{i.name}</strong>{' '}
+                <span style={{ float: 'right' }}>${i.price}</span>
+              </p>
+            ))}
+          </div>
+
+          <div
+            className="CurrentCheck-Payments"
+            style={{ position: 'absolute', bottom: '13em' }}
+          >
+            {check.payments.map((p) => (
+              <p key={uuid()} style={{ dispaly: 'inline' }}>
+                Payment------{p.type}----{' '}
+                <span style={{ float: 'right' }}>${p.subtotal}</span>
+              </p>
+            ))}
+          </div>
         </div>
 
-        <div>
+        <div className="CurrentCheck-Totals">
           <Typography variant="p" sx={{ padding: '6px' }}>
-            {check.createdAt && (
-              <span>
-                Created At:{' '}
-                <strong>{moment(check.createdAt).format('LT')}</strong>
-              </span>
-            )}
             {(check.subtotal || check.subtotal === 0) && (
               <span style={{ float: 'right', paddingRight: '6px' }}>
                 Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
@@ -165,7 +171,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             )}
           </Typography>
           <br />
+        </div>
 
+        <div className="CurrentCheck-Buttons">
           <Stack direction="row" spacing={2} justifyContent="center">
             <Button onClick={sendOrder} variant="contained">
               Send Order

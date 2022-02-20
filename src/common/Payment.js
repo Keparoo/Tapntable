@@ -31,8 +31,8 @@ const Payment = ({ showPayment }) => {
   const [ showPaymentAmountForm, setShowPaymentAmountForm ] = useState(false);
   const [ paymentType, setPaymentType ] = useState('');
 
-  const savePayment = async ({ amount, tip }) => {
-    console.debug('savePayment', amount, tip);
+  const savePayment = async ({ amount }) => {
+    console.debug('savePayment', amount);
 
     if (amount > check.amountDue) amount = check.amountDue;
     if (amount <= 0) {
@@ -43,8 +43,7 @@ const Payment = ({ showPayment }) => {
     const newPayment = await TapntableApi.postPayment(
       check.id,
       paymentType,
-      +tip,
-      +amount
+      amount
     );
     console.log(newPayment);
 

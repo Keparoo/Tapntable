@@ -5,7 +5,7 @@ import { TextField, Button, Box } from '@mui/material';
 const PayAmountForm = ({ amount, save, cancel }) => {
   console.debug('PayAmountForm', amount);
 
-  const [ form, setForm ] = useState({ amount });
+  const [ form, setForm ] = useState({ tip: '' });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -14,7 +14,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
 
   // Handle submit: call parent function save
   function handleSubmit(e) {
-    console.debug('PaymentAmountForm handleSubmit');
+    console.debug('AddTipForm handleSubmit');
     e.preventDefault();
     save({ ...form });
   }
@@ -32,16 +32,16 @@ const PayAmountForm = ({ amount, save, cancel }) => {
     >
       <TextField
         type="number"
-        id="amount"
-        name="amount"
-        label="Balance"
+        id="tip"
+        name="tip"
+        label="Tip"
         variant="outlined"
-        value={form.amount}
+        value={form.tip}
         onChange={handleChange}
       />
 
       <Button onClick={handleSubmit} variant="contained">
-        Submit
+        Add Tip & Close Payment
       </Button>
       <Button onClick={cancel} variant="contained">
         Cancel

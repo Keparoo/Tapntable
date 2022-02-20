@@ -54,6 +54,15 @@ const App = () => {
           </Link>
           <Link
             color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/payments"
+            underline="none"
+          >
+            Payments
+          </Link>
+          <Link
+            color="inherit"
             component={RouterLink}
             to="/items"
             underline="none"

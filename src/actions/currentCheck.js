@@ -9,6 +9,7 @@ import {
 // Handle async API call for list of blog titles
 
 export function newCheck(check) {
+  console.log('In action', check);
   return {
     type: CREATE_CHECK,
     check
@@ -23,7 +24,6 @@ export function addItemToCheck(item) {
 }
 
 export function getOpenCheck(check) {
-  console.log('In action', check);
   return {
     type: LOAD_CURRENT_CHECK,
     check

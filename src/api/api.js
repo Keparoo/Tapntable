@@ -70,6 +70,11 @@ class TapntableApi {
     return res.checks;
   }
 
+  static async getOpenChecks(userId) {
+    let res = await this.request(`checks`, { userId, isVoid: false });
+    return res.checks;
+  }
+
   static async getOrderedItems(query) {
     let res = await this.request(`ordered`, { checkId: query });
     return res.ordItems;
@@ -80,12 +85,22 @@ class TapntableApi {
     return res.payments;
   }
 
-  static async postPayment(checkId, type, tipAmt, subtotal) {
+  // static async getOpenPayments(type, ) {
+  //   let res = await this.request(`payments`, {})
+  // }
+
+  static async postPayment(checkId, type, subtotal) {
     let res = await this.request(
       `payments`,
-      { checkId, type, tipAmt, subtotal },
+      { checkId, type, subtotal },
       'post'
     );
+    return res.payment;
+  }
+
+  static async updatePayment(paymentId, tipAmt) {
+    console.log('updatePayment', paymentId, tipAmt);
+    let res = await this.request(`payments/${paymentId}`, { tipAmt }, 'patch');
     return res.payment;
   }
 

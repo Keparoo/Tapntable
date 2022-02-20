@@ -5,7 +5,7 @@ import { GET_OPEN_CHECKS } from './types';
 
 export function getOpenChecksFromAPI(userId) {
   return async function(dispatch) {
-    const checks = await TapntableApi.getChecks(userId);
+    const checks = await TapntableApi.getOpenChecks(userId);
     return dispatch(getChecks(checks));
   };
 }

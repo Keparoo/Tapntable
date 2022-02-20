@@ -43,16 +43,20 @@ const Payment = ({ showPayment }) => {
     const newPayment = await TapntableApi.postPayment(
       check.id,
       paymentType,
-      amount
+      +amount
     );
     console.log(newPayment);
 
     dispatch(addPayment(newPayment));
     setShowPaymentAmountForm(false);
-    if (check.amountDue === 0) showPayment(false);
-    //close check
-    // const closedCheck = await TapntableApi.closeCheck(check.id);
-    // console.log(closedCheck);
+
+    console.log('Amount Due', check);
+
+    if (check.amountDue === 0) {
+      showPayment(false);
+      const closeCheck = await TapntableApi.closeCheck(check.id);
+      console.log('Close check', closeCheck);
+    }
   };
 
   const cancelPayment = () => {
@@ -62,11 +66,18 @@ const Payment = ({ showPayment }) => {
     showPayment(false);
   };
 
-  const pay = async (type) => {
+  const pay = (type) => {
     console.debug('pay', type);
 
     setPaymentType(type);
     setShowPaymentAmountForm(true);
+  };
+
+  const cash = () => {
+    console.log(cash, CASH);
+
+    setPaymentType(CASH);
+    savePayment({ amount: check.amountDue });
   };
 
   return (
@@ -116,7 +127,7 @@ const Payment = ({ showPayment }) => {
         </Stack>
         <br />
         <Stack spacing={2} justifyContent="center">
-          <Button onClick={() => pay(CASH)} variant="contained" color="success">
+          <Button onClick={cash} variant="contained" color="success">
             Cash
           </Button>
           <Button onClick={cancelPayment}>Cancel Payment</Button>

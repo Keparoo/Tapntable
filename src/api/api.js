@@ -71,7 +71,11 @@ class TapntableApi {
   }
 
   static async getOpenChecks(userId) {
-    let res = await this.request(`checks`, { userId, isVoid: false });
+    let res = await this.request(`checks`, {
+      userId,
+      isVoid: false,
+      closedAt: undefined
+    });
     return res.checks;
   }
 

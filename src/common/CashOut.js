@@ -46,24 +46,6 @@ const CashOut = () => {
       <Typography variant="h3" align="center">
         Cash Out
       </Typography>
-
-      <Typography variant="h6" align="center">
-        Total Sales ${shiftResults.totalSales.toFixed(2)}
-      </Typography>
-      <br />
-      <Typography variant="h6" align="center">
-        Cash Sales ${shiftResults.cashSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Credit Sales ${shiftResults.creditSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Total Credit Tips ${shiftResults.totalCreditTip.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
-      </Typography>
-      <br />
       <Typography variant="h6" align="center">
         MC Sales ${shiftResults.masterCardSales.toFixed(2)}
       </Typography>
@@ -85,6 +67,28 @@ const CashOut = () => {
       <Typography variant="h6" align="center">
         Venmo Sales ${shiftResults.venmoSales.toFixed(2)}
       </Typography>
+      <br />
+
+      <Typography variant="h6" align="center">
+        Credit Sales ${shiftResults.creditSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Cash Sales ${shiftResults.cashSales.toFixed(2)}
+      </Typography>
+      <br />
+
+      <Typography variant="h6" align="center">
+        Total Sales ${shiftResults.totalSales.toFixed(2)}
+      </Typography>
+      <br />
+
+      <Typography variant="h6" align="center">
+        Total Credit Tips ${shiftResults.totalCreditTip.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
+      </Typography>
+      <br />
     </div>
   );
 };

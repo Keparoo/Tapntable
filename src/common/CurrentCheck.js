@@ -81,10 +81,6 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     //Show Pay Screen
     showOrderCats(false);
     showPayment(true);
-    // Get type, Amount
-    // insert into payments
-    // add all payments
-    //if totalpayments  >= total: allow close check
   };
 
   const printCheck = async () => {
@@ -96,7 +92,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
       check.federalTax
     );
     console.log('printCheck', printCheck);
-    // Insert logic to print at local printer
+    // Insert logic to print at local printer when available
   };
 
   const renderCurrentCheck = () => {

@@ -49,7 +49,6 @@ const Payment = ({ showPayment }) => {
       +amount
     );
     console.log('New Credit Payment Made', newPayment);
-    console.log('888888888888888subtotal', check.subtotal);
 
     if (check.amountDue - amount === 0) {
       const closeCheck = await TapntableApi.closeCheck(

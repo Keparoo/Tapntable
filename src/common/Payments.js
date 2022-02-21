@@ -3,7 +3,7 @@ import TapntableApi from '../api/api';
 import Spinner from './Spinner';
 import AddTipForm from './AddTipForm';
 import { Typography, Card, CardActionArea, CardContent } from '@mui/material';
-import { getPaymentsFromAPI } from '../actions/payments';
+// import { getPaymentsFromAPI } from '../actions/payments';
 
 const Payments = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -44,6 +44,7 @@ const Payments = () => {
     const addTipRes = await TapntableApi.updatePayment(paymentId, +tip);
     console.log(addTipRes);
     setShowAddTipForm(false);
+    setIsLoading(true);
   };
 
   const cancel = () => {

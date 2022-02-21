@@ -5,6 +5,7 @@ export default function items(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_ITEMS:
       return [ ...action.items ];
+
     default:
       return state;
   }

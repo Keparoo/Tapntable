@@ -8,3 +8,4 @@ export const LOAD_CURRENT_CHECK = 'LOAD_CURRENT_CHECK';
 export const REMOVE_FROM_CHECK = 'REMOVE_FROM_CHECK';
 export const ADD_PAYMENT = 'ADD_PAYMENT';
 export const GET_PAYMENTS = 'GET_PAYMENTS';
+export const FETCH_USER = 'FETCH_USER';

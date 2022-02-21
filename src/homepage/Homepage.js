@@ -6,7 +6,7 @@ const Homepage = () => {
   return (
     <div>
       <Typography variant="h3" align="center">
-        Homepage
+        Tapntable
       </Typography>
 
       <Typography variant="h4" align="center">

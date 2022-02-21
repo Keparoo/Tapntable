@@ -130,6 +130,11 @@ class TapntableApi {
     );
     return res.check;
   }
+
+  static async getUser(pin) {
+    let res = await this.request(`user`, { pin });
+    return res.user;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)

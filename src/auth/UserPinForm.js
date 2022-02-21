@@ -4,7 +4,7 @@ import { Typography, Box, TextField, Button } from '@mui/material';
 const UserPinForm = (save, cancel) => {
   console.debug('UserPinForm');
 
-  const [ form, setForm ] = useState({ tip: '' });
+  const [ form, setForm ] = useState({ pin: '' });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -13,7 +13,7 @@ const UserPinForm = (save, cancel) => {
 
   // Handle submit: call parent function save
   function handleSubmit(e) {
-    console.debug('AddTipForm handleSubmit');
+    console.debug('UserPinForm handleSubmit');
     e.preventDefault();
     save({ ...form });
   }
@@ -35,11 +35,11 @@ const UserPinForm = (save, cancel) => {
       >
         <TextField
           type="number"
-          id="tip"
-          name="tip"
-          label="Tip"
+          id="pin"
+          name="pin"
+          label="Pin"
           variant="outlined"
-          value={form.tip}
+          value={form.pin}
           onChange={handleChange}
         />
 

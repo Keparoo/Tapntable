@@ -90,7 +90,11 @@ class TapntableApi {
   }
 
   static async getUserShiftPayments(loginTime, userId) {
-    let res = await this.request(`payments`, { printedAt: loginTime, userId });
+    let res = await this.request(`payments`, {
+      printedAt: loginTime,
+      userId,
+      isVoid: false
+    });
     return res.payments.filter((p) => !p.tipAmt);
   }
 

@@ -3,6 +3,7 @@ import TapntableApi from '../api/api';
 import Spinner from './Spinner';
 import AddTipForm from './AddTipForm';
 import { Typography, Card, CardActionArea, CardContent } from '@mui/material';
+import { getPaymentsFromAPI } from '../actions/payments';
 
 const Payments = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -20,8 +21,10 @@ const Payments = () => {
         // Hardcode userId=1
         // await dispatch(getOpenChecksFromAPI(1));
         const payments = await TapntableApi.getPayments(1);
+        // await dispatchEvent(getPaymentsFromAPI(1))
         console.log('Payments', payments);
-        setPayments(payments.filter((p) => p.type !== 'Cash' && !p.tipAmt));
+        // setPayments(payments.filter((p) => p.type !== 'Cash' && !p.tipAmt));
+        setPayments(payments);
         setIsLoading(false);
       }
       if (isLoading) {

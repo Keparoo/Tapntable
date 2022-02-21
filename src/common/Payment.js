@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { getOpenChecksFromAPI } from '../actions/checks';
 import TapntableApi from '../api/api';
 import {
   Typography,
@@ -10,7 +11,9 @@ import {
   Box
 } from '@mui/material';
 import PayAmountForm from './PayAmountForm';
-import { addPayment } from '../actions/currentCheck';
+// import { addPayment, getOpenCheck } from '../actions/currentCheck';
+// import { getPaymentsFromAPI } from '../actions/payments';
+// import { calculateCheck } from '../utils/helpers';
 
 // Payment type enum values
 const CASH = 'Cash';
@@ -45,18 +48,15 @@ const Payment = ({ showPayment }) => {
       paymentType,
       +amount
     );
-    console.log(newPayment);
+    console.log('New Credit Payment Made', newPayment);
 
-    dispatch(addPayment(newPayment));
-    setShowPaymentAmountForm(false);
-
-    console.log('Amount Due', check);
-
-    if (check.amountDue === 0) {
-      showPayment(false);
+    if (check.amountDue - amount === 0) {
       const closeCheck = await TapntableApi.closeCheck(check.id);
       console.log('Close check', closeCheck);
     }
+
+    showPayment(false);
+    await dispatch(getOpenChecksFromAPI(1));
   };
 
   const cancelPayment = () => {
@@ -73,11 +73,21 @@ const Payment = ({ showPayment }) => {
     setShowPaymentAmountForm(true);
   };
 
-  const cash = () => {
-    console.log(cash, CASH);
+  const cash = async () => {
+    console.log(cash);
 
-    setPaymentType(CASH);
-    savePayment({ amount: check.amountDue });
+    const newPayment = await TapntableApi.postPayment(
+      check.id,
+      CASH,
+      check.amountDue
+    );
+    console.log('New Cash Payment Made', newPayment);
+    const closeCheck = await TapntableApi.closeCheck(check.id);
+
+    console.log('Close check', closeCheck);
+    showPayment(false);
+    // Update redux open checks
+    await dispatch(getOpenChecksFromAPI(1));
   };
 
   return (

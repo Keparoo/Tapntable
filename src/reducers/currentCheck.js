@@ -52,8 +52,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
       return INITIAL_STATE;
 
     case ADD_PAYMENT:
-      const amountDue = Math.floor(
-        (state.amountDue - action.payment.subtotal) * 100 / 100
+      const amountDue = Math.round(
+        (state.amountDue - action.payment.subtotal * 100) / 100
       );
       console.log('*****************Amount Due', amountDue);
 

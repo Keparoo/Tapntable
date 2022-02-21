@@ -22,6 +22,7 @@ const Servers = () => {
   console.debug('Servers');
 
   const history = useHistory();
+  const user = useSelector((st) => st.user);
   const items = useSelector((st) => st.items);
   const dispatch = useDispatch();
 
@@ -37,14 +38,14 @@ const Servers = () => {
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
         // Hardcode userId=1
-        await dispatch(getOpenChecksFromAPI(1));
+        await dispatch(getOpenChecksFromAPI(user.id));
         setIsLoading(false);
       }
       if (isLoading) {
         fetchItem();
       }
     },
-    [ dispatch, isLoading ]
+    [ dispatch, isLoading, user.id ]
   );
 
   const saveNewCheck = (tableNum, numGuests) => {

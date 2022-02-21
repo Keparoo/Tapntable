@@ -12,6 +12,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const dispatch = useDispatch();
 
   // Get current check
+  const user = useSelector((st) => st.user);
   const check = useSelector((st) => st.currentCheck);
   console.log('CurrentCheck', check);
 
@@ -21,8 +22,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     console.debug('sendOrder');
 
     // Create order in db: get order id
-    // Hard code userId=1
-    const order = await TapntableApi.createOrder(1);
+    const order = await TapntableApi.createOrder(user.id);
     console.log('order', order, check.newItems);
 
     if (check.id) {
@@ -41,9 +41,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
       }
     } else {
       // Create Check in db, get Check Id,
-      // hard code userId=1, ignore customer field
+      // ignore customer field
       const checkRes = await TapntableApi.createCheck(
-        1,
+        user.id,
         check.tableNum,
         check.numGuests
       );

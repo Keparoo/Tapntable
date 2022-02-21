@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import TapntableApi from '../api/api';
 import Spinner from './Spinner';
 import AddTipForm from './AddTipForm';
 import { Typography, Card, CardActionArea, CardContent } from '@mui/material';
-// import { getPaymentsFromAPI } from '../actions/payments';
 
 const Payments = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -12,21 +12,18 @@ const Payments = () => {
   const [ showAddTipForm, setShowAddTipForm ] = useState(false);
   const [ paymentId, setPaymentId ] = useState();
 
+  const user = useSelector((st) => st.user);
+
   useEffect(
     () => {
       console.debug('ItemList useEffect on Mount');
 
       async function fetchPayments() {
-        // await dispatch(fetchItemsFromAPI());
         // Hardcode logintime='2022-02-19' (Today)
-        // Hardcode userId=1
-        // await dispatch(getOpenChecksFromAPI(1));
         const payments = await TapntableApi.getUserShiftPayments(
           '2022-02-20',
-          1
+          user.id
         );
-        // await dispatchEvent(getPaymentsFromAPI(1))
-        // setPayments(payments.filter((p) => p.type !== 'Cash' && !p.tipAmt));
         setPayments(payments.filter((p) => !p.tipAmt));
         setIsLoading(false);
       }
@@ -34,7 +31,7 @@ const Payments = () => {
         fetchPayments();
       }
     },
-    [ isLoading ]
+    [ isLoading, user.id ]
   );
 
   const addTip = async ({ tip }) => {

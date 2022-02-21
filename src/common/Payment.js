@@ -12,8 +12,6 @@ import {
 } from '@mui/material';
 import PayAmountForm from './PayAmountForm';
 // import { addPayment, getOpenCheck } from '../actions/currentCheck';
-// import { getPaymentsFromAPI } from '../actions/payments';
-// import { calculateCheck } from '../utils/helpers';
 
 // Payment type enum values
 const CASH = 'Cash';
@@ -28,6 +26,7 @@ const VENMO = 'Venmo';
 const Payment = ({ showPayment }) => {
   console.debug('Payment');
 
+  const user = useSelector((st) => st.user);
   const check = useSelector((st) => st.currentCheck);
   const dispatch = useDispatch();
 
@@ -62,7 +61,7 @@ const Payment = ({ showPayment }) => {
     }
 
     showPayment(false);
-    await dispatch(getOpenChecksFromAPI(1));
+    await dispatch(getOpenChecksFromAPI(user.id));
   };
 
   const cancelPayment = () => {
@@ -99,7 +98,7 @@ const Payment = ({ showPayment }) => {
     console.log('Close check', closeCheck);
     showPayment(false);
     // Update redux open checks
-    await dispatch(getOpenChecksFromAPI(1));
+    await dispatch(getOpenChecksFromAPI(user.id));
   };
 
   return (

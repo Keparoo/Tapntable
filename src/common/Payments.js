@@ -26,9 +26,8 @@ const Payments = () => {
           1
         );
         // await dispatchEvent(getPaymentsFromAPI(1))
-        console.log('Payments', payments);
         // setPayments(payments.filter((p) => p.type !== 'Cash' && !p.tipAmt));
-        setPayments(payments);
+        setPayments(payments.filter((p) => !p.tipAmt));
         setIsLoading(false);
       }
       if (isLoading) {

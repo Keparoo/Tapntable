@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import { newCheck, getOpenCheck } from '../actions/currentCheck';
@@ -117,7 +118,9 @@ const Servers = () => {
           <Button onClick={createNewCheck} variant="contained">
             New Check
           </Button>
-          <Button variant="contained">Cash Out</Button>
+          <Button variant="contained" component={RouterLink} to="/cashout">
+            Cash Out
+          </Button>
           <Button variant="contained">Clock Out</Button>
         </Stack>
       </div>

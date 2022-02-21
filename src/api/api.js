@@ -95,7 +95,7 @@ class TapntableApi {
       userId,
       isVoid: false
     });
-    return res.payments.filter((p) => !p.tipAmt);
+    return res.payments;
   }
 
   static async postPayment(checkId, type, subtotal) {

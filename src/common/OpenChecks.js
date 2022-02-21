@@ -17,6 +17,16 @@ const OpenChecks = ({ open }) => {
 
   const checks = useSelector((st) => st.checks);
 
+  if (!checks.length) {
+    return (
+      <Container style={{ height: '20vh' }}>
+        <Typography variant="h4" align="center">
+          No open Checks
+        </Typography>
+      </Container>
+    );
+  }
+
   return (
     <div className="CurrentChecks">
       <Container style={{ height: '40vh' }}>

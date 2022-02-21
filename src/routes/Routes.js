@@ -8,6 +8,7 @@ import Kitchen from '../kitchen/Kitchen';
 import Bar from '../bar/Bar';
 import ItemsList from '../items/ItemsList';
 import Payments from '../common/Payments';
+import CashOut from '../common/CashOut';
 
 const Routes = () => {
   console.debug('AppRoutes');
@@ -32,6 +33,10 @@ const Routes = () => {
 
       <Route exact path="/payments">
         <Payments />
+      </Route>
+
+      <Route exact path="/cashout">
+        <CashOut />
       </Route>
 
       <Route exact path="/bar">

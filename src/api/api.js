@@ -89,9 +89,10 @@ class TapntableApi {
     return res.payments;
   }
 
-  // static async getOpenPayments(type, ) {
-  //   let res = await this.request(`payments`, {})
-  // }
+  static async getUserShiftPayments(loginTime, userId) {
+    let res = await this.request(`payments`, { createdAt: loginTime, userId });
+    return res.payments;
+  }
 
   static async postPayment(checkId, type, subtotal) {
     let res = await this.request(

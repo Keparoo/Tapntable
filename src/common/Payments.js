@@ -18,9 +18,13 @@ const Payments = () => {
 
       async function fetchPayments() {
         // await dispatch(fetchItemsFromAPI());
+        // Hardcode logintime='2022-02-19' (Today)
         // Hardcode userId=1
         // await dispatch(getOpenChecksFromAPI(1));
-        const payments = await TapntableApi.getPayments(1);
+        const payments = await TapntableApi.getUserShiftPayments(
+          '2022-02-20',
+          1
+        );
         // await dispatchEvent(getPaymentsFromAPI(1))
         console.log('Payments', payments);
         // setPayments(payments.filter((p) => p.type !== 'Cash' && !p.tipAmt));

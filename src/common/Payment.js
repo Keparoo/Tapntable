@@ -49,9 +49,16 @@ const Payment = ({ showPayment }) => {
       +amount
     );
     console.log('New Credit Payment Made', newPayment);
+    console.log('888888888888888subtotal', check.subtotal);
 
     if (check.amountDue - amount === 0) {
-      const closeCheck = await TapntableApi.closeCheck(check.id);
+      const closeCheck = await TapntableApi.closeCheck(
+        check.id,
+        check.subtotal,
+        check.localTax,
+        check.stateTax,
+        check.federalTax
+      );
       console.log('Close check', closeCheck);
     }
 
@@ -66,7 +73,7 @@ const Payment = ({ showPayment }) => {
     showPayment(false);
   };
 
-  const pay = (type) => {
+  const credit = async (type) => {
     console.debug('pay', type);
 
     setPaymentType(type);
@@ -82,7 +89,13 @@ const Payment = ({ showPayment }) => {
       check.amountDue
     );
     console.log('New Cash Payment Made', newPayment);
-    const closeCheck = await TapntableApi.closeCheck(check.id);
+    const closeCheck = await TapntableApi.closeCheck(
+      check.id,
+      check.subtotal,
+      check.localTax,
+      check.stateTax,
+      check.federalTax
+    );
 
     console.log('Close check', closeCheck);
     showPayment(false);
@@ -98,37 +111,37 @@ const Payment = ({ showPayment }) => {
         </Typography>
 
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={() => pay(MASTER_CARD)} variant="contained">
+          <Button onClick={() => credit(MASTER_CARD)} variant="contained">
             Master Card
           </Button>
-          <Button onClick={() => pay(VISA)} variant="contained">
+          <Button onClick={() => credit(VISA)} variant="contained">
             Visa
           </Button>
-          <Button onClick={() => pay(AMERICAN_EXPRESS)} variant="contained">
+          <Button onClick={() => credit(AMERICAN_EXPRESS)} variant="contained">
             Amex
           </Button>
-          <Button onClick={() => pay(DISCOVER)} variant="contained">
+          <Button onClick={() => credit(DISCOVER)} variant="contained">
             Discover
           </Button>
         </Stack>
         <br />
         <Stack direction="row" spacing={2} justifyContent="center">
           <Button
-            onClick={() => pay(GOOGLE_PAY)}
+            onClick={() => credit(GOOGLE_PAY)}
             variant="contained"
             color="secondary"
           >
             Google Pay
           </Button>
           <Button
-            onClick={() => pay(APPLE_PAY)}
+            onClick={() => credit(APPLE_PAY)}
             variant="contained"
             color="secondary"
           >
             Apple Pay
           </Button>
           <Button
-            onClick={() => pay(VENMO)}
+            onClick={() => credit(VENMO)}
             variant="contained"
             color="secondary"
           >

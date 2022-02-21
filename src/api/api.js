@@ -109,10 +109,19 @@ class TapntableApi {
     return res.payment;
   }
 
-  static async closeCheck(checkId) {
+  static async printCheck(checkId, subtotal, localTax, stateTax, federalTax) {
     let res = await this.request(
       `checks/${checkId}`,
-      { closedAt: new Date() },
+      { printedAt: new Date(), subtotal, localTax, stateTax, federalTax },
+      'patch'
+    );
+    return res.check;
+  }
+
+  static async closeCheck(checkId, subtotal, localTax, stateTax, federalTax) {
+    let res = await this.request(
+      `checks/${checkId}`,
+      { closedAt: new Date(), subtotal, localTax, stateTax, federalTax },
       'patch'
     );
     return res.check;

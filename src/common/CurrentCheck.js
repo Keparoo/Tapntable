@@ -87,6 +87,18 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     //if totalpayments  >= total: allow close check
   };
 
+  const printCheck = async () => {
+    const printCheck = await TapntableApi.printCheck(
+      check.id,
+      check.subtotal,
+      check.localTax,
+      check.stateTax,
+      check.federalTax
+    );
+    console.log('printCheck', printCheck);
+    // Insert logic to print at local printer
+  };
+
   const renderCurrentCheck = () => {
     return (
       <Container sx={{ padding: '8px' }}>
@@ -180,6 +192,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             </Button>
             <Button onClick={cancel} color="warning" variant="contained">
               Cancel
+            </Button>
+            <Button onClick={printCheck} variant="contained">
+              Print Check
             </Button>
             <Button onClick={pay} variant="contained">
               Pay

@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { fetchUserFromAPI } from '../actions/user';
+import { clearUserPin, fetchUserFromAPI } from '../actions/user';
+import TapntableApi from '../api/api';
 import { Typography, Link, Button } from '@mui/material';
 import UserPinForm from '../auth/UserPinForm';
+import {
+  TRAINEE,
+  EMPLOYEE,
+  COOK,
+  HOST,
+  CHEF,
+  SERVER,
+  BARTENDER,
+  HEAD_SERVER,
+  BAR_MANAGER,
+  MANAGER,
+  OWNER,
+  CLOCK_IN,
+  CLOCK_OUT
+} from '../constants';
 
 const Homepage = () => {
   const user = useSelector((st) => st.user);
@@ -11,28 +27,24 @@ const Homepage = () => {
 
   // const [ showUserPinForm, setShowUserPinForm ] = useState(true);
 
-  const login = ({ pin }) => {
+  const login = async ({ pin }) => {
     console.log('login', pin);
 
     dispatch(fetchUserFromAPI(pin));
-
-    if (('trainee', 'employee', 'cook', 'host', 'chef').includes(user.role)) {
-    }
-    console.log('Punch in only');
-    // punch in
-    // clear user pin
+    await TapntableApi.logEvent(user.id, CLOCK_IN);
   };
 
+  if ((TRAINEE, EMPLOYEE, COOK, HOST, CHEF).includes(user.role)) {
+    console.log('Punch in only');
+    dispatch(clearUserPin());
+  }
+
   if (
-    ('server',
-    'bartender',
-    'head-server',
-    'bar-manager',
-    'manager',
-    'owner').includes(user.role)
+    (SERVER, BARTENDER, HEAD_SERVER, BAR_MANAGER, MANAGER, OWNER).includes(
+      user.role
+    )
   ) {
     console.log('Punch in and go to orders');
-    // punch in
     // open to orders
   }
 

@@ -135,6 +135,15 @@ class TapntableApi {
     let res = await this.request(`users/pin`, { pin }, 'post');
     return res.user;
   }
+
+  static async logEvent(userId, event, entityId) {
+    let res = await this.request(
+      `users/logs`,
+      { userId, event, entityId },
+      'post'
+    );
+    return res.log;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)

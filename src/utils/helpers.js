@@ -1,7 +1,18 @@
 import config from '../restaurantConfig.json';
+import {
+  CASH,
+  MASTER_CARD,
+  VISA,
+  AMERICAN_EXPRESS,
+  DISCOVER,
+  GOOGLE_PAY,
+  APPLE_PAY,
+  VENMO
+} from '../constants';
 
 const formatTime = (time) => {
-  console.log(time);
+  console.debug('formatTime', time);
+
   let hours;
   let minutes;
   let pm = false;
@@ -26,8 +37,9 @@ const floatToMoney = (num) => {
 };
 
 const calculateCheck = (check, items, payments) => {
+  console.debug(calculateCheck, check, items, payments);
+
   const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0);
-  console.log('Subtotal', subtotal, config.tax);
   const localTax = floatToMoney(subtotal * config.tax.localRate);
   const stateTax = floatToMoney(subtotal * config.tax.stateRate);
   const federalTax = floatToMoney(subtotal * config.tax.federalRate);
@@ -46,15 +58,7 @@ const calculateCheck = (check, items, payments) => {
 };
 
 const calculateShift = (payments) => {
-  // Payment type enum values
-  const CASH = 'Cash';
-  const MASTER_CARD = 'MC';
-  const VISA = 'Visa';
-  const AMERICAN_EXPRESS = 'Amex';
-  const DISCOVER = 'Disc';
-  const GOOGLE_PAY = 'Google';
-  const APPLE_PAY = 'Apple';
-  const VENMO = 'Venmo';
+  console.debug(payments);
 
   let cashSales = 0;
   let masterCardSales = 0;

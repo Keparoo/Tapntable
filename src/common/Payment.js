@@ -3,6 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import TapntableApi from '../api/api';
 import {
+  CASH,
+  MASTER_CARD,
+  VISA,
+  AMERICAN_EXPRESS,
+  DISCOVER,
+  GOOGLE_PAY,
+  APPLE_PAY,
+  VENMO
+} from '../constants';
+
+import {
   Typography,
   Stack,
   Button,
@@ -12,16 +23,6 @@ import {
 } from '@mui/material';
 import PayAmountForm from './PayAmountForm';
 // import { addPayment, getOpenCheck } from '../actions/currentCheck';
-
-// Payment type enum values
-const CASH = 'Cash';
-const MASTER_CARD = 'MC';
-const VISA = 'Visa';
-const AMERICAN_EXPRESS = 'Amex';
-const DISCOVER = 'Disc';
-const GOOGLE_PAY = 'Google';
-const APPLE_PAY = 'Apple';
-const VENMO = 'Venmo';
 
 const Payment = ({ showPayment }) => {
   console.debug('Payment');

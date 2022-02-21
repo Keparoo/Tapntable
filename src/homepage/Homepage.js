@@ -9,20 +9,32 @@ const Homepage = () => {
   const user = useSelector((st) => st.user);
   const dispatch = useDispatch();
 
-  const [ showUserPinForm, setShowUserPinForm ] = useState(true);
+  // const [ showUserPinForm, setShowUserPinForm ] = useState(true);
 
   const login = ({ pin }) => {
     console.log('login', pin);
 
-    setShowUserPinForm(false);
     dispatch(fetchUserFromAPI(pin));
+
+    if (('trainee', 'employee', 'cook', 'host', 'chef').includes(user.role)) {
+    }
+    console.log('Punch in only');
+    // punch in
+    // clear user pin
   };
 
-  const cancel = () => {
-    console.log('cancel');
-
-    setShowUserPinForm(false);
-  };
+  if (
+    ('server',
+    'bartender',
+    'head-server',
+    'bar-manager',
+    'manager',
+    'owner').includes(user.role)
+  ) {
+    console.log('Punch in and go to orders');
+    // punch in
+    // open to orders
+  }
 
   if (!user.id) {
     return (
@@ -33,7 +45,7 @@ const Homepage = () => {
         <Typography variant="h3" align="center">
           Please Log in
         </Typography>
-        <UserPinForm login={login} cancel={cancel} />
+        <UserPinForm login={login} />
       </div>
     );
   }

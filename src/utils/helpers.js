@@ -57,89 +57,91 @@ const calculateShift = (payments) => {
   const VENMO = 'Venmo';
 
   let cashSales = 0;
-  let MCSales = 0;
-  let MCTip = 0;
-  let VisaSales = 0;
-  let VisaTip = 0;
-  let AmexSales = 0;
-  let AmexTip = 0;
-  let DiscSales = 0;
-  let DiscTip = 0;
-  let GoogleSales = 0;
-  let GoogleTip = 0;
-  let AppleSales = 0;
-  let AppleTip = 0;
-  let VenmoSales = 0;
-  let VenmoTip = 0;
+  let masterCardSales = 0;
+  let masterCardTip = 0;
+  let visaSales = 0;
+  let visaTip = 0;
+  let amexSales = 0;
+  let amexTip = 0;
+  let discSales = 0;
+  let discTip = 0;
+  let googleSales = 0;
+  let googleTip = 0;
+  let appleSales = 0;
+  let appleTip = 0;
+  let venmoSales = 0;
+  let venmoTip = 0;
   let totalCreditTip = 0;
   let totalSales = 0;
 
   for (let p of payments) {
     if (p.type === CASH) cashSales += +p.subtotal;
     if (p.type === MASTER_CARD) {
-      MCSales += +p.subtotal;
-      MCTip += +p.tipAmt;
+      masterCardSales += +p.subtotal;
+      masterCardTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
     if (p.type === VISA) {
-      VisaSales += +p.subtotal;
-      VisaTip += +p.tipAmt;
+      visaSales += +p.subtotal;
+      visaTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
     if (p.type === AMERICAN_EXPRESS) {
-      AmexSales += +p.subtotal;
-      AmexTip += +p.tipAmt;
+      amexSales += +p.subtotal;
+      amexTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
     if (p.type === DISCOVER) {
-      DiscSales += +p.subtotal;
-      DiscTip += +p.tipAmt;
+      discSales += +p.subtotal;
+      discTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
     if (p.type === GOOGLE_PAY) {
-      GoogleSales += +p.subtotal;
-      GoogleTip += +p.tipAmt;
+      googleSales += +p.subtotal;
+      googleTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
     if (p.type === APPLE_PAY) {
-      AppleSales += +p.subtotal;
-      AppleTip += +p.tipAmt;
+      appleSales += +p.subtotal;
+      appleTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
     if (p.type === VENMO) {
-      VenmoSales += +p.subtotal;
-      VenmoTip += +p.tipAmt;
+      venmoSales += +p.subtotal;
+      venmoTip += +p.tipAmt;
       totalCreditTip += +p.tipAmt;
       totalSales += +p.subtotal;
     }
   }
   const serverCashDue = cashSales - totalCreditTip;
+  const creditSales = totalSales - cashSales;
 
   return {
+    masterCardSales,
+    masterCardTip,
+    visaSales,
+    visaTip,
+    amexSales,
+    amexTip,
+    discSales,
+    discTip,
+    googleSales,
+    googleTip,
+    appleSales,
+    appleTip,
+    venmoSales,
+    venmoTip,
     cashSales,
-    MCSales,
-    MCTip,
-    VisaSales,
-    VisaTip,
-    AmexSales,
-    AmexTip,
-    DiscSales,
-    DiscTip,
-    GoogleSales,
-    GoogleTip,
-    AppleSales,
-    AppleTip,
-    VenmoSales,
-    VenmoTip,
+    creditSales,
     totalCreditTip,
-    serverCashDue,
-    totalSales
+    totalSales,
+    serverCashDue
   };
 };
 

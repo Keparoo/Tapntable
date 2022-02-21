@@ -55,14 +55,35 @@ const CashOut = () => {
         Cash Sales ${shiftResults.cashSales.toFixed(2)}
       </Typography>
       <Typography variant="h6" align="center">
-        Credit Sales ${(shiftResults.totalSales -
-          shiftResults.cashSales).toFixed(2)}
+        Credit Sales ${shiftResults.creditSales.toFixed(2)}
       </Typography>
       <Typography variant="h6" align="center">
         Total Credit Tips ${shiftResults.totalCreditTip.toFixed(2)}
       </Typography>
       <Typography variant="h6" align="center">
         Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
+      </Typography>
+      <br />
+      <Typography variant="h6" align="center">
+        MC Sales ${shiftResults.masterCardSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Visa Sales ${shiftResults.visaSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Amex Sales ${shiftResults.amexSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Discover Sales ${shiftResults.discSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Google Pay Sales ${shiftResults.googleSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Apple Pay Sales ${shiftResults.appleSales.toFixed(2)}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Venmo Sales ${shiftResults.venmoSales.toFixed(2)}
       </Typography>
     </div>
   );

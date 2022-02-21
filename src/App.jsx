@@ -38,6 +38,15 @@ const App = () => {
             color="inherit"
             sx={{ mr: 2 }}
             component={RouterLink}
+            to="/pin"
+            underline="none"
+          >
+            Pin
+          </Link>
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
             to="/"
             underline="none"
           >

@@ -2,13 +2,14 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Homepage from '../homepage/Homepage';
-import LoginForm from '../auth/LoginForm';
+import LoginForm from '../auth/UserPinForm';
 import Servers from '../servers/Servers';
 import Kitchen from '../kitchen/Kitchen';
 import Bar from '../bar/Bar';
 import ItemsList from '../items/ItemsList';
 import Payments from '../common/Payments';
 import CashOut from '../common/CashOut';
+import UserPinForm from '../auth/UserPinForm';
 
 const Routes = () => {
   console.debug('AppRoutes');
@@ -17,6 +18,10 @@ const Routes = () => {
     <Switch>
       <Route exact path="/">
         <Homepage />
+      </Route>
+
+      <Route exact path="/pin">
+        <UserPinForm />
       </Route>
 
       <Route exact path="/items">

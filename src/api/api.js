@@ -132,7 +132,7 @@ class TapntableApi {
   }
 
   static async getUser(pin) {
-    let res = await this.request(`user`, { pin });
+    let res = await this.request(`users/pin`, { pin }, 'post');
     return res.user;
   }
 }

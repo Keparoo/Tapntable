@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import { newCheck, getOpenCheck } from '../actions/currentCheck';
@@ -16,10 +16,12 @@ import OrderCategories from '../common/OrderCategories';
 import Payment from '../common/Payment';
 import { Button, Stack, Container, Typography, Grid } from '@mui/material';
 import './Servers.css';
+import { clearUserPin } from '../actions/user';
 
 const Servers = () => {
   console.debug('Servers');
 
+  const history = useHistory();
   const items = useSelector((st) => st.items);
   const dispatch = useDispatch();
 
@@ -79,6 +81,11 @@ const Servers = () => {
     setShowOrderCategories(true);
   };
 
+  const exit = () => {
+    dispatch(clearUserPin());
+    history.push('/');
+  };
+
   if (isLoading) return <Spinner />;
 
   if (!isLoading && items.length === 0) {
@@ -121,7 +128,9 @@ const Servers = () => {
           <Button variant="contained" component={RouterLink} to="/cashout">
             Cash Out
           </Button>
-          <Button variant="contained">Clock Out</Button>
+          <Button onClick={exit} variant="contained">
+            Exit
+          </Button>
         </Stack>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Box, TextField, Button } from '@mui/material';
 
-const UserPinForm = (save, cancel) => {
+const UserPinForm = ({ login, cancel }) => {
   console.debug('UserPinForm');
 
   const [ form, setForm ] = useState({ pin: '' });
@@ -15,7 +15,7 @@ const UserPinForm = (save, cancel) => {
   function handleSubmit(e) {
     console.debug('UserPinForm handleSubmit');
     e.preventDefault();
-    save({ ...form });
+    login({ ...form });
   }
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TapntableApi from '../api/api';
 import { calculateShift } from '../utils/helpers';
-import { Typography } from '@mui/material';
+import { Typography, Button, Stack } from '@mui/material';
 import Payments from './Payments';
 import Spinner from './Spinner';
 
@@ -32,12 +32,11 @@ const CashOut = () => {
   );
 
   const shiftResults = calculateShift(payments);
-  console.log('Shift Results', payments, shiftResults);
 
   if (isLoading) return <Spinner />;
 
+  // Still open payments: show Payments page
   if (payments.filter((p) => !p.tipAmt).length !== 0) {
-    console.log('Still open payments', payments.filter((p) => !p.tipAmt));
     return <Payments />;
   }
 
@@ -89,6 +88,9 @@ const CashOut = () => {
         Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
       </Typography>
       <br />
+      <Stack direction="row" spacing={2} justifyContent="center">
+        <Button variant="contained">Clock Out</Button>
+      </Stack>
     </div>
   );
 };

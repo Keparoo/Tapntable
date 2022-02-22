@@ -48,7 +48,7 @@ const UserPinForm = ({ login }) => {
         />
 
         <Button onClick={handleSubmit} variant="contained">
-          Login
+          Enter Pin
         </Button>
         <Button onClick={clear} variant="contained">
           Clear

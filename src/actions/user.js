@@ -1,5 +1,6 @@
 import TapntableApi from '../api/api';
 import { FETCH_USER, CLEAR_USER_PIN } from './types';
+import { CLOCK_IN, CLOCK_OUT } from '../constants';
 
 // Handle async API call for list of items
 
@@ -21,7 +22,7 @@ function getUser(user) {
 export function clockInUser(pin) {
   return async function(dispatch) {
     const user = await TapntableApi.getUser(pin);
-    const log = await TapntableApi.logEvent(user.id, 'clock-in');
+    const log = await TapntableApi.logEvent(user.id, CLOCK_IN);
     const clockedInUser = await TapntableApi.clockIn(user.id);
     console.log('Clock In user', clockedInUser, log);
     return dispatch(getUser(clockedInUser));
@@ -30,7 +31,7 @@ export function clockInUser(pin) {
 
 export function clockOutUser(userId) {
   return async function(dispatch) {
-    const log = await TapntableApi.logEvent(userId, 'clock-out');
+    const log = await TapntableApi.logEvent(userId, CLOCK_OUT);
     const clockedOutUser = await TapntableApi.clockOut(userId);
     console.log('Clock Out user', clockedOutUser, log);
     return dispatch(clearUserPin());

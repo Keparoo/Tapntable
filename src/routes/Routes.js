@@ -10,6 +10,8 @@ import ItemsList from '../items/ItemsList';
 import Payments from '../common/Payments';
 import CashOut from '../common/CashOut';
 import UserPinForm from '../auth/UserPinForm';
+import ClockOut from '../common/ClockOut';
+import Welcome from '../common/Welcome';
 
 const Routes = () => {
   console.debug('AppRoutes');
@@ -22,6 +24,14 @@ const Routes = () => {
 
       <Route exact path="/pin">
         <UserPinForm />
+      </Route>
+
+      <Route exact path="/welcome">
+        <Welcome />
+      </Route>
+
+      <Route exact path="/clockout">
+        <ClockOut />
       </Route>
 
       <Route exact path="/items">

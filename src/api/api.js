@@ -98,6 +98,12 @@ class TapntableApi {
     return res.payments;
   }
 
+  // // Return a list of all payments related to checkId
+  // static async getOpenPayments(query) {
+  //   let res = await this.request(`payments`, { userId: query });
+  //   return res.payments;
+  // }
+
   // Return all open user payments (tipAmt=null) since last user login. Exclude voided payments
   static async getUserShiftPayments(loginTime, userId) {
     let res = await this.request(`payments`, {

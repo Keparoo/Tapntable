@@ -19,12 +19,15 @@ const Payments = () => {
       console.debug('ItemList useEffect on Mount');
 
       async function fetchPayments() {
+        console.log('The user is: ', user);
         // Hardcode logintime='2022-02-19' (Today)
         const payments = await TapntableApi.getUserShiftPayments(
           '2022-02-20',
           user.id
         );
+        console.log('Payments before filter', payments);
         setPayments(payments.filter((p) => !p.tipAmt));
+        console.log('In Payments', payments);
         setIsLoading(false);
       }
       if (isLoading) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { clockOutUser } from '../actions/user';
+import { clockOutUser, clearUserPin } from '../actions/user';
 
 const LogoutPage = () => {
   const user = useSelector((state) => state.user);
@@ -13,6 +13,7 @@ const LogoutPage = () => {
     console.debug('clockOut');
 
     dispatch(clockOutUser(user.id));
+    dispatch(clearUserPin());
     history.push('/');
   };
 

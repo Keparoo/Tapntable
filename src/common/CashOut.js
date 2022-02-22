@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clockOutUser, clearUserPin } from '../actions/user';
+import { getOpenChecksFromAPI } from '../actions/checks';
+import { getOpenPaymentsFromAPI } from '../actions/payments';
 import TapntableApi from '../api/api';
 import { calculateShift } from '../utils/helpers';
 import { Typography, Button, Stack } from '@mui/material';
@@ -10,10 +12,12 @@ import Spinner from './Spinner';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);
-  const [ payments, setPayments ] = useState([]);
-  const shiftResults = calculateShift(payments);
+  // const [ payments, setPayments ] = useState([]);
+  // const shiftResults = calculateShift(payments);
 
   const user = useSelector((st) => st.user);
+  const openChecks = useSelector((st) => st.checks);
+  const payments = useSelector((st) => st.payments);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -22,23 +26,25 @@ const CashOut = () => {
       console.debug('ItemList useEffect on Mount');
 
       async function fetchPayments() {
-        // Hardcode loginTime
-        // const loginTime = '2022-02-20';
+        await dispatch(getOpenChecksFromAPI(user.id));
         const loginTime = await TapntableApi.getUserClockInTime(user.id);
         console.debug('loginTime', loginTime);
         const userId = user.id;
-        const payments = await TapntableApi.getUserShiftPayments(
-          loginTime,
-          userId
-        );
-        setPayments(payments);
+        console.log('This is the user id', userId);
+        // const payments = await TapntableApi.getUserShiftPayments(
+        //   loginTime,
+        //   userId
+        // );
+        await dispatch(getOpenPaymentsFromAPI(loginTime, userId));
+        console.log('Cashout: Payments', payments);
+        // setPayments(payments);
         setIsLoading(false);
       }
       if (isLoading) {
         fetchPayments();
       }
     },
-    [ isLoading, user.id ]
+    [ isLoading, user.id, dispatch, payments ]
   );
 
   const clockOut = () => {
@@ -49,10 +55,21 @@ const CashOut = () => {
 
   if (isLoading) return <Spinner />;
 
+  // Still open checks: show Servers page
+  if (openChecks.length !== 0) {
+    console.debug('Still Open checks', openChecks);
+    history.push('/servers');
+    console.debug('After push');
+  }
+
   // Still open payments: show Payments page
   if (payments.filter((p) => !p.tipAmt).length !== 0) {
-    return <Payments />;
+    console.debug('Still open payments', payments.filter((p) => !p.tipAmt));
+    history.push('/payments');
+    // return <Payments />;
   }
+
+  const shiftResults = calculateShift(payments);
 
   return (
     <div>

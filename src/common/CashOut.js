@@ -23,7 +23,9 @@ const CashOut = () => {
 
       async function fetchPayments() {
         // Hardcode loginTime
-        const loginTime = '2022-02-20';
+        // const loginTime = '2022-02-20';
+        const loginTime = await TapntableApi.getUserClockInTime(user.id);
+        console.debug('loginTime', loginTime);
         const userId = user.id;
         const payments = await TapntableApi.getUserShiftPayments(
           loginTime,

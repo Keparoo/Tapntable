@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { CASH_OUT, CLOCK_IN } from '../constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -36,16 +37,19 @@ class TapntableApi {
 
   /** Get list of items filtered by query if query is not undefined */
 
+  // Return a list of all items in db
   static async getItems(query) {
     let res = await this.request(`items`, { name: query });
     return res.items;
   }
 
+  // Post a new order to database
   static async createOrder(userId) {
     let res = await this.request(`orders`, { userId }, 'post');
     return res.order;
   }
 
+  // Post a new check to database
   // ignore customer field
   static async createCheck(userId, tableNum, numGuests) {
     let res = await this.request(
@@ -56,6 +60,7 @@ class TapntableApi {
     return res.check;
   }
 
+  // Post an ordered item to database
   static async createOrdItem(itemId, orderId, checkId, seatNum, itemNote) {
     let res = await this.request(
       `ordered`,
@@ -65,11 +70,13 @@ class TapntableApi {
     return res.ordItem;
   }
 
+  // Return all user's checks
   static async getChecks(query) {
     let res = await this.request(`checks`, { userId: query });
     return res.checks;
   }
 
+  // Return user's open checks where isVoid=false
   static async getOpenChecks(userId) {
     let res = await this.request(`checks`, {
       userId,
@@ -79,16 +86,19 @@ class TapntableApi {
     return res.checks;
   }
 
+  // Return all ordered items related to checkId
   static async getOrderedItems(query) {
     let res = await this.request(`ordered`, { checkId: query });
     return res.ordItems;
   }
 
+  // Return a list of all payments related to checkId
   static async getPayments(query) {
     let res = await this.request(`payments`, { checkId: query });
     return res.payments;
   }
 
+  // Return all open user payments (tipAmt=null) since last user login. Exclude voided payments
   static async getUserShiftPayments(loginTime, userId) {
     let res = await this.request(`payments`, {
       printedAt: loginTime,
@@ -98,6 +108,7 @@ class TapntableApi {
     return res.payments;
   }
 
+  // Post a payment to db
   static async postPayment(checkId, type, subtotal) {
     let res = await this.request(
       `payments`,
@@ -107,12 +118,15 @@ class TapntableApi {
     return res.payment;
   }
 
+  // Add a tip amount to a paymnet (tipAmt not null indicates the payment is closed)
   static async updatePayment(paymentId, tipAmt) {
     console.log('updatePayment', paymentId, tipAmt);
     let res = await this.request(`payments/${paymentId}`, { tipAmt }, 'patch');
     return res.payment;
   }
 
+  // Print Check, timestamp print time and update subtotal and tax
+  // This may be done multiple times before closing check
   static async printCheck(checkId, subtotal, localTax, stateTax, federalTax) {
     let res = await this.request(
       `checks/${checkId}`,
@@ -122,6 +136,7 @@ class TapntableApi {
     return res.check;
   }
 
+  // Close check: timestamp and update subtotal and tax (timestamp not null indicates check closed)
   static async closeCheck(checkId, subtotal, localTax, stateTax, federalTax) {
     let res = await this.request(
       `checks/${checkId}`,
@@ -131,11 +146,13 @@ class TapntableApi {
     return res.check;
   }
 
+  // Query database to get user from pin
   static async getUser(pin) {
     let res = await this.request(`users/pin`, { pin }, 'post');
     return res.user;
   }
 
+  // Update users record to indicate user is clocked in: isClockedIn=true
   static async clockIn(id) {
     const isClockedIn = true;
     let res = await this.request(
@@ -145,6 +162,8 @@ class TapntableApi {
     );
     return res.user;
   }
+
+  // Update users record to indicate user is clocked out: isClockedIn=false
   static async clockOut(id) {
     const isClockedIn = false;
     let res = await this.request(
@@ -155,6 +174,27 @@ class TapntableApi {
     return res.user;
   }
 
+  // Log user cash-out
+  // static async cashOut(userId) {
+  //   let res = await this.request(
+  //     `users/logs`,
+  //     { userId, event: CASH_OUT },
+  //     'post'
+  //   );
+  //   return res.user;
+  // }
+
+  // Return user's last clock-in time
+  static async getUserClockInTime(id) {
+    let res = await this.request(`users/logs`, {
+      userId: id,
+      event: CLOCK_IN,
+      desc: true
+    });
+    return res.logs[0].timestamp;
+  }
+
+  // Log event to user_logs: entityId is optional
   static async logEvent(userId, event, entityId) {
     let res = await this.request(
       `users/logs`,

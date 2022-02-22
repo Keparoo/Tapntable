@@ -136,6 +136,25 @@ class TapntableApi {
     return res.user;
   }
 
+  static async clockIn(id) {
+    const isClockedIn = true;
+    let res = await this.request(
+      `users/timeclock`,
+      { id, isClockedIn },
+      'post'
+    );
+    return res.user;
+  }
+  static async clockOut(id) {
+    const isClockedIn = false;
+    let res = await this.request(
+      `users/timeclock`,
+      { id, isClockedIn },
+      'post'
+    );
+    return res.user;
+  }
+
   static async logEvent(userId, event, entityId) {
     let res = await this.request(
       `users/logs`,

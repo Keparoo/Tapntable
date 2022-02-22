@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { clockOutUser } from '../actions/user';
 import TapntableApi from '../api/api';
 import { calculateShift } from '../utils/helpers';
 import { Typography, Button, Stack } from '@mui/material';
 import Payments from './Payments';
 import Spinner from './Spinner';
+import { clearUserPin } from '../actions/user';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ payments, setPayments ] = useState([]);
+  const shiftResults = calculateShift(payments);
+
+  const user = useSelector((st) => st.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(
     () => {
@@ -31,7 +40,10 @@ const CashOut = () => {
     [ isLoading ]
   );
 
-  const shiftResults = calculateShift(payments);
+  const clockOut = () => {
+    dispatch(clockOutUser(user.id));
+    history.push('/');
+  };
 
   if (isLoading) return <Spinner />;
 
@@ -89,7 +101,9 @@ const CashOut = () => {
       </Typography>
       <br />
       <Stack direction="row" spacing={2} justifyContent="center">
-        <Button variant="contained">Clock Out</Button>
+        <Button onClick={clockOut} variant="contained">
+          Clock Out
+        </Button>
       </Stack>
     </div>
   );

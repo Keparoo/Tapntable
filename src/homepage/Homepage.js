@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { clearUserPin, fetchUserFromAPI } from '../actions/user';
+import { clearUserPin, fetchUserFromAPI, clockInUser } from '../actions/user';
 import TapntableApi from '../api/api';
 import { Typography, Link, Button } from '@mui/material';
 import UserPinForm from '../auth/UserPinForm';
@@ -27,11 +27,22 @@ const Homepage = () => {
 
   // const [ showUserPinForm, setShowUserPinForm ] = useState(true);
 
-  const login = async ({ pin }) => {
+  const getUser = ({ pin }) => {
     console.log('login', pin);
 
     dispatch(fetchUserFromAPI(pin));
-    await TapntableApi.logEvent(user.id, CLOCK_IN);
+    console.log('User Id: ', user);
+  };
+
+  const clockIn = async (userId) => {
+    console.debug('clockIn', userId);
+
+    dispatch(clockInUser(user.pin));
+  };
+
+  const cancelLogin = () => {
+    console.debug('cancel login');
+    dispatch(clearUserPin());
   };
 
   if ((TRAINEE, EMPLOYEE, COOK, HOST, CHEF).includes(user.role)) {
@@ -57,7 +68,27 @@ const Homepage = () => {
         <Typography variant="h3" align="center">
           Please Log in
         </Typography>
-        <UserPinForm login={login} />
+        <UserPinForm login={getUser} />
+      </div>
+    );
+  }
+
+  if (user.id && !user.isClockedIn) {
+    return (
+      <div>
+        <Typography variant="h3" align="center">
+          Tapntable
+        </Typography>
+        <Button
+          onClick={() => clockIn(user.id)}
+          variant="contained"
+          align="center"
+        >
+          Clock In
+        </Button>
+        <Button onClick={cancelLogin} variant="contained" align="center">
+          Cancel
+        </Button>
       </div>
     );
   }

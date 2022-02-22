@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { clockOutUser } from '../actions/user';
+import { clockOutUser, clearUserPin } from '../actions/user';
 import TapntableApi from '../api/api';
 import { calculateShift } from '../utils/helpers';
 import { Typography, Button, Stack } from '@mui/material';
 import Payments from './Payments';
 import Spinner from './Spinner';
-import { clearUserPin } from '../actions/user';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -42,6 +41,7 @@ const CashOut = () => {
 
   const clockOut = () => {
     dispatch(clockOutUser(user.id));
+    dispatch(clearUserPin());
     history.push('/');
   };
 

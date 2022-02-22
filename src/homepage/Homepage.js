@@ -95,6 +95,21 @@ const Homepage = () => {
       );
     }
   }
+  if (user.id && !user.isClockedIn)
+    return (
+      <div>
+        <Button
+          onClick={() => clockIn(user.id)}
+          variant="contained"
+          align="center"
+        >
+          Clock In
+        </Button>
+        <Button onClick={cancelClockIn} variant="contained" align="center">
+          Cancel
+        </Button>
+      </div>
+    );
 
   return <Redirect to="/servers" />;
 

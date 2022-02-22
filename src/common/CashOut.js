@@ -22,9 +22,9 @@ const CashOut = () => {
       console.debug('ItemList useEffect on Mount');
 
       async function fetchPayments() {
-        // Hardcode loginTime and userId
+        // Hardcode loginTime
         const loginTime = '2022-02-20';
-        const userId = 1;
+        const userId = user.id;
         const payments = await TapntableApi.getUserShiftPayments(
           loginTime,
           userId
@@ -36,7 +36,7 @@ const CashOut = () => {
         fetchPayments();
       }
     },
-    [ isLoading ]
+    [ isLoading, user.id ]
   );
 
   const clockOut = () => {

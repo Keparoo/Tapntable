@@ -24,6 +24,7 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // Query API to identify PIN entered
   const getUser = ({ pin }) => {
     console.log('login', pin);
 
@@ -42,25 +43,7 @@ const Homepage = () => {
     dispatch(clearUserPin());
   };
 
-  // if ((TRAINEE, EMPLOYEE, COOK, HOST, CHEF).includes(user.role)) {
-  //   console.log('Punch in only');
-  //   dispatch(clearUserPin());
-  // }
-
-  // if (user.roleId === 2) {
-  //   console.log('Punch in only');
-  //   dispatch(clearUserPin());
-  // }
-
-  if (
-    (SERVER, BARTENDER, HEAD_SERVER, BAR_MANAGER, MANAGER, OWNER).includes(
-      user.role
-    )
-  ) {
-    console.log('Punch in and go to orders');
-    // open to orders
-  }
-
+  // Enter pin to identify person
   if (!user.id) {
     return (
       <div>
@@ -75,6 +58,7 @@ const Homepage = () => {
     );
   }
 
+  // If a log-in-only role
   if (user.id && user.roleId === 2) {
     if (user.isClockedIn) {
       return <ClockOut />;
@@ -95,6 +79,8 @@ const Homepage = () => {
       );
     }
   }
+
+  // If  a role that takes orders that is not currently clocked-in
   if (user.id && !user.isClockedIn)
     return (
       <div>
@@ -111,21 +97,8 @@ const Homepage = () => {
       </div>
     );
 
+  // If a role that takes orders and is currently clocked-in
   return <Redirect to="/servers" />;
-
-  // return (
-  //   <div>
-  //     <Typography variant="h3" align="center">
-  //       Tapntable
-  //     </Typography>
-
-  //     <Typography variant="h4" align="center">
-  //       <Button variant="contained" component={RouterLink} to="/server">
-  //         Server Page
-  //       </Button>
-  //     </Typography>
-  //   </div>
-  // );
 };
 
 export default Homepage;

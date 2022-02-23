@@ -92,6 +92,12 @@ class TapntableApi {
     return res.ordItems;
   }
 
+  // Return all ordered items related to checkId
+  static async getOrderedItemsByOrder(query) {
+    let res = await this.request(`ordered`, { orderId: query });
+    return res.ordItems;
+  }
+
   // Return a list of all payments related to checkId
   static async getPayments(query) {
     let res = await this.request(`payments`, { checkId: query });
@@ -215,9 +221,9 @@ class TapntableApi {
     return res.log;
   }
 
-  // Get list of open orders from database
+  // Get list of open orders from database filtered by destinationId
   static async getOpenOrders() {
-    let res = await this.request(`orders`);
+    let res = await this.request(`orders`, { completedAt: undefined });
     return res.orders;
   }
 }

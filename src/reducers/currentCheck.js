@@ -55,7 +55,6 @@ export default function newCheck(state = INITIAL_STATE, action) {
       const amountDue = Math.round(
         (state.amountDue - action.payment.subtotal * 100) / 100
       );
-      console.log('*****************Amount Due', amountDue);
 
       return {
         ...state,

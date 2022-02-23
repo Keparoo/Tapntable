@@ -21,23 +21,97 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const sendOrder = async () => {
     console.debug('sendOrder');
 
+    //Separate newItems into destinations
+    const kitchenHotOrder = check.newItems.filter(
+      (i) => i.destination === 'Kitchen-Hot'
+    );
+    const kitchenColdOrder = check.newItems.filter(
+      (i) => i.destination === 'Kitchen-Cold'
+    );
+    const barOrder = check.newItems.filter((i) => i.destination === 'Bar');
+    console.log(
+      'Kitchen/Bar Order: ',
+      check.newItems,
+      kitchenHotOrder,
+      kitchenColdOrder,
+      barOrder
+    );
+
     // Create order in db: get order id
-    const order = await TapntableApi.createOrder(user.id);
-    console.log('order', order, check.newItems);
+    let kitchenHotOrderRes;
+    let kitchenColdOrderRes;
+    let barOrderRes;
+
+    if (kitchenHotOrder.length) {
+      kitchenHotOrderRes = await TapntableApi.createOrder(user.id);
+      console.log('order', kitchenHotOrderRes, kitchenHotOrder);
+    }
+    if (kitchenColdOrder.length) {
+      kitchenColdOrderRes = await TapntableApi.createOrder(user.id);
+      console.log('order', kitchenColdOrderRes, kitchenColdOrder);
+    }
+    if (barOrder.length) {
+      barOrderRes = await TapntableApi.createOrder(user.id);
+      console.log('order', barOrderRes, barOrder);
+    }
+
+    // old code before orders separated
+    // const order = await TapntableApi.createOrder(user.id);
+    // console.log('order', order, check.newItems);
 
     if (check.id) {
       // Create ordered_items objects for each item
       // Hard-code seat-num=1
       // Hard-code itemNote="Well Done"
-      for (const item of check.newItems) {
-        const ordItem = await TapntableApi.createOrdItem(
-          item.id,
-          order.id,
-          check.id,
-          1,
-          'Well Done'
-        );
-        console.log('ordItem', ordItem);
+      // for (const item of check.newItems) {
+      //   const ordItem = await TapntableApi.createOrdItem(
+      //     item.id,
+      //     order.id,
+      //     check.id,
+      //     1,
+      //     'Well Done'
+      //   );
+      //   console.log('ordItem', ordItem);
+      // }
+
+      // Create ordered items for Kitchen-Hot
+      if (kitchenHotOrder.length) {
+        for (const item of kitchenHotOrder) {
+          const ordItem = await TapntableApi.createOrdItem(
+            item.id,
+            kitchenHotOrderRes.id,
+            check.id,
+            1,
+            'Well Done'
+          );
+          console.log('ordItem', ordItem);
+        }
+      }
+      // Create ordered items for Kitchen-Cold
+      if (kitchenColdOrder.length) {
+        for (const item of kitchenColdOrder) {
+          const ordItem = await TapntableApi.createOrdItem(
+            item.id,
+            kitchenColdOrderRes.id,
+            check.id,
+            1,
+            'No Onions'
+          );
+          console.log('ordItem', ordItem);
+        }
+      }
+      // Create ordered items for Bar
+      if (barOrder.length) {
+        for (const item of barOrder) {
+          const ordItem = await TapntableApi.createOrdItem(
+            item.id,
+            barOrderRes.id,
+            check.id,
+            1,
+            'Extra Olives'
+          );
+          console.log('ordItem', ordItem);
+        }
       }
     } else {
       // Create Check in db, get Check Id,
@@ -52,15 +126,55 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
       // Create ordered_items objects for each item
       // Hard-code seat-num=1
       // Hard-code itemNote="Well Done"
-      for (const item of check.newItems) {
-        const ordItem = await TapntableApi.createOrdItem(
-          item.id,
-          order.id,
-          checkRes.id,
-          1,
-          'Well Done'
-        );
-        console.log('ordItem', ordItem);
+      // for (const item of check.newItems) {
+      //   const ordItem = await TapntableApi.createOrdItem(
+      //     item.id,
+      //     order.id,
+      //     checkRes.id,
+      //     1,
+      //     'Well Done'
+      //   );
+      //   console.log('ordItem', ordItem);
+      // }
+
+      // Create ordered items for Kitchen-Hot
+      if (kitchenHotOrder.length) {
+        for (const item of kitchenHotOrder) {
+          const ordItem = await TapntableApi.createOrdItem(
+            item.id,
+            kitchenHotOrderRes.id,
+            checkRes.id,
+            1,
+            'Well Done'
+          );
+          console.log('ordItem', ordItem);
+        }
+      }
+      // Create ordered items for Kitchen-Cold
+      if (kitchenColdOrder.length) {
+        for (const item of kitchenColdOrder) {
+          const ordItem = await TapntableApi.createOrdItem(
+            item.id,
+            kitchenColdOrderRes.id,
+            checkRes.id,
+            1,
+            'No Onions'
+          );
+          console.log('ordItem', ordItem);
+        }
+      }
+      // Create ordered items for Bar
+      if (barOrder.length) {
+        for (const item of barOrder) {
+          const ordItem = await TapntableApi.createOrdItem(
+            item.id,
+            barOrderRes.id,
+            checkRes.id,
+            1,
+            'Extra Olives'
+          );
+          console.log('ordItem', ordItem);
+        }
       }
     }
 

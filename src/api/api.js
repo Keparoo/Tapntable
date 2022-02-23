@@ -214,6 +214,12 @@ class TapntableApi {
     );
     return res.log;
   }
+
+  // Get list of open orders from database
+  static async getOpenOrders() {
+    let res = await this.request(`orders`);
+    return res.orders;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)

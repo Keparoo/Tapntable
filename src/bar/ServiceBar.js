@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { clearCurrentCheck } from '../actions/currentCheck';
 
-const Kitchen = () => {
+const ServiceBar = () => {
   console.debug('Kitchen');
 
   const user = useSelector((state) => state.user);
@@ -21,7 +21,7 @@ const Kitchen = () => {
 
   useEffect(
     () => {
-      console.debug('Kitchen useEffect on Mount');
+      console.debug('Service Bar useEffect on Mount');
 
       async function fetchItem() {
         dispatch(clearCurrentCheck());
@@ -33,8 +33,8 @@ const Kitchen = () => {
         // Get list of ordered items for order
         for (let order of ordersRes) {
           let orderItems = await TapntableApi.getOrderedItemsByOrder(order.id);
-          // Filter out items with destination other than kitchen-hot
-          orderItems = orderItems.filter((i) => i.destinationId === 1);
+          // Filter out items with destination other than bar
+          orderItems = orderItems.filter((i) => i.destinationId === 3);
           order.items = orderItems;
         }
 
@@ -120,4 +120,4 @@ const Kitchen = () => {
   );
 };
 
-export default Kitchen;
+export default ServiceBar;

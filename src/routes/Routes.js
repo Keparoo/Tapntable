@@ -5,7 +5,7 @@ import Homepage from '../homepage/Homepage';
 import LoginForm from '../auth/UserPinForm';
 import Servers from '../servers/Servers';
 import Kitchen from '../kitchen/Kitchen';
-import Bar from '../bar/Bar';
+import ServiceBar from '../bar/ServiceBar';
 import ItemsList from '../items/ItemsList';
 import Payments from '../common/Payments';
 import CashOut from '../common/CashOut';
@@ -54,8 +54,8 @@ const Routes = () => {
         <CashOut />
       </Route>
 
-      <Route exact path="/bar">
-        <Bar />
+      <Route exact path="/servicebar">
+        <ServiceBar />
       </Route>
 
       <Route exact path="/kitchen">

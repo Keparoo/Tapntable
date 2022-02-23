@@ -98,6 +98,17 @@ class TapntableApi {
     return res.ordItems;
   }
 
+  static async completeOrder(orderId) {
+    let res = await this.request(
+      `orders/${orderId}`,
+      {
+        completedAt: new Date()
+      },
+      'patch'
+    );
+    return res.order;
+  }
+
   // Return a list of all payments related to checkId
   static async getPayments(query) {
     let res = await this.request(`payments`, { checkId: query });

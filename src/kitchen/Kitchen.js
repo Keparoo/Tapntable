@@ -26,7 +26,9 @@ const Kitchen = () => {
       async function fetchItem() {
         dispatch(clearCurrentCheck());
 
-        const ordersRes = await TapntableApi.getOpenOrders();
+        let ordersRes = await TapntableApi.getOpenOrders();
+        if (ordersRes !== [])
+          ordersRes = ordersRes.filter((o) => !o.completedAt);
         for (let order of ordersRes) {
           const orderItems = await TapntableApi.getOrderedItemsByOrder(
             order.id
@@ -44,6 +46,13 @@ const Kitchen = () => {
     [ dispatch, isLoading ]
   );
 
+  const orderComplete = async (orderId) => {
+    console.debug('orderComplete', orderId);
+    const complete = await TapntableApi.completeOrder(orderId);
+    console.log('Completed order: ', complete);
+    setIsLoading(true);
+  };
+
   return (
     <div className="Kitchen">
       <Container style={{ height: '40vh' }}>
@@ -54,6 +63,7 @@ const Kitchen = () => {
         {orders.map((o) => (
           <Card
             key={o.id}
+            onClick={() => orderComplete(o.id)}
             sx={{
               width: 275,
               float: 'left',
@@ -69,19 +79,25 @@ const Kitchen = () => {
                   gutterBottom
                 >
                   OrderId: {o.id}
+                  <span style={{ float: 'right' }}>
+                    Sent: {moment(o.sentAt).format('LT')}
+                  </span>
                 </Typography>
                 <Typography variant="h5" component="div">
-                  User Id: {o.userId}
+                  {o.displayName}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Sent At: {moment(o.sentAt).format('LT')}
+                  Add Table number here
                 </Typography>
                 {o.items.map((i) => (
-                  <div>
-                    <p>{i.name}</p>
-                    <p>{i.itemNote}</p>
-                    <p>{i.seatNum}</p>
-                    <p>{i.destinationId}</p>
+                  <div key={i.id}>
+                    <Typography variant="p">
+                      <strong>{i.name}</strong> Seat: {i.seatNum}
+                    </Typography>
+                    <br />
+                    <Typography variant="p">{i.itemNote}</Typography>
+
+                    <p>Dest:{i.destinationId}</p>
                     <p>{i.count}</p>
                     <p>{i.isVoid}</p>
                   </div>

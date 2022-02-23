@@ -92,6 +92,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
       check.federalTax
     );
     console.log('printCheck', printCheck);
+    dispatch(clearCurrentCheck());
+    reload(true);
+    showOrderCats(false);
     // Insert logic to print at local printer when available
   };
 

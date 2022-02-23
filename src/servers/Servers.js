@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
-import { newCheck, getOpenCheck } from '../actions/currentCheck';
+import {
+  newCheck,
+  getOpenCheck,
+  clearCurrentCheck
+} from '../actions/currentCheck';
 import TapntableApi from '../api/api';
 import { calculateCheck } from '../utils/helpers';
 // import config from '../restaurantConfig.json';
@@ -37,8 +41,8 @@ const Servers = () => {
 
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
-        // Hardcode userId=1
         await dispatch(getOpenChecksFromAPI(user.id));
+        dispatch(clearCurrentCheck());
         setIsLoading(false);
       }
       if (isLoading) {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CASH_OUT, CLOCK_IN } from '../constants';
+import { CASH_OUT, CLOCK_IN, CASH } from '../constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -116,11 +116,16 @@ class TapntableApi {
 
   // Post a payment to db
   static async postPayment(checkId, type, subtotal) {
-    let res = await this.request(
-      `payments`,
-      { checkId, type, subtotal },
-      'post'
-    );
+    let res;
+    if (type === CASH) {
+      res = await this.request(
+        `payments`,
+        { checkId, type, subtotal, tipAmt: 0 },
+        'post'
+      );
+    } else {
+      res = await this.request(`payments`, { checkId, type, subtotal }, 'post');
+    }
     return res.payment;
   }
 

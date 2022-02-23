@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import TapntableApi from '../api/api';
 import Spinner from './Spinner';
 import AddTipForm from './AddTipForm';
 import { Typography, Card, CardActionArea, CardContent } from '@mui/material';
+import { CASH } from '../constants';
+import { clearCurrentCheck } from '../actions/currentCheck';
 
 const Payments = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -13,20 +15,23 @@ const Payments = () => {
   const [ paymentId, setPaymentId ] = useState();
 
   const user = useSelector((st) => st.user);
+  const dispatch = useDispatch();
 
   useEffect(
     () => {
-      console.debug('ItemList useEffect on Mount');
+      console.debug('Payments useEffect on Mount');
 
       async function fetchPayments() {
-        console.log('The user is: ', user);
-        // Hardcode logintime='2022-02-19' (Today)
+        console.debug();
+        // console.log('The user is: ', user);
+        dispatch(clearCurrentCheck());
+        const loginTime = await TapntableApi.getUserClockInTime(user.id);
         const payments = await TapntableApi.getUserShiftPayments(
-          '2022-02-20',
+          loginTime,
           user.id
         );
         console.log('Payments before filter', payments);
-        setPayments(payments.filter((p) => !p.tipAmt));
+        setPayments(payments.filter((p) => !p.tipAmt && p.type !== CASH));
         console.log('In Payments', payments);
         setIsLoading(false);
       }

@@ -9,6 +9,7 @@ import { calculateShift } from '../utils/helpers';
 import { Typography, Button, Stack } from '@mui/material';
 import Payments from './Payments';
 import Spinner from './Spinner';
+import { clearCurrentCheck } from '../actions/currentCheck';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -26,6 +27,7 @@ const CashOut = () => {
       console.debug('ItemList useEffect on Mount');
 
       async function fetchPayments() {
+        dispatch(clearCurrentCheck());
         await dispatch(getOpenChecksFromAPI(user.id));
         const loginTime = await TapntableApi.getUserClockInTime(user.id);
         console.debug('loginTime', loginTime);

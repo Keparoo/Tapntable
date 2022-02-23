@@ -6,6 +6,7 @@ import { fetchItemsFromAPI } from '../actions/items';
 // import SearchForm from '../common/SearchForm';
 import ItemCardList from './ItemCardList';
 import Spinner from '../common/Spinner';
+import { clearCurrentCheck } from '../actions/currentCheck';
 
 /*  Render page with list of items and filter search form
 
@@ -30,6 +31,7 @@ const ItemList = () => {
     () => {
       console.debug('ItemList useEffect on Mount');
 
+      dispatch(clearCurrentCheck());
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
         setIsLoading(false);

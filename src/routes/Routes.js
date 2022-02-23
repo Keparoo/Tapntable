@@ -5,6 +5,7 @@ import Homepage from '../homepage/Homepage';
 import LoginForm from '../auth/UserPinForm';
 import Servers from '../servers/Servers';
 import Kitchen from '../kitchen/Kitchen';
+import KitchenCold from '../kitchen/KitchenCold';
 import ServiceBar from '../bar/ServiceBar';
 import ItemsList from '../items/ItemsList';
 import Payments from '../common/Payments';
@@ -60,6 +61,9 @@ const Routes = () => {
 
       <Route exact path="/kitchen">
         <Kitchen />
+      </Route>
+      <Route exact path="/kitchencold">
+        <KitchenCold />
       </Route>
       <Route render={() => <Redirect to="/servers" />} />
     </Switch>

@@ -86,7 +86,16 @@ const App = () => {
             to="/kitchen"
             underline="none"
           >
-            Kitchen
+            Kitchen Hot
+          </Link>
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/kitchencold"
+            underline="none"
+          >
+            Kitchen Cold
           </Link>
           <Link
             color="inherit"

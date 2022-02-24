@@ -14,5 +14,9 @@
     "phone": "508-555-1234",
     "website": "www.duckinnpub.com",
     "week_start_mon": true
+  },
+  "terminal": {
+    "id": "server-main",
+    "localPrinter": "server-main-printer"
   }
 }

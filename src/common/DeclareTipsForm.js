@@ -5,7 +5,7 @@ import { TextField, Button, Box } from '@mui/material';
 const DeclaredTipsForm = ({ save }) => {
   console.debug('DeclaredTipsForm');
 
-  const [ form, setForm ] = useState({ declaredTips: '' });
+  const [ form, setForm ] = useState({ declaredTips: 0 });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -36,7 +36,7 @@ const DeclaredTipsForm = ({ save }) => {
         name="declaredTips"
         label="Declared Tips"
         variant="outlined"
-        value={form.tip}
+        value={form.declaredTips}
         onChange={handleChange}
       />
 

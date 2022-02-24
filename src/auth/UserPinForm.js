@@ -24,9 +24,6 @@ const UserPinForm = ({ login }) => {
 
   return (
     <div>
-      <Typography variant="h3" align="center">
-        Login Form
-      </Typography>
       <Box
         component="form"
         sx={{

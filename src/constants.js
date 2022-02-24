@@ -21,6 +21,12 @@ export const CHEF = 'chef';
 export const MANAGER = 'manager';
 export const OWNER = 'owner';
 
+// Terminal/Printer destination values
+export const KITCHEN_HOT = 'Kitchen-Hot';
+export const KITCHEN_COLD = 'Kitchen-Cold';
+export const BAR = 'Bar';
+export const NO_SEND = 'No-Send';
+
 // Log Events enum values
 export const CLOCK_IN = 'clock-in';
 export const CLOCK_OUT = 'clock-out';

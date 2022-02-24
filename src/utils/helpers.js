@@ -37,7 +37,7 @@ const floatToMoney = (num) => {
 };
 
 const calculateCheck = (check, items, payments) => {
-  console.debug(calculateCheck, check, items, payments);
+  console.debug('calculateCheck', check, items, payments);
 
   const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0);
   const localTax = floatToMoney(subtotal * config.tax.localRate);

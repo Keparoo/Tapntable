@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import TapntableApi from '../api/api';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
+import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');
@@ -23,95 +24,117 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
     //Separate newItems into destinations
     const kitchenHotOrder = check.newItems.filter(
-      (i) => i.destination === 'Kitchen-Hot'
+      (i) => i.destination === KITCHEN_HOT
     );
     const kitchenColdOrder = check.newItems.filter(
-      (i) => i.destination === 'Kitchen-Cold'
+      (i) => i.destination === KITCHEN_COLD
     );
-    const barOrder = check.newItems.filter((i) => i.destination === 'Bar');
-    console.log(
+    const barOrder = check.newItems.filter((i) => i.destination === BAR);
+    const noSendOrder = check.newItems.filter((i) => i.destination === NO_SEND);
+
+    // Item missing destination or has invalid destinationId
+    if (
+      kitchenHotOrder.length +
+        kitchenColdOrder.length +
+        barOrder.length +
+        noSendOrder.length <
+      check.newItems.length
+    )
+      console.error('****Warning, not being sent to order****');
+
+    console.debug(
       'Kitchen/Bar Order: ',
       check.newItems,
       kitchenHotOrder,
       kitchenColdOrder,
-      barOrder
+      barOrder,
+      noSendOrder
     );
 
     // Create order in db: get order id
     let kitchenHotOrderRes;
     let kitchenColdOrderRes;
     let barOrderRes;
+    let noSendOrderRes;
 
+    // Combine these into one call
     if (kitchenHotOrder.length) {
       kitchenHotOrderRes = await TapntableApi.createOrder(user.id);
-      console.log('order', kitchenHotOrderRes, kitchenHotOrder);
+      console.debug('order', kitchenHotOrderRes, kitchenHotOrder);
     }
     if (kitchenColdOrder.length) {
       kitchenColdOrderRes = await TapntableApi.createOrder(user.id);
-      console.log('order', kitchenColdOrderRes, kitchenColdOrder);
+      console.debug('order', kitchenColdOrderRes, kitchenColdOrder);
     }
     if (barOrder.length) {
       barOrderRes = await TapntableApi.createOrder(user.id);
-      console.log('order', barOrderRes, barOrder);
+      console.debug('order', barOrderRes, barOrder);
+    }
+    if (noSendOrder.length) {
+      noSendOrderRes = await TapntableApi.createOrder(user.id);
+      console.debug('order', noSendOrderRes, noSendOrder);
     }
 
-    // old code before orders separated
-    // const order = await TapntableApi.createOrder(user.id);
-    // console.log('order', order, check.newItems);
+    // Create ordered_items in database for each item in itemList
+    const createOrderedItems = async (
+      itemList,
+      orderId,
+      checkId,
+      seatNum,
+      itemNote
+    ) => {
+      for (const item of itemList) {
+        const ordItem = await TapntableApi.createOrdItem(
+          item.id,
+          orderId,
+          checkId,
+          seatNum,
+          itemNote
+        );
+        console.debug('ordItem', ordItem);
+      }
+    };
 
     if (check.id) {
-      // Create ordered_items objects for each item
-      // Hard-code seat-num=1
-      // Hard-code itemNote="Well Done"
-      // for (const item of check.newItems) {
-      //   const ordItem = await TapntableApi.createOrdItem(
-      //     item.id,
-      //     order.id,
-      //     check.id,
-      //     1,
-      //     'Well Done'
-      //   );
-      //   console.log('ordItem', ordItem);
-      // }
-
       // Create ordered items for Kitchen-Hot
       if (kitchenHotOrder.length) {
-        for (const item of kitchenHotOrder) {
-          const ordItem = await TapntableApi.createOrdItem(
-            item.id,
-            kitchenHotOrderRes.id,
-            check.id,
-            1,
-            'Well Done'
-          );
-          console.log('ordItem', ordItem);
-        }
+        createOrderedItems(
+          kitchenHotOrder,
+          kitchenHotOrderRes.id,
+          check.id,
+          1,
+          'Well Done'
+        );
       }
       // Create ordered items for Kitchen-Cold
       if (kitchenColdOrder.length) {
-        for (const item of kitchenColdOrder) {
-          const ordItem = await TapntableApi.createOrdItem(
-            item.id,
-            kitchenColdOrderRes.id,
-            check.id,
-            1,
-            'No Onions'
-          );
-          console.log('ordItem', ordItem);
-        }
+        createOrderedItems(
+          kitchenColdOrder,
+          kitchenColdOrderRes.id,
+          check.id,
+          1,
+          'No Onions'
+        );
       }
       // Create ordered items for Bar
       if (barOrder.length) {
-        for (const item of barOrder) {
-          const ordItem = await TapntableApi.createOrdItem(
-            item.id,
-            barOrderRes.id,
-            check.id,
-            1,
-            'Extra Olives'
-          );
-          console.log('ordItem', ordItem);
-        }
+        createOrderedItems(
+          barOrder,
+          barOrderRes.id,
+          check.id,
+          1,
+          'Extra Olives'
+        );
+      }
+      // Create ordered items for no-send (eg, fountain drinks)
+      if (noSendOrder.length) {
+        createOrderedItems(
+          noSendOrder,
+          noSendOrderRes.id,
+          check.id,
+          1,
+          'No Ice'
+        );
       }
     } else {
       // Create Check in db, get Check Id,
@@ -121,60 +144,47 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         check.tableNum,
         check.numGuests
       );
-      console.log('check', checkRes);
-
-      // Create ordered_items objects for each item
-      // Hard-code seat-num=1
-      // Hard-code itemNote="Well Done"
-      // for (const item of check.newItems) {
-      //   const ordItem = await TapntableApi.createOrdItem(
-      //     item.id,
-      //     order.id,
-      //     checkRes.id,
-      //     1,
-      //     'Well Done'
-      //   );
-      //   console.log('ordItem', ordItem);
-      // }
+      console.debug('check', checkRes);
 
       // Create ordered items for Kitchen-Hot
       if (kitchenHotOrder.length) {
-        for (const item of kitchenHotOrder) {
-          const ordItem = await TapntableApi.createOrdItem(
-            item.id,
-            kitchenHotOrderRes.id,
-            checkRes.id,
-            1,
-            'Well Done'
-          );
-          console.log('ordItem', ordItem);
-        }
+        createOrderedItems(
+          kitchenHotOrder,
+          kitchenHotOrderRes.id,
+          checkRes.id,
+          1,
+          'Well Done'
+        );
       }
       // Create ordered items for Kitchen-Cold
       if (kitchenColdOrder.length) {
-        for (const item of kitchenColdOrder) {
-          const ordItem = await TapntableApi.createOrdItem(
-            item.id,
-            kitchenColdOrderRes.id,
-            checkRes.id,
-            1,
-            'No Onions'
-          );
-          console.log('ordItem', ordItem);
-        }
+        createOrderedItems(
+          kitchenColdOrder,
+          kitchenColdOrderRes.id,
+          checkRes.id,
+          1,
+          'No Onions'
+        );
       }
       // Create ordered items for Bar
       if (barOrder.length) {
-        for (const item of barOrder) {
-          const ordItem = await TapntableApi.createOrdItem(
-            item.id,
-            barOrderRes.id,
-            checkRes.id,
-            1,
-            'Extra Olives'
-          );
-          console.log('ordItem', ordItem);
-        }
+        createOrderedItems(
+          barOrder,
+          barOrderRes.id,
+          checkRes.id,
+          1,
+          'Extra Olives'
+        );
+      }
+      // Create ordered items for no-send (eg, fountain drinks)
+      if (noSendOrder.length) {
+        createOrderedItems(
+          noSendOrder,
+          noSendOrderRes.id,
+          checkRes.id,
+          1,
+          'No Ice'
+        );
       }
     }
 

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import TapntableApi from '../api/api';
 import { clearCurrentCheck } from '../actions/currentCheck';
+import ItemNoteForm from './ItemNoteForm';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Button, Stack } from '@mui/material';
@@ -11,6 +12,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');
 
   const dispatch = useDispatch();
+  const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
 
   // Get current check
   const user = useSelector((st) => st.user);
@@ -57,7 +59,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     let barOrderRes;
     let noSendOrderRes;
 
-    // Combine these into one call
+    // Combine these into one call ?
     if (kitchenHotOrder.length) {
       kitchenHotOrderRes = await TapntableApi.createOrder(user.id);
       console.debug('order', kitchenHotOrderRes, kitchenHotOrder);
@@ -76,20 +78,14 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     }
 
     // Create ordered_items in database for each item in itemList
-    const createOrderedItems = async (
-      itemList,
-      orderId,
-      checkId,
-      seatNum,
-      itemNote
-    ) => {
+    const createOrderedItems = async (itemList, orderId, checkId, seatNum) => {
       for (const item of itemList) {
         const ordItem = await TapntableApi.createOrdItem(
           item.id,
           orderId,
           checkId,
           seatNum,
-          itemNote
+          item.itemNote
         );
         console.debug('ordItem', ordItem);
       }
@@ -98,13 +94,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     if (check.id) {
       // Create ordered items for Kitchen-Hot
       if (kitchenHotOrder.length) {
-        createOrderedItems(
-          kitchenHotOrder,
-          kitchenHotOrderRes.id,
-          check.id,
-          1,
-          'Well Done'
-        );
+        createOrderedItems(kitchenHotOrder, kitchenHotOrderRes.id, check.id, 1);
       }
       // Create ordered items for Kitchen-Cold
       if (kitchenColdOrder.length) {
@@ -112,29 +102,16 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           kitchenColdOrder,
           kitchenColdOrderRes.id,
           check.id,
-          1,
-          'No Onions'
+          1
         );
       }
       // Create ordered items for Bar
       if (barOrder.length) {
-        createOrderedItems(
-          barOrder,
-          barOrderRes.id,
-          check.id,
-          1,
-          'Extra Olives'
-        );
+        createOrderedItems(barOrder, barOrderRes.id, check.id, 1);
       }
       // Create ordered items for no-send (eg, fountain drinks)
       if (noSendOrder.length) {
-        createOrderedItems(
-          noSendOrder,
-          noSendOrderRes.id,
-          check.id,
-          1,
-          'No Ice'
-        );
+        createOrderedItems(noSendOrder, noSendOrderRes.id, check.id, 1);
       }
     } else {
       // Create Check in db, get Check Id,
@@ -152,8 +129,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           kitchenHotOrder,
           kitchenHotOrderRes.id,
           checkRes.id,
-          1,
-          'Well Done'
+          1
         );
       }
       // Create ordered items for Kitchen-Cold
@@ -162,29 +138,16 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           kitchenColdOrder,
           kitchenColdOrderRes.id,
           checkRes.id,
-          1,
-          'No Onions'
+          1
         );
       }
       // Create ordered items for Bar
       if (barOrder.length) {
-        createOrderedItems(
-          barOrder,
-          barOrderRes.id,
-          checkRes.id,
-          1,
-          'Extra Olives'
-        );
+        createOrderedItems(barOrder, barOrderRes.id, checkRes.id, 1);
       }
       // Create ordered items for no-send (eg, fountain drinks)
       if (noSendOrder.length) {
-        createOrderedItems(
-          noSendOrder,
-          noSendOrderRes.id,
-          checkRes.id,
-          1,
-          'No Ice'
-        );
+        createOrderedItems(noSendOrder, noSendOrderRes.id, checkRes.id, 1);
       }
     }
 
@@ -220,6 +183,23 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     reload(true);
     showOrderCats(false);
     // Insert logic to print at local printer when available
+  };
+
+  const addNote = (i) => {
+    setShowItemNoteForm(true);
+    i.itemNote = 'Well Done';
+    console.log('Item Note: ', i);
+  };
+
+  const saveNote = (item, note) => {
+    item.item.itemNote = item.note;
+    console.debug('Item Note: ', item);
+    setShowItemNoteForm(false);
+  };
+
+  const cancelNote = () => {
+    console.debug('cancelNote');
+    setShowItemNoteForm(false);
   };
 
   const renderCurrentCheck = () => {
@@ -261,10 +241,15 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               </p>
             ))}
             {check.newItems.map((i) => (
-              <p key={uuid()}>
-                <strong>{i.name}</strong>{' '}
-                <span style={{ float: 'right' }}>${i.price}</span>
-              </p>
+              <React.Fragment>
+                <p key={uuid()} onClick={() => addNote(i)}>
+                  <strong>{i.name}</strong>{' '}
+                  <span style={{ float: 'right' }}>${i.price}</span>
+                </p>
+                {showItemNoteForm && (
+                  <ItemNoteForm item={i} save={saveNote} cancel={cancelNote} />
+                )}
+              </React.Fragment>
             ))}
           </div>
 

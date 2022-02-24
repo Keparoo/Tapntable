@@ -84,9 +84,7 @@ const Kitchen = () => {
                   gutterBottom
                 >
                   OrderId: {o.id}
-                  <span style={{ float: 'right' }}>
-                    Sent: {moment(o.sentAt).format('LT')}
-                  </span>
+                  <span style={{ float: 'right' }}>Check ID: </span>
                 </Typography>
                 <Typography variant="h5" component="div">
                   {o.displayName}
@@ -100,7 +98,9 @@ const Kitchen = () => {
                       <strong>{i.name}</strong> Seat: {i.seatNum}
                     </Typography>
                     <br />
-                    <Typography variant="p">{i.itemNote}</Typography>
+                    <Typography variant="p">
+                      {i.itemNote && <strong>****{i.itemNote}</strong>}
+                    </Typography>
 
                     <p>Dest:{i.destinationId}</p>
                     <p>{i.count}</p>
@@ -108,8 +108,7 @@ const Kitchen = () => {
                   </div>
                 ))}
                 <Typography variant="body2">
-                  Completed At:{' '}
-                  {o.completedAt && moment(o.completedAt).format('LT')}
+                  Sent: {o.sentAt && moment(o.sentAt).format('LT')}
                 </Typography>
               </CardContent>
             </CardActionArea>

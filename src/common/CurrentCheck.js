@@ -13,13 +13,12 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   const dispatch = useDispatch();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
+  // const [seatNum, setSeatNum] = useState(1)
 
-  // Get current check
+  // Get current user and check
   const user = useSelector((st) => st.user);
   const check = useSelector((st) => st.currentCheck);
-  console.log('CurrentCheck', check);
-
-  // console.log('Check items', check.items, check.createdAt);
+  console.debug('CurrentCheck', check);
 
   const sendOrder = async () => {
     console.debug('sendOrder');
@@ -34,7 +33,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     const barOrder = check.newItems.filter((i) => i.destination === BAR);
     const noSendOrder = check.newItems.filter((i) => i.destination === NO_SEND);
 
-    // Item missing destination or has invalid destinationId
+    // Item missing destination or has invalid destinationId. Check item in database
     if (
       kitchenHotOrder.length +
         kitchenColdOrder.length +
@@ -42,7 +41,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         noSendOrder.length <
       check.newItems.length
     )
-      console.error('****Warning, not being sent to order****');
+      console.error(
+        '****Warning, not being sent to order! Check item details****'
+      );
 
     console.debug(
       'Kitchen/Bar Order: ',
@@ -164,12 +165,13 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     showOrderCats(false);
   };
 
+  // Show Pay Screen
   const pay = () => {
-    //Show Pay Screen
     showOrderCats(false);
     showPayment(true);
   };
 
+  // Calculate and Print Check
   const printCheck = async () => {
     const printCheck = await TapntableApi.printCheck(
       check.id,
@@ -185,18 +187,20 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     // Insert logic to print at local printer when available
   };
 
+  // Add an item note: Show form
   const addNote = (i) => {
+    console.debut('addNote', i);
     setShowItemNoteForm(true);
-    i.itemNote = 'Well Done';
-    console.log('Item Note: ', i);
   };
 
+  // Save item note: Hide form
   const saveNote = (item, note) => {
     item.item.itemNote = item.note;
     console.debug('Item Note: ', item);
     setShowItemNoteForm(false);
   };
 
+  // Cancel item note: Hide form
   const cancelNote = () => {
     console.debug('cancelNote');
     setShowItemNoteForm(false);

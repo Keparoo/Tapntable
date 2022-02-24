@@ -224,6 +224,7 @@ class TapntableApi {
 
   // Log event to user_logs: entityId is optional
   static async logEvent(userId, event, declaredTips, entityId) {
+    if (declaredTips) declaredTips = +declaredTips;
     let res = await this.request(
       `users/logs`,
       { userId, event, declaredTips, entityId },

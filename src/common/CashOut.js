@@ -10,11 +10,13 @@ import { Typography, Button, Stack } from '@mui/material';
 import Payments from './Payments';
 import Spinner from './Spinner';
 import { clearCurrentCheck } from '../actions/currentCheck';
+import DeclaredTipsForm from './DeclareTipsForm';
+import { DECLARE_CASH_TIPS } from '../constants';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);
-  // const [ payments, setPayments ] = useState([]);
-  // const shiftResults = calculateShift(payments);
+  const [ showDeclaredTipsForm, setShowDeclaredTipsForm ] = useState(true);
+  const [ showClockOut, setShowClockOut ] = useState(false);
 
   const user = useSelector((st) => st.user);
   const openChecks = useSelector((st) => st.checks);
@@ -31,15 +33,9 @@ const CashOut = () => {
         await dispatch(getOpenChecksFromAPI(user.id));
         const loginTime = await TapntableApi.getUserClockInTime(user.id);
         console.debug('loginTime', loginTime);
-        const userId = user.id;
-        console.log('This is the user id', userId);
-        // const payments = await TapntableApi.getUserShiftPayments(
-        //   loginTime,
-        //   userId
-        // );
-        await dispatch(getOpenPaymentsFromAPI(loginTime, userId));
-        console.log('Cashout: Payments', payments);
-        // setPayments(payments);
+        // const userId = user.id;
+        await dispatch(getOpenPaymentsFromAPI(loginTime, user.id));
+        console.debug('Cashout: Payments', payments);
         setIsLoading(false);
       }
       if (isLoading) {
@@ -55,20 +51,29 @@ const CashOut = () => {
     history.push('/');
   };
 
+  const saveDeclaredTips = async ({ declaredTips }) => {
+    const saveTipsRes = await TapntableApi.logEvent(
+      user.id,
+      DECLARE_CASH_TIPS,
+      declaredTips
+    );
+    console.debug('saveDeclaredTips', declaredTips, saveTipsRes);
+    setShowDeclaredTipsForm(false);
+    setShowClockOut(true);
+  };
+
   if (isLoading) return <Spinner />;
 
   // Still open checks: show Servers page
   if (openChecks.length !== 0) {
     console.debug('Still Open checks', openChecks);
     history.push('/servers');
-    console.debug('After push');
   }
 
   // Still open payments: show Payments page
   if (payments.filter((p) => !p.tipAmt).length !== 0) {
     console.debug('Still open payments', payments.filter((p) => !p.tipAmt));
     history.push('/payments');
-    // return <Payments />;
   }
 
   const shiftResults = calculateShift(payments);
@@ -121,11 +126,14 @@ const CashOut = () => {
         Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
       </Typography>
       <br />
-      <Stack direction="row" spacing={2} justifyContent="center">
-        <Button onClick={clockOut} variant="contained">
-          Clock Out
-        </Button>
-      </Stack>
+      {showDeclaredTipsForm && <DeclaredTipsForm save={saveDeclaredTips} />}
+      {showClockOut && (
+        <Stack direction="row" spacing={2} justifyContent="center">
+          <Button onClick={clockOut} variant="contained">
+            Clock Out
+          </Button>
+        </Stack>
+      )}
     </div>
   );
 };

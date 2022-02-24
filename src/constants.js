@@ -31,6 +31,7 @@ export const NO_SEND = 'No-Send';
 export const CLOCK_IN = 'clock-in';
 export const CLOCK_OUT = 'clock-out';
 export const CASH_OUT = 'cash-out';
+export const DECLARE_CASH_TIPS = 'declare-cash-tips';
 export const OPEN_SHIFT = 'open-shift';
 export const CLOSE_SHIFT = 'close-shift';
 export const OPEN_DAY = 'open-day';

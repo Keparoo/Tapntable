@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clockOutUser, clearUserPin } from '../actions/user';
@@ -23,17 +23,14 @@ const LogoutPage = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h3" align="center">
-        Tapntable
-      </Typography>
-      <Button onClick={clockOut} variant="contained" align="center">
+    <Stack direction="row" spacing={2} mt={24} justifyContent="center">
+      <Button onClick={clockOut} variant="contained">
         Clock Out
       </Button>
-      <Button onClick={cancel} variant="contained" align="center">
+      <Button onClick={cancel} variant="contained">
         Cancel
       </Button>
-    </div>
+    </Stack>
   );
 };
 

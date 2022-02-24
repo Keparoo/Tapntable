@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink, useHistory, Redirect } from 'react-router-dom';
-import { clearUserPin, fetchUserFromAPI, clockInUser } from '../actions/user';
-import { Typography, Link, Button } from '@mui/material';
+import { useHistory, Redirect } from 'react-router-dom';
+import {
+  clearUserPin,
+  fetchUserFromAPI,
+  clockInUser,
+  clockOutUser
+} from '../actions/user';
+import { Typography, Button, Container, Stack } from '@mui/material';
 import UserPinForm from '../auth/UserPinForm';
 import {
   TRAINEE,
@@ -38,6 +43,14 @@ const Homepage = () => {
     history.push('/welcome');
   };
 
+  const clockOut = () => {
+    console.debug('clockOut');
+
+    dispatch(clockOutUser(user.id));
+    dispatch(clearUserPin());
+    history.push('/');
+  };
+
   const cancelClockIn = () => {
     console.debug('cancel login');
     dispatch(clearUserPin());
@@ -46,15 +59,12 @@ const Homepage = () => {
   // Enter pin to identify person
   if (!user.id) {
     return (
-      <div>
-        <Typography variant="h3" align="center">
-          Tapntable
-        </Typography>
-        <Typography variant="h3" align="center">
+      <Container align="center">
+        <Typography variant="h3" align="center" mt={24} gutterBottom>
           Please Log in
         </Typography>
-        <UserPinForm login={getUser} />
-      </div>
+        <UserPinForm login={getUser} align="center" />
+      </Container>
     );
   }
 
@@ -64,18 +74,14 @@ const Homepage = () => {
       return <ClockOut />;
     } else {
       return (
-        <div>
-          <Button
-            onClick={() => clockIn(user.id)}
-            variant="contained"
-            align="center"
-          >
+        <Stack direction="row" spacing={2} mt={24} justifyContent="center">
+          <Button onClick={() => clockIn(user.id)} variant="contained">
             Clock In
           </Button>
-          <Button onClick={cancelClockIn} variant="contained" align="center">
+          <Button onClick={cancelClockIn} variant="contained">
             Cancel
           </Button>
-        </div>
+        </Stack>
       );
     }
   }
@@ -83,18 +89,14 @@ const Homepage = () => {
   // If  a role that takes orders that is not currently clocked-in
   if (user.id && !user.isClockedIn)
     return (
-      <div>
-        <Button
-          onClick={() => clockIn(user.id)}
-          variant="contained"
-          align="center"
-        >
+      <Stack direction="row" spacing={2} mt={24} justifyContent="center">
+        <Button onClick={() => clockIn(user.id)} variant="contained">
           Clock In
         </Button>
-        <Button onClick={cancelClockIn} variant="contained" align="center">
+        <Button onClick={cancelClockIn} variant="contained">
           Cancel
         </Button>
-      </div>
+      </Stack>
     );
 
   // If a role that takes orders and is currently clocked-in

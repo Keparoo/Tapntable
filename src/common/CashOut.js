@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { clockOutUser, clearUserPin } from '../actions/user';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import { getOpenPaymentsFromAPI } from '../actions/payments';
+import { clearCurrentCheck } from '../actions/currentCheck';
+
 import TapntableApi from '../api/api';
+import { DECLARE_CASH_TIPS } from '../constants';
 import { calculateShift } from '../utils/helpers';
-import { Typography, Button, Stack } from '@mui/material';
+
+import { Typography, Button, Stack, Container, Paper } from '@mui/material';
+
 import Payments from './Payments';
 import Spinner from './Spinner';
-import { clearCurrentCheck } from '../actions/currentCheck';
 import DeclaredTipsForm from './DeclareTipsForm';
-import { DECLARE_CASH_TIPS } from '../constants';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -79,62 +83,53 @@ const CashOut = () => {
   const shiftResults = calculateShift(payments);
 
   return (
-    <div>
+    <Container maxWidth="xs">
       <Typography variant="h3" align="center">
         Cash Out
       </Typography>
-      <Typography variant="h6" align="center">
-        MC Sales ${shiftResults.masterCardSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Visa Sales ${shiftResults.visaSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Amex Sales ${shiftResults.amexSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Discover Sales ${shiftResults.discSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Google Pay Sales ${shiftResults.googleSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Apple Pay Sales ${shiftResults.appleSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Venmo Sales ${shiftResults.venmoSales.toFixed(2)}
-      </Typography>
+      <Paper elevation="6" sx={{ marginTop: 4, marginBottom: 4 }}>
+        <Typography variant="body1" mx={10} pt={4}>
+          MC Sales ${shiftResults.masterCardSales.toFixed(2)} <br />
+          Amex Sales ${shiftResults.amexSales.toFixed(2)} <br />
+          Visa Sales ${shiftResults.visaSales.toFixed(2)} <br />
+          Amex Sales ${shiftResults.amexSales.toFixed(2)} <br />
+          Discover Sales ${shiftResults.discSales.toFixed(2)} <br />
+          Google Pay Sales ${shiftResults.googleSales.toFixed(2)} <br />
+          Apple Pay Sales ${shiftResults.appleSales.toFixed(2)} <br />
+          Venmo Sales ${shiftResults.venmoSales.toFixed(2)}
+        </Typography>
+        <br />
+
+        <Typography variant="h6" mx={10}>
+          Credit Sales ${shiftResults.creditSales.toFixed(2)} <br />
+          Cash Sales ${shiftResults.cashSales.toFixed(2)} <br />
+          Total Sales ${shiftResults.totalSales.toFixed(2)}
+        </Typography>
+        <br />
+        <Typography variant="h6" mx={10} pb={4}>
+          Total Credit Tips ${shiftResults.totalCreditTip.toFixed(2)} <br />
+          Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
+        </Typography>
+      </Paper>
       <br />
 
-      <Typography variant="h6" align="center">
-        Credit Sales ${shiftResults.creditSales.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Cash Sales ${shiftResults.cashSales.toFixed(2)}
-      </Typography>
-      <br />
-
-      <Typography variant="h6" align="center">
-        Total Sales ${shiftResults.totalSales.toFixed(2)}
-      </Typography>
-      <br />
-
-      <Typography variant="h6" align="center">
-        Total Credit Tips ${shiftResults.totalCreditTip.toFixed(2)}
-      </Typography>
-      <Typography variant="h6" align="center">
-        Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
-      </Typography>
-      <br />
-      {showDeclaredTipsForm && <DeclaredTipsForm save={saveDeclaredTips} />}
+      {showDeclaredTipsForm && (
+        <Stack direction="row" spacing={2} align="center">
+          <DeclaredTipsForm save={saveDeclaredTips} justifyContent="center" />
+        </Stack>
+      )}
       {showClockOut && (
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={clockOut} variant="contained">
+          <Button
+            onClick={clockOut}
+            variant="contained"
+            justifyContent="center"
+          >
             Clock Out
           </Button>
         </Stack>
       )}
-    </div>
+    </Container>
   );
 };
 

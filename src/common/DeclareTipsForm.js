@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Box,
+  Container,
+  InputAdornment
+} from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
 const DeclaredTipsForm = ({ save }) => {
@@ -20,30 +26,39 @@ const DeclaredTipsForm = ({ save }) => {
   }
 
   return (
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-        justifyContent: 'center'
-      }}
-      noValidate
-      autoComplete="off"
-      justifyContent="center"
-    >
-      <TextField
-        type="number"
-        id="declaredTips"
-        name="declaredTips"
-        label="Declared Tips"
-        variant="outlined"
-        value={form.declaredTips}
-        onChange={handleChange}
-      />
+    <Container>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' }
+        }}
+        noValidate
+        align="center"
+        autoComplete="off"
+      >
+        <TextField
+          type="number"
+          id="declaredTips"
+          name="declaredTips"
+          label="Declared Tips"
+          variant="outlined"
+          placeholder="0.00"
+          autoFocus={true}
+          required={true}
+          helperText="Enter any declared cash tips"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>
+          }}
+          onSubmit={handleSubmit}
+          value={form.declaredTips}
+          onChange={handleChange}
+        />
 
-      <Button onClick={handleSubmit} variant="contained">
-        Add Declared Cash Tips for Shift
-      </Button>
-    </Box>
+        <Button onClick={handleSubmit} variant="contained">
+          Submit
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

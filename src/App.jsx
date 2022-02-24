@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import restaurantConfig from './restaurantConfig.json';
+
 import './App.css';
 // import CssBaseline from '@mui/material/CssBaseline';
 import {
@@ -12,14 +14,15 @@ import {
   Toolbar,
   Link
 } from '@mui/material';
-import restaurantConfig from './restaurantConfig.json';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Routes from './routes/Routes';
 
 const App = () => {
   console.debug('App');
-
   console.log(restaurantConfig);
+
+  const theme = createTheme({});
 
   return (
     <div className="App">
@@ -116,10 +119,6 @@ const App = () => {
           </Link>
         </Toolbar>
       </AppBar>
-
-      <main>
-        <Container maxWidth="lg" />
-      </main>
 
       <Routes />
     </div>

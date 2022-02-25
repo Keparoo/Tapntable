@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { Typography, Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 
 const UserPinForm = ({ login }) => {
   console.debug('UserPinForm');
 
-  const [ form, setForm ] = useState({ pin: '' });
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-  }
+  const [ pin, setPin ] = useState('');
+  const [ formError, setFormError ] = useState(false);
 
   // Handle submit: call parent function save
   function handleSubmit(e) {
     console.debug('UserPinForm handleSubmit');
     e.preventDefault();
-    login({ ...form });
+
+    if (!pin) setFormError(true);
+
+    if (pin) login(pin);
   }
 
   const clear = () => {
-    setForm({ pin: '' });
+    setPin('');
+    setFormError(false);
   };
 
   return (
@@ -27,25 +27,27 @@ const UserPinForm = ({ login }) => {
       <Box
         component="form"
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-          justifyContent: 'center'
+          '& > :not(style)': { m: 1, width: '25ch' }
         }}
         noValidate
         autoComplete="off"
-        justifyContent="center"
+        onSubmit={handleSubmit}
       >
         <TextField
+          onChange={(e) => setPin(e.target.value)}
           type="number"
           id="pin"
           name="pin"
-          label="Pin"
+          label="User Pin"
           variant="outlined"
-          value={form.pin}
-          onChange={handleChange}
+          value={pin}
+          required
+          helperText="Please enter your pin"
+          error={formError}
         />
 
         <Button onClick={handleSubmit} variant="contained">
-          Enter Pin
+          Submit
         </Button>
         <Button onClick={clear} variant="contained">
           Clear

@@ -35,6 +35,7 @@ const DeclaredTipsForm = ({ save }) => {
         noValidate
         align="center"
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <TextField
           type="number"
@@ -49,7 +50,6 @@ const DeclaredTipsForm = ({ save }) => {
           InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>
           }}
-          onSubmit={handleSubmit}
           value={form.declaredTips}
           onChange={handleChange}
         />

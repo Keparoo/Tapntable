@@ -5,7 +5,16 @@ import { clearCurrentCheck } from '../actions/currentCheck';
 import ItemNoteForm from './ItemNoteForm';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Container, Button, Stack } from '@mui/material';
+import {
+  Typography,
+  Container,
+  Button,
+  Stack,
+  Divider,
+  List,
+  ListItem,
+  ListItemText
+} from '@mui/material';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
@@ -13,6 +22,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   const dispatch = useDispatch();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
+  const [ currItem, setCurrItem ] = useState({});
   // const [seatNum, setSeatNum] = useState(1)
 
   // Get current user and check
@@ -189,8 +199,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   // Add an item note: Show form
   const addNote = (i) => {
-    console.debut('addNote', i);
+    console.debug('addNote', i);
     setShowItemNoteForm(true);
+    setCurrItem(i.id);
   };
 
   // Save item note: Hide form
@@ -212,20 +223,20 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         <div
           style={{ background: 'lightgray', height: '80vh', padding: '8px' }}
         >
-          <div className="CurrentCheck-Header">
+          <header className="CurrentCheck-Header">
             <Typography variant="h6" align="center" sx={{ padding: '6px' }}>
-              {check.createdAt && (
+              {check.tableNum && (
                 <span>
-                  Created At:{' '}
-                  <strong>{moment(check.createdAt).format('LT')}</strong>
+                  Table: <strong>{check.tableNum}</strong>
                 </span>
               )}
             </Typography>
 
             <Typography variant="p">
-              {check.tableNum && (
+              {check.createdAt && (
                 <span>
-                  Table Num: <strong>{check.tableNum}</strong>
+                  Created At:{' '}
+                  <strong>{moment(check.createdAt).format('LT')}</strong>
                 </span>
               )}
               {check.numGuests && (
@@ -234,28 +245,47 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                 </span>
               )}
             </Typography>
-          </div>
+          </header>
           <br />
 
-          <div className="CurrentCheck-Items">
+          <List className="CurrentCheck-Items">
             {check.items.map((i) => (
-              <p key={uuid()}>
-                <strong>{i.name}</strong>{' '}
-                <span style={{ float: 'right' }}>${i.price}</span>
-              </p>
-            ))}
-            {check.newItems.map((i) => (
-              <React.Fragment>
-                <p key={uuid()} onClick={() => addNote(i)}>
+              <ListItem key={uuid()}>
+                <ListItemText>
                   <strong>{i.name}</strong>{' '}
                   <span style={{ float: 'right' }}>${i.price}</span>
-                </p>
-                {showItemNoteForm && (
+                  {i.itemNote && (
+                    <span>
+                      <br />
+                      {i.itemNote}
+                    </span>
+                  )}
+                </ListItemText>
+              </ListItem>
+            ))}
+          </List>
+          <Divider>New Items</Divider>
+
+          <List>
+            {check.newItems.map((i) => (
+              <ListItem key={uuid()} button>
+                <ListItemText onClick={(e) => addNote(i)}>
+                  <strong>{i.name}</strong>{' '}
+                  <span style={{ float: 'right' }}>${i.price}</span>
+                  {i.itemNote && (
+                    <span>
+                      <br />
+                      {i.itemNote}
+                    </span>
+                  )}
+                </ListItemText>
+                {showItemNoteForm &&
+                currItem === i.id && (
                   <ItemNoteForm item={i} save={saveNote} cancel={cancelNote} />
                 )}
-              </React.Fragment>
+              </ListItem>
             ))}
-          </div>
+          </List>
 
           <div
             className="CurrentCheck-Payments"

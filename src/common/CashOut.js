@@ -83,14 +83,13 @@ const CashOut = () => {
   const shiftResults = calculateShift(payments);
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth="sm">
       <Typography variant="h3" align="center">
         Cash Out
       </Typography>
       <Paper elevation="6" sx={{ marginTop: 4, marginBottom: 4 }}>
         <Typography variant="body1" mx={10} pt={4}>
           MC Sales ${shiftResults.masterCardSales.toFixed(2)} <br />
-          Amex Sales ${shiftResults.amexSales.toFixed(2)} <br />
           Visa Sales ${shiftResults.visaSales.toFixed(2)} <br />
           Amex Sales ${shiftResults.amexSales.toFixed(2)} <br />
           Discover Sales ${shiftResults.discSales.toFixed(2)} <br />
@@ -102,13 +101,21 @@ const CashOut = () => {
 
         <Typography variant="h6" mx={10}>
           Credit Sales ${shiftResults.creditSales.toFixed(2)} <br />
+          Credit Tips ${shiftResults.totalCreditTip.toFixed(2)} <br />
           Cash Sales ${shiftResults.cashSales.toFixed(2)} <br />
           Total Sales ${shiftResults.totalSales.toFixed(2)}
         </Typography>
         <br />
         <Typography variant="h6" mx={10} pb={4}>
-          Total Credit Tips ${shiftResults.totalCreditTip.toFixed(2)} <br />
-          Server Cash Due ${shiftResults.serverCashDue.toFixed(2)}
+          {shiftResults.serverCashDue > 0 ? (
+            <span>
+              Owed to Restaurant ${shiftResults.serverCashDue.toFixed(2)}
+            </span>
+          ) : (
+            <span>
+              Owed to Server ${(shiftResults.serverCashDue * -1).toFixed(2)}
+            </span>
+          )}
         </Typography>
       </Paper>
       <br />

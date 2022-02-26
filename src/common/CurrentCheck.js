@@ -262,7 +262,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             </Typography>
           </header>
 
-          <Divider>Sent Items</Divider>
+          {check.items.length !== 0 && <Divider>Sent Items</Divider>}
 
           <List className="CurrentCheck-Items" dense={true}>
             {check.items.map((i) => (
@@ -280,7 +280,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               </ListItem>
             ))}
           </List>
-          <Divider>New Items</Divider>
+          {check.newItems.length !== 0 && <Divider>New Items</Divider>}
 
           <List>
             {check.newItems.map((i, idx, arr) => (

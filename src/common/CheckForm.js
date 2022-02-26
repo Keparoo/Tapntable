@@ -1,4 +1,4 @@
-import { Box, Container, TextField, Button } from '@mui/material';
+import { Box, Paper, Container, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 // import './NewCheckForm.css';
 
@@ -36,12 +36,12 @@ const CheckForm = ({
   }
 
   return (
-    <Container>
-      <Box
-        component="form"
+    <Container maxWidth="sm" sx={{ marginTop: '12em' }}>
+      <Paper
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' }
+          '& > :not(style)': { m: 2, width: '25ch', mt: 4 }
         }}
+        component="form"
         noValidate
         align="center"
         autoComplete="off"
@@ -77,7 +77,7 @@ const CheckForm = ({
           Create New Check
         </Button>
         <Button onClick={cancel}>Cancel</Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

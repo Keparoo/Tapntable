@@ -4,16 +4,7 @@ import restaurantConfig from './restaurantConfig.json';
 
 import './App.css';
 // import CssBaseline from '@mui/material/CssBaseline';
-import {
-  Typography,
-  CssBaseline,
-  Container,
-  AppBar,
-  Grid,
-  Button,
-  Toolbar,
-  Link
-} from '@mui/material';
+import { Typography, CssBaseline, AppBar, Toolbar, Link } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Routes from './routes/Routes';

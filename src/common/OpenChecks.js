@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import {
   Typography,
   Container,
-  Button,
   Card,
-  CardActions,
   CardActionArea,
   CardContent
 } from '@mui/material';

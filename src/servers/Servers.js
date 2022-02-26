@@ -18,7 +18,7 @@ import CurrentCheck from '../common/CurrentCheck';
 import Spinner from '../common/Spinner';
 import OrderCategories from '../common/OrderCategories';
 import Payment from '../common/Payment';
-import { Button, Stack, Container, Typography, Grid } from '@mui/material';
+import { Button, Stack, Grid } from '@mui/material';
 import './Servers.css';
 import { clearUserPin } from '../actions/user';
 

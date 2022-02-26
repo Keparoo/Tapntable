@@ -9,18 +9,17 @@ import {
   Typography,
   Container,
   Button,
+  Box,
   Stack,
   Divider,
   List,
   ListItem,
   ListItemText,
   ListItemButton,
-  ListItemSecondaryAction,
-  ListSubheader
+  ListItemSecondaryAction
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
-import { Box } from '@mui/system';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');

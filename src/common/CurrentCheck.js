@@ -228,17 +228,18 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     return (
       <Container sx={{ padding: '8px', width: 400 }}>
         <Box
+          px={1}
+          py={2}
           sx={{
             height: '80vh',
             width: '100%',
             maxWidth: 400,
-            bgcolor: 'lightgray',
-            padding: '8px'
+            bgcolor: 'lightgray'
           }}
           style={{ overflow: 'auto' }}
         >
           <header className="CurrentCheck-Header">
-            <Typography variant="h6" align="center" sx={{ padding: '6px' }}>
+            <Typography variant="h6" align="center">
               {check.tableNum && (
                 <span>
                   Table: <strong>{check.tableNum}</strong>

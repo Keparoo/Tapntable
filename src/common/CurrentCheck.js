@@ -198,16 +198,18 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   };
 
   // Add an item note: Show form
-  const addNote = (i) => {
-    console.debug('addNote', i);
+  const addNote = (arr, idx) => {
+    console.debug('addNote', idx, arr);
     setShowItemNoteForm(true);
-    setCurrItem(i.id);
+    setCurrItem(idx);
   };
 
   // Save item note: Hide form
-  const saveNote = (item, note) => {
-    item.item.itemNote = item.note;
-    console.debug('Item Note: ', item);
+  const saveNote = (i, note) => {
+    console.debug('*****saveNote', i, note);
+    // item.item.itemNote = item.note;
+    i.itemNote = note.note;
+    console.debug('Item Note: ', note.note);
     setShowItemNoteForm(false);
   };
 
@@ -267,9 +269,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           <Divider>New Items</Divider>
 
           <List>
-            {check.newItems.map((i) => (
-              <ListItem key={uuid()} button>
-                <ListItemText onClick={(e) => addNote(i)}>
+            {check.newItems.map((i, idx, arr) => (
+              <ListItem key={idx} button>
+                <ListItemText onClick={() => addNote(arr, idx)}>
                   <strong>{i.name}</strong>{' '}
                   <span style={{ float: 'right' }}>${i.price}</span>
                   {i.itemNote && (
@@ -280,8 +282,13 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                   )}
                 </ListItemText>
                 {showItemNoteForm &&
-                currItem === i.id && (
-                  <ItemNoteForm item={i} save={saveNote} cancel={cancelNote} />
+                currItem === idx && (
+                  <ItemNoteForm
+                    i={i}
+                    idx={idx}
+                    save={saveNote}
+                    cancel={cancelNote}
+                  />
                 )}
               </ListItem>
             ))}

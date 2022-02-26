@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
-const ItemNoteForm = ({ item, save, cancel }) => {
-  console.debug('PayAmountForm', item);
+const ItemNoteForm = ({ i, save, cancel }) => {
+  console.debug('ItemNoteForm', i);
 
   const [ form, setForm ] = useState({ note: '' });
 
@@ -16,7 +16,7 @@ const ItemNoteForm = ({ item, save, cancel }) => {
   function handleSubmit(e) {
     console.debug('AddNoteForm handleSubmit');
     e.preventDefault();
-    save({ item, ...form });
+    save(i, { ...form });
   }
 
   return (

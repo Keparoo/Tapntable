@@ -149,4 +149,4 @@ const calculateShift = (payments) => {
   };
 };
 
-export { formatTime, calculateCheck, calculateShift };
+export { formatTime, calculateCheck, floatToMoney, calculateShift };

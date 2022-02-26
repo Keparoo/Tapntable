@@ -6,6 +6,7 @@ import {
   CLEAR_CURRENT_CHECK,
   ADD_PAYMENT
 } from '../actions/types';
+import { floatToMoney } from '../utils/helpers';
 
 const INITIAL_STATE = { items: [], newItems: [], payments: [] };
 export default function newCheck(state = INITIAL_STATE, action) {
@@ -26,8 +27,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
     case ADD_TO_CHECK:
       return {
         ...state,
-        subtotal: +state.subtotal + +action.item.price,
-        newItems: [ ...state.newItems, action.item ]
+        subtotal: floatToMoney(+state.subtotal + +action.item.price),
+        newItems: [ ...state.newItems, { ...action.item } ]
       };
 
     case REMOVE_FROM_CHECK:
@@ -52,9 +53,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
       return INITIAL_STATE;
 
     case ADD_PAYMENT:
-      const amountDue = Math.round(
-        (state.amountDue - action.payment.subtotal * 100) / 100
-      );
+      const amountDue = floatToMoney(state.amountDue - action.payment.subtotal);
 
       return {
         ...state,

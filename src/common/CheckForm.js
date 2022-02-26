@@ -1,9 +1,10 @@
+import { Box, Container, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 // import './NewCheckForm.css';
 
-/* Render New/Edit post form
+/* Render New Check form
 
-    Call the parent (POST) on edit or cancel click
+    Call the parent (POST) or cancel click
 */
 
 const CheckForm = ({
@@ -17,6 +18,8 @@ const CheckForm = ({
     tableNum: check.tableNum,
     numGuests: check.numGuests
   });
+  const [ tableNumFormError, setTableNumFormError ] = useState(false);
+  const [ numGuestsFormError, setNumGuestsFormError ] = useState(false);
 
   // Handle changes in the form
   function handleChange(e) {
@@ -27,43 +30,55 @@ const CheckForm = ({
   // Handle submit: call parent function save
   function handleSubmit(e) {
     e.preventDefault();
-    save({ ...form });
+    if (!form.tableNum) setTableNumFormError(true);
+    if (!form.numGuests) setNumGuestsFormError(true);
+    if (form.tableNum && form.numGuests) save({ ...form });
   }
 
   return (
-    <form
-      className="mb-4"
-      style={{ width: 300, margin: 'auto', marginTop: '100px' }}
-      onSubmit={handleSubmit}
-    >
-      <div className="form-group">
-        <label htmlFor="tableNum">Table Number:</label>
-        <input
-          className="form-control active"
+    <Container>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' }
+        }}
+        noValidate
+        align="center"
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <TextField
           type="number"
-          name="tableNum"
           id="tableNum"
-          onChange={handleChange}
-          value={form.tableNum}
+          name="tableNum"
+          label="Table Number"
+          variant="outlined"
           autoFocus={true}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="numGuests">Number of Guests:</label>
-        <input
-          className="form-control"
-          type="number"
-          name="numGuests"
-          id="numGuests"
+          required={true}
+          helperText="Please enter the table nubmer"
+          value={form.tableNum}
           onChange={handleChange}
-          value={form.numGuests}
+          error={tableNumFormError}
         />
-      </div>
-      <button className="btn btn-primary mr-2">Create New Check</button>
-      <button onClick={cancel} className="btn btn-secondary">
-        Cancel
-      </button>
-    </form>
+        <TextField
+          type="number"
+          id="numGuests"
+          name="numGuests"
+          label="Number of Guests"
+          variant="outlined"
+          autoFocus={true}
+          required={true}
+          helperText="Please enter the number of guests"
+          value={form.numGuests}
+          onChange={handleChange}
+          error={numGuestsFormError}
+        />
+        <Button onClick={handleSubmit} variant="contained">
+          Create New Check
+        </Button>
+        <Button onClick={cancel}>Cancel</Button>
+      </Box>
+    </Container>
   );
 };
 

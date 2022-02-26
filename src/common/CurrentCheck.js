@@ -13,9 +13,14 @@ import {
   Divider,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  ListItemButton,
+  ListItemSecondaryAction,
+  ListSubheader
 } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
+import { Box } from '@mui/system';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');
@@ -221,9 +226,16 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   const renderCurrentCheck = () => {
     return (
-      <Container sx={{ padding: '8px' }}>
-        <div
-          style={{ background: 'lightgray', height: '80vh', padding: '8px' }}
+      <Container sx={{ padding: '8px', width: 400 }}>
+        <Box
+          sx={{
+            height: '80vh',
+            width: '100%',
+            maxWidth: 400,
+            bgcolor: 'lightgray',
+            padding: '8px'
+          }}
+          style={{ overflow: 'auto' }}
         >
           <header className="CurrentCheck-Header">
             <Typography variant="h6" align="center" sx={{ padding: '6px' }}>
@@ -248,9 +260,10 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               )}
             </Typography>
           </header>
-          <br />
 
-          <List className="CurrentCheck-Items">
+          <Divider>Sent Items</Divider>
+
+          <List className="CurrentCheck-Items" dense={true}>
             {check.items.map((i) => (
               <ListItem key={uuid()}>
                 <ListItemText>
@@ -270,10 +283,12 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
           <List>
             {check.newItems.map((i, idx, arr) => (
-              <ListItem key={idx} button>
+              <ListItem key={idx} button disablePadding>
+                <ListItemButton sx={{ pr: 0, width: 2 }}>
+                  <MoreVertIcon />
+                </ListItemButton>
                 <ListItemText onClick={() => addNote(arr, idx)}>
-                  <strong>{i.name}</strong>{' '}
-                  <span style={{ float: 'right' }}>${i.price}</span>
+                  <strong>{i.name}</strong>
                   {i.itemNote && (
                     <span>
                       <br />
@@ -281,6 +296,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     </span>
                   )}
                 </ListItemText>
+                <ListItemSecondaryAction>${i.price}</ListItemSecondaryAction>
                 {showItemNoteForm &&
                 currItem === idx && (
                   <ItemNoteForm
@@ -293,7 +309,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               </ListItem>
             ))}
           </List>
+        </Box>
 
+        <footer style={{ marginTop: 'auto' }}>
           <div
             className="CurrentCheck-Payments"
             style={{ position: 'absolute', bottom: '13em' }}
@@ -305,34 +323,34 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               </p>
             ))}
           </div>
-        </div>
 
-        <div className="CurrentCheck-Totals">
-          <Typography variant="p" sx={{ padding: '6px' }}>
-            {(check.subtotal || check.subtotal === 0) && (
-              <span style={{ float: 'right', paddingRight: '6px' }}>
-                Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
-              </span>
-            )}
-          </Typography>
+          <div className="CurrentCheck-Totals">
+            <Typography variant="p" sx={{ padding: '6px' }}>
+              {(check.subtotal || check.subtotal === 0) && (
+                <span style={{ float: 'right', paddingRight: '16px' }}>
+                  Subtotal: <strong>${check.subtotal.toFixed(2)}</strong>
+                </span>
+              )}
+            </Typography>
 
-          <br />
-          <Typography variant="p" sx={{ padding: '6px' }}>
-            {(check.amountDue || check.amountDue === 0) && (
-              <span style={{ float: 'right', paddingRight: '6px' }}>
-                Amount Due: <strong>${check.amountDue.toFixed(2)}</strong>
-              </span>
-            )}
-          </Typography>
-          <Typography variant="p" sx={{ padding: '6px' }}>
-            {(check.totalTax || check.totalTax === 0) && (
-              <span style={{ float: 'left', paddingLeft: '6px' }}>
-                Tax: <strong>${check.totalTax.toFixed(2)}</strong>
-              </span>
-            )}
-          </Typography>
-          <br />
-        </div>
+            <br />
+            <Typography variant="p" sx={{ padding: '6px' }}>
+              {(check.amountDue || check.amountDue === 0) && (
+                <span style={{ float: 'right', paddingRight: '16px' }}>
+                  Amount Due: <strong>${check.amountDue.toFixed(2)}</strong>
+                </span>
+              )}
+            </Typography>
+            <Typography variant="p" sx={{ padding: '6px' }}>
+              {(check.totalTax || check.totalTax === 0) && (
+                <span style={{ float: 'left', paddingLeft: '6px' }}>
+                  Tax: <strong>${check.totalTax.toFixed(2)}</strong>
+                </span>
+              )}
+            </Typography>
+            <br />
+          </div>
+        </footer>
 
         <div className="CurrentCheck-Buttons">
           <Stack direction="row" spacing={2} justifyContent="center">

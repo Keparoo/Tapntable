@@ -6,7 +6,6 @@ import {
   Grid,
   Paper,
   Typography,
-  Box,
   Button,
   ButtonBase,
   Stack
@@ -31,16 +30,18 @@ const OrderCats = () => {
   }));
 
   const displayCategory = (cat) => {
+    console.debug('displayCategory', cat);
     setShowCat(true);
     setCurrentCat(cat);
   };
 
-  const back = () => {
+  const close = () => {
+    console.debug('close');
     setShowCat(false);
   };
 
   const addItem = (item) => {
-    // console.log(item);
+    console.debug('addItem', item);
     dispatch(addItemToCheck(item));
   };
 
@@ -48,7 +49,7 @@ const OrderCats = () => {
     console.debug('Category', cat);
 
     const catItems = items.filter((i) => i.category === cat);
-    console.debug('catItems', items, catItems);
+    console.debug('catItems', catItems);
 
     return (
       <Paper sx={{ padding: '24px' }}>
@@ -60,7 +61,7 @@ const OrderCats = () => {
           ))}
         </Stack>
         <Stack sx={{ padding: '24px' }}>
-          <Button onClick={back}>Back</Button>
+          <Button onClick={close}>Back</Button>
         </Stack>
       </Paper>
     );

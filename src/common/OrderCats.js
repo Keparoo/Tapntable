@@ -21,7 +21,7 @@ const OrderCats = () => {
   const [ currentCat, setCurrentCat ] = useState('');
 
   const Item = styled(ButtonBase)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
     ...theme.typography.button,
     variant: 'outlined',
     padding: theme.spacing(3),
@@ -52,24 +52,39 @@ const OrderCats = () => {
     console.debug('catItems', catItems);
 
     return (
-      <Paper sx={{ padding: '24px' }}>
-        <Stack direction="row" spacing={2} justifyContent="center">
+      <Paper sx={{ padding: '24px', backgroundColor: '#fafafa' }}>
+        <Grid
+          container
+          direction="row"
+          spacing={4}
+          justifyContent="space-evenly"
+          alignItems="center"
+        >
           {catItems.map((i) => (
-            <Button key={i.id} onClick={() => addItem(i)} variant="contained">
-              {i.name}
-            </Button>
+            <Grid item key={i.id}>
+              <Button onClick={() => addItem(i)} variant="contained">
+                {i.name}
+              </Button>
+            </Grid>
           ))}
-        </Stack>
+        </Grid>
         <Stack sx={{ padding: '24px' }}>
-          <Button onClick={close}>Back</Button>
+          <Button onClick={close}>Close</Button>
         </Stack>
       </Paper>
     );
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper sx={{ flexGrow: 1 }}>
+    <Container maxWidth="md">
+      <Paper
+        sx={{
+          flexGrow: 1,
+          marginBottom: '16px',
+          marginTop: '16px',
+          backgroundColor: '#fafafa'
+        }}
+      >
         <Typography variant="h2" align="center">
           Order Categories
         </Typography>

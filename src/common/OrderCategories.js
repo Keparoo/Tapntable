@@ -3,6 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItemToCheck } from '../actions/currentCheck';
 import { Typography, Button, Stack } from '@mui/material';
 
+/**
+ * This Component is currently deprecated and has been replaced with OrderCats
+ * 
+ * 
+ * 
+ */
+
 const OrderCategories = () => {
   console.debug('OrderCategories');
 

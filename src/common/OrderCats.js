@@ -93,6 +93,7 @@ const OrderCats = () => {
           direction="row"
           spacing={4}
           justifyContent="space-evenly"
+          alignItems="center"
         >
           <Grid item xs={12} sm={6} md={4}>
             <Button

@@ -102,11 +102,20 @@ const App = () => {
           </Link>
           <Link
             color="inherit"
+            sx={{ mr: 2 }}
             component={RouterLink}
             to="/items"
             underline="none"
           >
             Items
+          </Link>
+          <Link
+            color="inherit"
+            component={RouterLink}
+            to="/closeday"
+            underline="none"
+          >
+            Close Day
           </Link>
         </Toolbar>
       </AppBar>

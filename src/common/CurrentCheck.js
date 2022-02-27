@@ -289,12 +289,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                 </ListItemButton>
                 <ListItemText onClick={() => addNote(arr, idx)}>
                   <strong>{i.name}</strong>
-                  {i.itemNote && (
-                    <span>
-                      <br />
-                      {i.itemNote}
-                    </span>
-                  )}
+                  {i.itemNote && <span>{i.itemNote}</span>}
                 </ListItemText>
                 <ListItemSecondaryAction>${i.price}</ListItemSecondaryAction>
                 {showItemNoteForm &&

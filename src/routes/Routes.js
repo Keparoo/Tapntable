@@ -13,6 +13,8 @@ import CashOut from '../common/CashOut';
 import UserPinForm from '../auth/UserPinForm';
 import ClockOut from '../common/ClockOut';
 import Welcome from '../common/Welcome';
+import ManagerRoute from '../auth/ManagerRoute';
+import CloseDay from '../auth/CloseDay';
 
 const Routes = () => {
   console.debug('AppRoutes');
@@ -62,9 +64,15 @@ const Routes = () => {
       <Route exact path="/kitchen">
         <Kitchen />
       </Route>
+
       <Route exact path="/kitchencold">
         <KitchenCold />
       </Route>
+
+      <ManagerRoute exact path="/closeday">
+        <CloseDay />
+      </ManagerRoute>
+
       <Route render={() => <Redirect to="/servers" />} />
     </Switch>
   );

@@ -20,14 +20,14 @@ const OrderCats = () => {
   const [ showCat, setShowCat ] = useState(false);
   const [ currentCat, setCurrentCat ] = useState('');
 
-  const Item = styled(ButtonBase)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
-    ...theme.typography.button,
-    variant: 'outlined',
-    padding: theme.spacing(3),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }));
+  // const Item = styled(ButtonBase)(({ theme }) => ({
+  //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
+  //   ...theme.typography.button,
+  //   variant: 'outlined',
+  //   padding: theme.spacing(3),
+  //   textAlign: 'center',
+  //   color: theme.palette.text.secondary
+  // }));
 
   const displayCategory = (cat) => {
     console.debug('displayCategory', cat);
@@ -52,7 +52,7 @@ const OrderCats = () => {
     console.debug('catItems', catItems);
 
     return (
-      <Paper sx={{ padding: '24px', backgroundColor: '#fafafa' }}>
+      <Paper elevation={3} sx={{ padding: '24px' }}>
         <Grid
           container
           direction="row"
@@ -68,7 +68,7 @@ const OrderCats = () => {
             </Grid>
           ))}
         </Grid>
-        <Stack sx={{ padding: '24px' }}>
+        <Stack sx={{ paddingTop: '36px' }}>
           <Button onClick={close}>Close</Button>
         </Stack>
       </Paper>
@@ -78,60 +78,105 @@ const OrderCats = () => {
   return (
     <Container maxWidth="md">
       <Paper
+        elevation={3}
         sx={{
-          flexGrow: 1,
           marginBottom: '16px',
           marginTop: '16px',
-          backgroundColor: '#fafafa'
+          padding: '24px'
         }}
       >
-        <Typography variant="h2" align="center">
+        <Typography variant="h2" align="center" gutterBottom>
           Order Categories
         </Typography>
         <Grid
           container
           direction="row"
           spacing={4}
-          justifyContent="space-between"
-          alignItems="center"
+          justifyContent="space-evenly"
         >
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Appetizer')}>Appetizers</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Appetizer')}
+            >
+              Appetizers
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Soup')}>Soup</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button variant="outlined" onClick={() => displayCategory('Soup')}>
+              Soup
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Salad')}>Salad</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button variant="outlined" onClick={() => displayCategory('Salad')}>
+              Salad
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Sandwich')}>Sandwiches</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Sandwich')}
+            >
+              Sandwiches
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Entree')}>Entrees</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Entree')}
+            >
+              Entrees
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Favorites')}>Favorites</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Favorites')}
+            >
+              Favorites
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Addition')}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Addition')}
+            >
               Menu Additions
-            </Item>
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Dessert')}>Desserts</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Dessert')}
+            >
+              Desserts
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Beverage')}>Beverages</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Beverage')}
+            >
+              Beverages
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Beer')}>Beer</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button variant="outlined" onClick={() => displayCategory('Beer')}>
+              Beer
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Wine')}>Wine</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button variant="outlined" onClick={() => displayCategory('Wine')}>
+              Wine
+            </Button>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Item onClick={() => displayCategory('Liquor')}>Liquor</Item>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="outlined"
+              onClick={() => displayCategory('Liquor')}
+            >
+              Liquor
+            </Button>
           </Grid>
         </Grid>
       </Paper>

@@ -66,7 +66,6 @@ const CheckForm = ({
           name="numGuests"
           label="Number of Guests"
           variant="outlined"
-          autoFocus={true}
           required={true}
           helperText="Please enter the number of guests"
           value={form.numGuests}

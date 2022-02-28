@@ -1,10 +1,10 @@
-import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MANAGER, OWNER } from '../constants';
 import { AppBar, Link, Toolbar, Typography } from '@mui/material';
 
-const KitchenNavbar = () => {
+const Navbar = () => {
   const user = useSelector((st) => st.user);
 
   return (
@@ -125,4 +125,4 @@ const KitchenNavbar = () => {
   );
 };
 
-export default KitchenNavbar;
+export default Navbar;

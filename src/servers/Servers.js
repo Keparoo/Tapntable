@@ -66,6 +66,7 @@ const Servers = () => {
   const cancel = () => {
     console.debug('Cancel NewCheck Form');
     setShowCheckForm(false);
+    setShowOrderCategories(false);
   };
 
   const createNewCheck = () => {

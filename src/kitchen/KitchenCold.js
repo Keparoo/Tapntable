@@ -11,15 +11,19 @@ import {
 } from '@mui/material';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import { TICKET_REFRESH_RATE } from '../constants';
+import { useHistory } from 'react-router-dom';
 
 const Kitchen = () => {
   console.debug('Kitchen');
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [ isLoading, setIsLoading ] = useState(true);
   const [ orders, setOrders ] = useState([]);
   const [ intervalId, setIntervalId ] = useState('');
+
+  if (!user.pin) history.push('/');
 
   useEffect(
     () => {

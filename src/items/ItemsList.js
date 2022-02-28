@@ -7,6 +7,7 @@ import { fetchItemsFromAPI } from '../actions/items';
 import ItemCardList from './ItemCardList';
 import Spinner from '../common/Spinner';
 import { clearCurrentCheck } from '../actions/currentCheck';
+import { useHistory } from 'react-router-dom';
 
 /*  Render page with list of items and filter search form
 
@@ -24,8 +25,12 @@ const ItemList = () => {
 
   // const [ items, setItems ] = useState([]);
   const items = useSelector((st) => st.items);
+  const user = useSelector((st) => st.user);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [ isLoading, setIsLoading ] = useState(true);
+
+  if (!user.pin) history.push('/');
 
   useEffect(
     () => {

@@ -36,6 +36,8 @@ const Servers = () => {
   const [ showCheckForm, setShowCheckForm ] = useState(false);
   const [ showPayment, setShowPayment ] = useState(false);
 
+  if (!user.pin) history.push('/');
+
   useEffect(
     () => {
       console.debug('ItemList useEffect on Mount');

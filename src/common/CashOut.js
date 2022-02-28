@@ -28,6 +28,8 @@ const CashOut = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  if (!user.pin) history.push('/');
+
   useEffect(
     () => {
       console.debug('ItemList useEffect on Mount');

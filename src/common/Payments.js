@@ -6,16 +6,20 @@ import AddTipForm from './AddTipForm';
 import { Typography, Card, CardActionArea, CardContent } from '@mui/material';
 import { CASH } from '../constants';
 import { clearCurrentCheck } from '../actions/currentCheck';
+import { useHistory } from 'react-router-dom';
 
 const Payments = () => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ payments, setPayments ] = useState([]);
+  const history = useHistory();
 
   const [ showAddTipForm, setShowAddTipForm ] = useState(false);
   const [ paymentId, setPaymentId ] = useState();
 
   const user = useSelector((st) => st.user);
   const dispatch = useDispatch();
+
+  if (!user.pin) history.push('/');
 
   useEffect(
     () => {

@@ -1,9 +1,13 @@
 import React from 'react';
 import { Button, Stack } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const UserLogoutForm = ({ logout }) => {
+  const user = useSelector((st) => st.user);
   const history = useHistory();
+
+  if (!user.pin) history.push('/');
 
   const cancel = () => {
     console.debug('Cancel User Logout');

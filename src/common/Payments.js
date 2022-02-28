@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import TapntableApi from '../api/api';
-import Spinner from './Spinner';
-import AddTipForm from './AddTipForm';
-import { Typography, Card, CardActionArea, CardContent } from '@mui/material';
-import { CASH } from '../constants';
-import { clearCurrentCheck } from '../actions/currentCheck';
 import { useHistory } from 'react-router-dom';
+import { clearCurrentCheck } from '../actions/currentCheck';
+import TapntableApi from '../api/api';
+import { CASH } from '../constants';
+
+import AddTipForm from './AddTipForm';
+import Spinner from './Spinner';
+
+import {
+  Typography,
+  Card,
+  CardActionArea,
+  CardContent,
+  Button,
+  Stack,
+  Container
+} from '@mui/material';
 
 const Payments = () => {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -27,7 +37,7 @@ const Payments = () => {
 
       async function fetchPayments() {
         console.debug();
-        // console.log('The user is: ', user);
+
         dispatch(clearCurrentCheck());
         const loginTime = await TapntableApi.getUserClockInTime(user.id);
         const payments = await TapntableApi.getUserShiftPayments(
@@ -43,9 +53,10 @@ const Payments = () => {
         fetchPayments();
       }
     },
-    [ isLoading, user.id ]
+    [ isLoading, user.id, dispatch ]
   );
 
+  // Add tip to payment in db
   const addTip = async ({ tip }) => {
     console.debug('addTip', tip);
 
@@ -55,10 +66,12 @@ const Payments = () => {
     setIsLoading(true);
   };
 
+  // Turn off add tip form
   const cancel = () => {
     setShowAddTipForm(false);
   };
 
+  // Show add tip form
   const tip = (paymentId) => {
     console.debug('tip', paymentId);
 
@@ -68,9 +81,31 @@ const Payments = () => {
 
   if (isLoading) return <Spinner />;
 
+  // No open payments
+  if (payments.length === 0) {
+    return (
+      <Container maxWidth="md">
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{ marginTop: '15vh' }}
+          gutterBottom
+        >
+          No Open Payments
+        </Typography>
+        <Stack justifyContent="center">
+          <Button onClick={() => history.push('/cashout')} variant="contained">
+            Cash Out
+          </Button>
+        </Stack>
+      </Container>
+    );
+  }
+
+  // Display open payments
   return (
     <div>
-      <Typography variant="h3" align="center">
+      <Typography variant="h4" align="center">
         Open Payments
       </Typography>
       {payments.map((p) => (

@@ -28,7 +28,7 @@ const OpenChecks = ({ open }) => {
   return (
     <div className="CurrentChecks">
       <Container style={{ height: '40vh' }}>
-        <Typography variant="h4" align="center">
+        <Typography variant="h4" align="center" gutterBottom>
           Open Checks
         </Typography>
 

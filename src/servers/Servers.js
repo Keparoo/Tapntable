@@ -133,10 +133,7 @@ const Servers = () => {
           <Button onClick={createNewCheck} variant="contained">
             New Check
           </Button>
-          <Button variant="contained" component={RouterLink} to="/cashout">
-            Cash Out
-          </Button>
-          <Button onClick={exit} variant="contained">
+          <Button onClick={exit} variant="contained" color="secondary">
             Exit
           </Button>
         </Stack>

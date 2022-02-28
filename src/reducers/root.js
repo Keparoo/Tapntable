@@ -3,6 +3,7 @@ import items from './items';
 import checks from './checks';
 import payments from './payments';
 import currentCheck from './currentCheck';
+import totals from './totals';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   items,
   checks,
   payments,
-  currentCheck
+  currentCheck,
+  totals
 });

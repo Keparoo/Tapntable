@@ -10,3 +10,9 @@ export const ADD_PAYMENT = 'ADD_PAYMENT';
 export const GET_OPEN_PAYMENTS = 'GET_OPEN_PAYMENTS';
 export const FETCH_USER = 'FETCH_USER';
 export const CLEAR_USER_PIN = 'CLEAR_USER_PIN';
+
+export const GET_DAY_OPEN_TIME = 'GET_DAY_OPEN_TIME';
+export const GET_DAY_CHECKS = 'GET_DAY_CHECKS';
+export const GET_DAY_PAYMENTS = 'GET_DAY_PAYMENTS';
+export const GET_DAY_USER_DATA = 'GET_DAY_USER_DATA';
+export const GET_EMPLOYEE_HOURS = 'GET_EMPLOYEE_HOURS';

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { CASH_OUT, CLOCK_IN, CASH } from '../constants';
+import { getDayOpenFromAPI } from '../actions/totals';
+import { CASH_OUT, CLOCK_IN, CASH, OPEN_DAY } from '../constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -35,6 +36,8 @@ class TapntableApi {
 
   // Individual API routes
 
+  //**************Items Queries*************************************** */
+
   /** Get list of items filtered by query if query is not undefined */
 
   // Return a list of all items in db
@@ -43,11 +46,32 @@ class TapntableApi {
     return res.items;
   }
 
+  //**************Orders Queries*************************************** */
+
   // Post a new order to database
   static async createOrder(userId) {
     let res = await this.request(`orders`, { userId }, 'post');
     return res.order;
   }
+
+  static async completeOrder(orderId) {
+    let res = await this.request(
+      `orders/${orderId}`,
+      {
+        completedAt: new Date()
+      },
+      'patch'
+    );
+    return res.order;
+  }
+
+  // Get list of open orders from database filtered by destinationId
+  static async getOpenOrders() {
+    let res = await this.request(`orders`, { completedAt: undefined });
+    return res.orders;
+  }
+
+  //**************Checks Queries*************************************** */
 
   // Post a new check to database
   // ignore customer field
@@ -58,16 +82,6 @@ class TapntableApi {
       'post'
     );
     return res.check;
-  }
-
-  // Post an ordered item to database
-  static async createOrdItem(itemId, orderId, checkId, seatNum, itemNote) {
-    let res = await this.request(
-      `ordered`,
-      { itemId, orderId, checkId, seatNum, itemNote },
-      'post'
-    );
-    return res.ordItem;
   }
 
   // Return all user's checks
@@ -86,6 +100,39 @@ class TapntableApi {
     return res.checks;
   }
 
+  // Print Check, timestamp print time and update subtotal and tax
+  // This may be done multiple times before closing check
+  static async printCheck(checkId, subtotal, localTax, stateTax, federalTax) {
+    let res = await this.request(
+      `checks/${checkId}`,
+      { printedAt: new Date(), subtotal, localTax, stateTax, federalTax },
+      'patch'
+    );
+    return res.check;
+  }
+
+  // Close check: timestamp and update subtotal and tax (timestamp not null indicates check closed)
+  static async closeCheck(checkId, subtotal, localTax, stateTax, federalTax) {
+    let res = await this.request(
+      `checks/${checkId}`,
+      { closedAt: new Date(), subtotal, localTax, stateTax, federalTax },
+      'patch'
+    );
+    return res.check;
+  }
+
+  //**************Ordered_Items Queries*************************************** */
+
+  // Post an ordered item to database
+  static async createOrdItem(itemId, orderId, checkId, seatNum, itemNote) {
+    let res = await this.request(
+      `ordered`,
+      { itemId, orderId, checkId, seatNum, itemNote },
+      'post'
+    );
+    return res.ordItem;
+  }
+
   // Return all ordered items related to checkId
   static async getOrderedItems(query) {
     let res = await this.request(`ordered`, { checkId: query });
@@ -98,16 +145,7 @@ class TapntableApi {
     return res.ordItems;
   }
 
-  static async completeOrder(orderId) {
-    let res = await this.request(
-      `orders/${orderId}`,
-      {
-        completedAt: new Date()
-      },
-      'patch'
-    );
-    return res.order;
-  }
+  //**************Payments Queries*************************************** */
 
   // Return a list of all payments related to checkId
   static async getPayments(query) {
@@ -153,26 +191,14 @@ class TapntableApi {
     return res.payment;
   }
 
-  // Print Check, timestamp print time and update subtotal and tax
-  // This may be done multiple times before closing check
-  static async printCheck(checkId, subtotal, localTax, stateTax, federalTax) {
-    let res = await this.request(
-      `checks/${checkId}`,
-      { printedAt: new Date(), subtotal, localTax, stateTax, federalTax },
-      'patch'
-    );
-    return res.check;
+  //**************Auth Queries*************************************** */
+
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, 'post');
+    return res.token;
   }
 
-  // Close check: timestamp and update subtotal and tax (timestamp not null indicates check closed)
-  static async closeCheck(checkId, subtotal, localTax, stateTax, federalTax) {
-    let res = await this.request(
-      `checks/${checkId}`,
-      { closedAt: new Date(), subtotal, localTax, stateTax, federalTax },
-      'patch'
-    );
-    return res.check;
-  }
+  //**************Users Queries*************************************** */
 
   // Query database to get user from pin
   static async getUser(pin) {
@@ -233,15 +259,9 @@ class TapntableApi {
     return res.log;
   }
 
-  // Get list of open orders from database filtered by destinationId
-  static async getOpenOrders() {
-    let res = await this.request(`orders`, { completedAt: undefined });
-    return res.orders;
-  }
-
-  static async login(data) {
-    let res = await this.request(`auth/token`, data, 'post');
-    return res.token;
+  static async getDayOpen() {
+    let res = await this.request(`users/logs`, { event: OPEN_DAY, desc: true });
+    return res.timestamp[0];
   }
 }
 

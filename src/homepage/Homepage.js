@@ -1,27 +1,17 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { clearUserPin, fetchUserFromAPI, clockInUser } from '../actions/user';
-import { Typography, Button, Container, Paper, Stack } from '@mui/material';
+import { Button, Container, Paper, Stack } from '@mui/material';
 import UserPinForm from '../auth/UserPinForm';
-import UserLoginForm from '../auth/UserLogInForm';
-import {
-  TRAINEE,
-  EMPLOYEE,
-  COOK,
-  HOST,
-  CHEF,
-  SERVER,
-  BARTENDER,
-  HEAD_SERVER,
-  BAR_MANAGER,
-  MANAGER,
-  OWNER
-} from '../constants';
+import { TOKEN_STORAGE_ID } from '../App';
+import { isClockInOnly } from '../utils/helpers';
 import ClockOut from '../common/ClockOut';
 
 const Homepage = () => {
   const user = useSelector((st) => st.user);
+  const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -36,6 +26,7 @@ const Homepage = () => {
   const clockIn = async (userId) => {
     console.debug('clockIn', userId);
     dispatch(clockInUser(user.pin));
+    // Insert code to print login time on local receipt printer
     history.push('/welcome');
   };
 
@@ -44,11 +35,13 @@ const Homepage = () => {
     dispatch(clearUserPin());
   };
 
+  if (!token) history.push('/login');
+
   // Enter pin to identify person
   if (!user.id) return <UserPinForm login={getUser} align="center" />;
 
   // If a log-in-only role
-  if (user.id && user.role === EMPLOYEE) {
+  if (user.id && isClockInOnly(user.role)) {
     if (user.isClockedIn) {
       return <ClockOut />;
     } else {

@@ -352,7 +352,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             <Button onClick={sendOrder} variant="contained">
               Send Order
             </Button>
-            <Button onClick={cancel} color="warning" variant="contained">
+            <Button onClick={cancel} color="secondary" variant="contained">
               Cancel
             </Button>
             <Button onClick={printCheck} variant="contained">

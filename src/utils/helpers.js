@@ -7,7 +7,11 @@ import {
   DISCOVER,
   GOOGLE_PAY,
   APPLE_PAY,
-  VENMO
+  VENMO,
+  TRAINEE,
+  EMPLOYEE,
+  HOST,
+  COOK
 } from '../constants';
 
 const formatTime = (time) => {
@@ -149,4 +153,17 @@ const calculateShift = (payments) => {
   };
 };
 
-export { formatTime, calculateCheck, floatToMoney, calculateShift };
+// Returns true if employee is a "clock-in-only" (doesn't enter orders)
+const isClockInOnly = (role) => {
+  return (
+    role === TRAINEE || role === EMPLOYEE || role === COOK || role === HOST
+  );
+};
+
+export {
+  formatTime,
+  calculateCheck,
+  floatToMoney,
+  calculateShift,
+  isClockInOnly
+};

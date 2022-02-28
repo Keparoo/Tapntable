@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
-import restaurantConfig from './restaurantConfig.json';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useLocalStorage from './hooks/useLocalStorage';
+
 import jwt_decode from 'jwt-decode';
+
+import restaurantConfig from './restaurantConfig.json';
+import { BAR, KITCHEN_COLD, KITCHEN_HOT } from './constants';
 import TapntableApi from './api/api';
 
 import './App.css';
-// import CssBaseline from '@mui/material/CssBaseline';
-import { Typography, CssBaseline, AppBar, Toolbar, Link } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { blueGrey, amber } from '@mui/material/colors';
 
 import Routes from './routes/Routes';
-import useLocalStorage from './hooks/useLocalStorage';
-import { blueGrey, yellow, amber } from '@mui/material/colors';
-import { BAR, KITCHEN_COLD, KITCHEN_HOT, MANAGER, OWNER } from './constants';
-import { useSelector } from 'react-redux';
+import Navbar from './routes/Navbar';
 import KitchenNavbar from './routes/KitchenNavbar';
 import ServiceBarNavbar from './routes/ServiceBarNavbar';
-import Navbar from './routes/Navbar';
 
 // Local storage key name for token: log in persistence
 export const TOKEN_STORAGE_ID = 'tapntable-token';
@@ -27,7 +28,7 @@ const App = () => {
 
   const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
   const history = useHistory();
-  const user = useSelector((st) => st.user);
+  // const user = useSelector((st) => st.user);
 
   // Primary color: #546e7a, Secondary color: #fbc02d
   const theme = createTheme({

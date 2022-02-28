@@ -38,6 +38,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
         variant="outlined"
         value={form.tip}
         onChange={handleChange}
+        autoFocus={true}
       />
 
       <Button onClick={handleSubmit} variant="contained">

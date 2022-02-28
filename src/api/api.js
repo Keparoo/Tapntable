@@ -238,6 +238,11 @@ class TapntableApi {
     let res = await this.request(`orders`, { completedAt: undefined });
     return res.orders;
   }
+
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, 'post');
+    return res.token;
+  }
 }
 
 // for now, put token ("manager" / "password" on class)
@@ -246,7 +251,7 @@ class TapntableApi {
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlSWQiOjEwLCJpYXQiOjE2NDQzNTYzNjN9.EcgASVCSRs2LGS3uG27KJ6Rr7nlKxi0CvtSfO6pVzIg';
 
 // role='manager'
-TapntableApi.token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY0NjAwNTU1OX0.RAwhNdxeVIGECejHl4jxVD4EVaqDZcUACzQM8j6KZO8';
+// TapntableApi.token =
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY0NjAwNTU1OX0.RAwhNdxeVIGECejHl4jxVD4EVaqDZcUACzQM8j6KZO8';
 
 export default TapntableApi;

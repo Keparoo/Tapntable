@@ -4,6 +4,7 @@ import { useHistory, Redirect } from 'react-router-dom';
 import { clearUserPin, fetchUserFromAPI, clockInUser } from '../actions/user';
 import { Typography, Button, Container, Paper, Stack } from '@mui/material';
 import UserPinForm from '../auth/UserPinForm';
+import UserLoginForm from '../auth/UserLogInForm';
 import {
   TRAINEE,
   EMPLOYEE,
@@ -44,18 +45,7 @@ const Homepage = () => {
   };
 
   // Enter pin to identify person
-  if (!user.id) {
-    return (
-      <Container align="center">
-        <Paper elevation={3} sx={{ paddingBottom: 8 }}>
-          <Typography variant="h3" align="center" mt={24} pt={8} gutterBottom>
-            Please Log in
-          </Typography>
-          <UserPinForm login={getUser} align="center" />
-        </Paper>
-      </Container>
-    );
-  }
+  if (!user.id) return <UserPinForm login={getUser} align="center" />;
 
   // If a log-in-only role
   if (user.id && user.role === EMPLOYEE) {

@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Homepage from '../homepage/Homepage';
-import LoginForm from '../auth/UserPinForm';
+import UserLoginForm from '../auth/UserLogInForm';
+import UserLogoutForm from '../auth/UserLogoutForm';
 import Servers from '../servers/Servers';
 import Kitchen from '../kitchen/Kitchen';
 import KitchenCold from '../kitchen/KitchenCold';
@@ -10,23 +11,18 @@ import ServiceBar from '../bar/ServiceBar';
 import ItemsList from '../items/ItemsList';
 import Payments from '../common/Payments';
 import CashOut from '../common/CashOut';
-import UserPinForm from '../auth/UserPinForm';
 import ClockOut from '../common/ClockOut';
 import Welcome from '../common/Welcome';
 import ManagerRoute from '../auth/ManagerRoute';
 import CloseDay from '../auth/CloseDay';
 
-const Routes = () => {
+const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');
 
   return (
     <Switch>
       <Route exact path="/">
         <Homepage />
-      </Route>
-
-      <Route exact path="/pin">
-        <UserPinForm />
       </Route>
 
       <Route exact path="/welcome">
@@ -42,8 +38,12 @@ const Routes = () => {
       </Route>
 
       <Route exact path="/login">
-        <LoginForm />
+        <UserLoginForm login={login} />
       </Route>
+
+      <ManagerRoute exact path="/logout">
+        <UserLogoutForm logout={logout} />
+      </ManagerRoute>
 
       <Route exact path="/servers">
         <Servers />

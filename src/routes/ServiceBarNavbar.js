@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { MANAGER, OWNER } from '../constants';
 import { AppBar, Link, Toolbar, Typography } from '@mui/material';
 
-const KitchenNavbar = () => {
+const ServiceBarNavbar = () => {
   const user = useSelector((st) => st.user);
 
   return (
@@ -47,51 +47,7 @@ const KitchenNavbar = () => {
         >
           Home
         </Link>
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/servers"
-          underline="none"
-        >
-          Servers
-        </Link>
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/payments"
-          underline="none"
-        >
-          Payments
-        </Link>
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/cashout"
-          underline="none"
-        >
-          Cash Out
-        </Link>
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/kitchen"
-          underline="none"
-        >
-          Kitchen Hot
-        </Link>
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/kitchencold"
-          underline="none"
-        >
-          Kitchen Cold
-        </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -101,6 +57,7 @@ const KitchenNavbar = () => {
         >
           Service Bar
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -110,19 +67,9 @@ const KitchenNavbar = () => {
         >
           Items
         </Link>
-        {user.role === MANAGER || user.role === OWNER ? (
-          <Link
-            color="inherit"
-            component={RouterLink}
-            to="/closeday"
-            underline="none"
-          >
-            Close Day
-          </Link>
-        ) : null}
       </Toolbar>
     </AppBar>
   );
 };
 
-export default KitchenNavbar;
+export default ServiceBarNavbar;

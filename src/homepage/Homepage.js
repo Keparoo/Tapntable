@@ -58,7 +58,7 @@ const Homepage = () => {
   }
 
   // If a log-in-only role
-  if (user.id && user.roleId === 2) {
+  if (user.id && user.role === EMPLOYEE) {
     if (user.isClockedIn) {
       return <ClockOut />;
     } else {

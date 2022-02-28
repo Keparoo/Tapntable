@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clearUserPin } from '../actions/user';
+import { EMPLOYEE } from '../constants';
 
 const Welcome = () => {
   const user = useSelector((state) => state.user);
@@ -10,7 +11,7 @@ const Welcome = () => {
   const history = useHistory();
 
   const handleClick = () => {
-    if (user.roleId === 2) {
+    if (user.role === EMPLOYEE) {
       console.log('Welcome - Log in only');
       dispatch(clearUserPin());
       history.push('/');

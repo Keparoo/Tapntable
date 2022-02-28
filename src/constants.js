@@ -1,3 +1,8 @@
+/*
+*  Note: a duplicate of this file exists in the backend root dir.
+*  Any changes made here must be made there
+*/
+
 //Payment Method enum values
 export const CASH = 'Cash';
 export const MASTER_CARD = 'MC';

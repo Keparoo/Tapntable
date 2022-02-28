@@ -21,10 +21,10 @@ const ManagerRoute = ({ exact, path, children }) => {
     'currentUser=',
     user.displayName,
     'userRole=',
-    user.roleId
+    user.role
   );
 
-  if (user.roleId < 10) {
+  if (user.role !== 'manager' && user.role !== 'owner') {
     return <Redirect to="/" />;
   }
 

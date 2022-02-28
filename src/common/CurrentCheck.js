@@ -37,6 +37,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const sendOrder = async () => {
     console.debug('sendOrder');
 
+    if (check.newItems.length === 0) return;
+
     //Separate newItems into destinations
     const kitchenHotOrder = check.newItems.filter(
       (i) => i.destination === KITCHEN_HOT
@@ -349,18 +351,36 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
         <div className="CurrentCheck-Buttons">
           <Stack direction="row" spacing={2} justifyContent="center">
-            <Button onClick={sendOrder} variant="contained">
-              Send Order
-            </Button>
+            {check.newItems.length === 0 ? (
+              <Button onClick={sendOrder} variant="contained" disabled>
+                Send Order
+              </Button>
+            ) : (
+              <Button onClick={sendOrder} variant="contained">
+                Send Order
+              </Button>
+            )}
             <Button onClick={cancel} color="secondary" variant="contained">
               Cancel
             </Button>
-            <Button onClick={printCheck} variant="contained">
-              Print Check
-            </Button>
-            <Button onClick={pay} variant="contained">
-              Pay
-            </Button>
+            {check.id ? (
+              <Button onClick={printCheck} variant="contained">
+                Print Check
+              </Button>
+            ) : (
+              <Button onClick={printCheck} variant="contained" disabled>
+                Print Check
+              </Button>
+            )}
+            {check.id ? (
+              <Button onClick={pay} variant="contained">
+                Pay
+              </Button>
+            ) : (
+              <Button onClick={pay} variant="contained" disabled>
+                Pay
+              </Button>
+            )}
           </Stack>
         </div>
       </Container>

@@ -100,6 +100,12 @@ class TapntableApi {
     return res.checks;
   }
 
+  // Get all checks from the day
+  static async getDayChecks(timestamp) {
+    let res = await this.request(`checks`, { createdAt: timestamp });
+    return res.checks;
+  }
+
   // Print Check, timestamp print time and update subtotal and tax
   // This may be done multiple times before closing check
   static async printCheck(checkId, subtotal, localTax, stateTax, federalTax) {
@@ -191,6 +197,12 @@ class TapntableApi {
     return res.payment;
   }
 
+  // Get all payments from the day
+  static async getDayPayments(timestamp) {
+    let res = await this.request(`payments`, { createdAt: timestamp });
+    return res.payments;
+  }
+
   //**************Auth Queries*************************************** */
 
   static async login(data) {
@@ -262,6 +274,11 @@ class TapntableApi {
   static async getDayOpen() {
     let res = await this.request(`users/logs`, { event: OPEN_DAY, desc: true });
     return res.timestamp[0];
+  }
+
+  static async getDayUserData(timestamp) {
+    let res = await this.request(`users/logs`, { after: timestamp });
+    return res.logs;
   }
 }
 

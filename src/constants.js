@@ -48,3 +48,6 @@ export const UPDATE_ITEM = 'update-item';
 export const DELETE_ITEM_ORDERED = 'delete-item-ordered';
 export const VOID_ITEM = 'void-item';
 export const VOID_CHECK = 'void-check';
+
+// Ticket refresh rate in ms for Kitchen-Hot, Kitchen-Cold, Service-Bar
+export const TICKET_REFRESH_RATE = 90000;

@@ -10,6 +10,7 @@ import {
   CardContent
 } from '@mui/material';
 import { clearCurrentCheck } from '../actions/currentCheck';
+import { TICKET_REFRESH_RATE } from '../constants';
 
 const ServiceBar = () => {
   console.debug('Kitchen');
@@ -18,6 +19,7 @@ const ServiceBar = () => {
   const dispatch = useDispatch();
   const [ isLoading, setIsLoading ] = useState(true);
   const [ orders, setOrders ] = useState([]);
+  const [ intervalId, setIntervalId ] = useState('');
 
   useEffect(
     () => {
@@ -50,6 +52,16 @@ const ServiceBar = () => {
     },
     [ dispatch, isLoading ]
   );
+
+  // Refresh the tickets on screen
+  const refreshTickets = () => {
+    console.debug('refreshTickets');
+    setIsLoading(true);
+  };
+
+  // Set the ticket refresh rate to 90 seconds
+  if (!intervalId)
+    setIntervalId(setInterval(refreshTickets, TICKET_REFRESH_RATE));
 
   const orderComplete = async (orderId) => {
     console.debug('orderComplete', orderId);

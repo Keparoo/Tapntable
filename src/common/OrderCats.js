@@ -29,22 +29,26 @@ const OrderCats = () => {
   //   color: theme.palette.text.secondary
   // }));
 
+  // Display items is category
   const displayCategory = (cat) => {
     console.debug('displayCategory', cat);
     setShowCat(true);
     setCurrentCat(cat);
   };
 
+  // Stop display of current category items
   const close = () => {
     console.debug('close');
     setShowCat(false);
   };
 
+  // Add item to current check
   const addItem = (item) => {
     console.debug('addItem', item);
     dispatch(addItemToCheck(item));
   };
 
+  // View of items in category
   const Category = ({ cat }) => {
     console.debug('Category', cat);
 
@@ -75,6 +79,7 @@ const OrderCats = () => {
     );
   };
 
+  // List of item categories and display of selected category items
   return (
     <Container maxWidth="md">
       <Paper

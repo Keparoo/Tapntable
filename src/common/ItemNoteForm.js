@@ -43,7 +43,7 @@ const ItemNoteForm = ({ i, save, cancel }) => {
       <Button onClick={handleSubmit} variant="contained">
         Add Note
       </Button>
-      <Button onClick={cancel} variant="contained">
+      <Button onClick={cancel} variant="contained" color="secondary">
         Cancel
       </Button>
     </Box>

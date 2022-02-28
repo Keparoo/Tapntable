@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
-// import  TextField from '@mui/material/TextField';
 
 const PayAmountForm = ({ amount, save, cancel }) => {
   console.debug('PayAmountForm', amount);
@@ -43,7 +42,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
       <Button onClick={handleSubmit} variant="contained">
         Submit
       </Button>
-      <Button onClick={cancel} variant="contained">
+      <Button onClick={cancel} variant="contained" color="secondary">
         Cancel
       </Button>
     </Box>
@@ -51,13 +50,3 @@ const PayAmountForm = ({ amount, save, cancel }) => {
 };
 
 export default PayAmountForm;
-
-// <TextField
-// type="number"
-// id="tip"
-// name="tip"
-// label="Tip"
-// variant="outlined"
-// value={form.tip}
-// onChange={handleChange}
-// />

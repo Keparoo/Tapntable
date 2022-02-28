@@ -75,7 +75,9 @@ const CheckForm = ({
         <Button onClick={handleSubmit} variant="contained">
           Create New Check
         </Button>
-        <Button onClick={cancel}>Cancel</Button>
+        <Button onClick={cancel} color="secondary">
+          Cancel
+        </Button>
       </Paper>
     </Container>
   );

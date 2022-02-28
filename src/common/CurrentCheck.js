@@ -47,6 +47,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
       (i) => i.destination === KITCHEN_COLD
     );
     const barOrder = check.newItems.filter((i) => i.destination === BAR);
+
+    // No send orders are filled by servers: eg: fountain drinks, coffee, tea, etc
+    // These items do not display/print in kitchen or bar
     const noSendOrder = check.newItems.filter((i) => i.destination === NO_SEND);
 
     // Item missing destination or has invalid destinationId. Check item in database

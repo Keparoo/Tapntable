@@ -13,16 +13,8 @@ import {
   VENMO
 } from '../constants';
 
-import {
-  Typography,
-  Stack,
-  Button,
-  TextField,
-  Container,
-  Box
-} from '@mui/material';
+import { Typography, Stack, Button, Container, Paper } from '@mui/material';
 import PayAmountForm from './PayAmountForm';
-// import { addPayment, getOpenCheck } from '../actions/currentCheck';
 
 const Payment = ({ showPayment }) => {
   console.debug('Payment');
@@ -34,6 +26,7 @@ const Payment = ({ showPayment }) => {
   const [ showPaymentAmountForm, setShowPaymentAmountForm ] = useState(false);
   const [ paymentType, setPaymentType ] = useState('');
 
+  // Post new payment to db
   const savePayment = async ({ amount }) => {
     console.debug('savePayment', amount);
 
@@ -65,6 +58,7 @@ const Payment = ({ showPayment }) => {
     await dispatch(getOpenChecksFromAPI(user.id));
   };
 
+  // Close PayAmount form
   const cancelPayment = () => {
     console.debug('cancelPayment');
 
@@ -72,6 +66,7 @@ const Payment = ({ showPayment }) => {
     showPayment(false);
   };
 
+  // Pay by credit
   const credit = async (type) => {
     console.debug('pay', type);
 
@@ -79,6 +74,7 @@ const Payment = ({ showPayment }) => {
     setShowPaymentAmountForm(true);
   };
 
+  // Pay by cash: Should be done after all credit payments-- Check is closed
   const cash = async () => {
     console.log(cash);
 
@@ -104,64 +100,69 @@ const Payment = ({ showPayment }) => {
 
   return (
     <div>
-      <Container>
-        <Typography variant="h3" align="center">
-          Payment
-        </Typography>
+      <Container maxWidth="md">
+        <Paper sx={{ marginTop: '15vh' }} elevation={3}>
+          <Typography variant="h3" align="center" gutterBottom>
+            Payment
+          </Typography>
 
-        <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={() => credit(MASTER_CARD)} variant="contained">
-            Master Card
-          </Button>
-          <Button onClick={() => credit(VISA)} variant="contained">
-            Visa
-          </Button>
-          <Button onClick={() => credit(AMERICAN_EXPRESS)} variant="contained">
-            Amex
-          </Button>
-          <Button onClick={() => credit(DISCOVER)} variant="contained">
-            Discover
-          </Button>
-        </Stack>
-        <br />
-        <Stack direction="row" spacing={2} justifyContent="center">
-          <Button
-            onClick={() => credit(GOOGLE_PAY)}
-            variant="contained"
-            color="secondary"
-          >
-            Google Pay
-          </Button>
-          <Button
-            onClick={() => credit(APPLE_PAY)}
-            variant="contained"
-            color="secondary"
-          >
-            Apple Pay
-          </Button>
-          <Button
-            onClick={() => credit(VENMO)}
-            variant="contained"
-            color="secondary"
-          >
-            Venmo
-          </Button>
-        </Stack>
-        <br />
-        <Stack spacing={2} justifyContent="center">
-          <Button onClick={cash} variant="contained" color="success">
-            Cash
-          </Button>
-          <Button onClick={cancelPayment}>Cancel Payment</Button>
-        </Stack>
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button onClick={() => credit(MASTER_CARD)} variant="contained">
+              Master Card
+            </Button>
+            <Button onClick={() => credit(VISA)} variant="contained">
+              Visa
+            </Button>
+            <Button
+              onClick={() => credit(AMERICAN_EXPRESS)}
+              variant="contained"
+            >
+              Amex
+            </Button>
+            <Button onClick={() => credit(DISCOVER)} variant="contained">
+              Discover
+            </Button>
+          </Stack>
+          <br />
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button
+              onClick={() => credit(GOOGLE_PAY)}
+              variant="contained"
+              color="secondary"
+            >
+              Google Pay
+            </Button>
+            <Button
+              onClick={() => credit(APPLE_PAY)}
+              variant="contained"
+              color="secondary"
+            >
+              Apple Pay
+            </Button>
+            <Button
+              onClick={() => credit(VENMO)}
+              variant="contained"
+              color="secondary"
+            >
+              Venmo
+            </Button>
+          </Stack>
+          <br />
+          <Stack spacing={2} justifyContent="center">
+            <Button onClick={cash} variant="contained">
+              Cash
+            </Button>
+            <Button onClick={cancelPayment}>Cancel Payment</Button>
+          </Stack>
 
-        {showPaymentAmountForm && (
-          <PayAmountForm
-            amount={check.amountDue.toFixed(2)}
-            save={savePayment}
-            cancel={cancelPayment}
-          />
-        )}
+          {showPaymentAmountForm && (
+            <PayAmountForm
+              amount={check.amountDue.toFixed(2)}
+              save={savePayment}
+              cancel={cancelPayment}
+            />
+          )}
+        </Paper>
       </Container>
     </div>
   );

@@ -26,6 +26,7 @@ const App = () => {
   console.debug('App');
   console.log(restaurantConfig);
 
+  // Retrieve token from local storage if there is one
   const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
   const history = useHistory();
   // const user = useSelector((st) => st.user);
@@ -38,6 +39,7 @@ const App = () => {
     }
   });
 
+  // Assign token from local storage to Tapntable API
   useEffect(
     () => {
       console.debug('App useEffect loadUserInfo', 'token=', token);
@@ -61,14 +63,15 @@ const App = () => {
     [ token ]
   );
 
-  // Log out user sitewide
+  // Log out user sitewide: Clear token. Users will not be able to use POS
   const logout = () => {
     TapntableApi.token = null;
     setToken(null);
     history.push('/login');
   };
 
-  // Sitewide login: check success===true &  await this function
+  // Sitewide login: get and store token
+  // Token expires in 23 hours
   const login = async (loginData) => {
     try {
       let token = await TapntableApi.login(loginData);

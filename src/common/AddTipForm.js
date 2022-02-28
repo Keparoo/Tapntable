@@ -44,7 +44,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
       <Button onClick={handleSubmit} variant="contained">
         Add Tip & Close Payment
       </Button>
-      <Button onClick={cancel} variant="contained">
+      <Button onClick={cancel} variant="contained" color="secondary">
         Cancel
       </Button>
     </Box>

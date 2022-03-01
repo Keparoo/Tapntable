@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import { clockOutUser, clearUserPin } from '../actions/user';
 import { getOpenChecksFromAPI } from '../actions/checks';
@@ -22,9 +22,9 @@ const CashOut = () => {
   const [ showDeclaredTipsForm, setShowDeclaredTipsForm ] = useState(true);
   const [ showClockOut, setShowClockOut ] = useState(false);
 
-  const user = useSelector((st) => st.user);
-  const openChecks = useSelector((st) => st.checks);
-  const payments = useSelector((st) => st.payments);
+  const user = useSelector((st) => st.user, shallowEqual);
+  const openChecks = useSelector((st) => st.checks, shallowEqual);
+  const payments = useSelector((st) => st.payments, shallowEqual);
   const dispatch = useDispatch();
   const history = useHistory();
 

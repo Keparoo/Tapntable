@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { getDayOpenFromAPI } from '../actions/totals';
-import { CASH_OUT, CLOCK_IN, CASH, OPEN_DAY } from '../constants';
+import { CLOCK_IN, CASH, OPEN_DAY } from '../constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -103,6 +102,7 @@ class TapntableApi {
   // Get all checks from the day
   static async getDayChecks(timestamp) {
     let res = await this.request(`checks`, { createdAt: timestamp });
+    console.debug('********************Checks', res);
     return res.checks;
   }
 
@@ -148,6 +148,12 @@ class TapntableApi {
   // Return all ordered items related to checkId
   static async getOrderedItemsByOrder(query) {
     let res = await this.request(`ordered`, { orderId: query });
+    return res.ordItems;
+  }
+
+  // Return all ordered items from the day
+  static async getDayItems(timestamp) {
+    let res = await this.request(`ordered`, { sentAt: timestamp });
     return res.ordItems;
   }
 
@@ -199,7 +205,7 @@ class TapntableApi {
 
   // Get all payments from the day
   static async getDayPayments(timestamp) {
-    let res = await this.request(`payments`, { createdAt: timestamp });
+    let res = await this.request(`payments`, { printedAt: timestamp });
     return res.payments;
   }
 
@@ -273,7 +279,8 @@ class TapntableApi {
 
   static async getDayOpen() {
     let res = await this.request(`users/logs`, { event: OPEN_DAY, desc: true });
-    return res.timestamp[0];
+    console.debug('***********Day Open', res);
+    return res.logs[0].timestamp;
   }
 
   static async getDayUserData(timestamp) {

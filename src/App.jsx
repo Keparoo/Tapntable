@@ -18,6 +18,7 @@ import Routes from './routes/Routes';
 import Navbar from './routes/Navbar';
 import KitchenNavbar from './routes/KitchenNavbar';
 import ServiceBarNavbar from './routes/ServiceBarNavbar';
+import NoUserNavbar from './routes/NoUserNavbar';
 
 // Local storage key name for token: log in persistence
 export const TOKEN_STORAGE_ID = 'tapntable-token';
@@ -29,7 +30,7 @@ const App = () => {
   // Retrieve token from local storage if there is one
   const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
   const history = useHistory();
-  // const user = useSelector((st) => st.user);
+  const user = useSelector((st) => st.user);
 
   // Primary color: #546e7a, Secondary color: #fbc02d
   const theme = createTheme({
@@ -82,6 +83,18 @@ const App = () => {
       return { success: false, errors };
     }
   };
+
+  if (!user.pin) {
+    return (
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <CssBaseline />
+          <NoUserNavbar />
+          <Routes login={login} logout={logout} />
+        </div>
+      </ThemeProvider>
+    );
+  }
 
   // Show navbar with Kitchen only elements
   if (

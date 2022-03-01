@@ -129,11 +129,7 @@ const CashOut = () => {
       )}
       {showClockOut && (
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button
-            onClick={clockOut}
-            variant="contained"
-            justifyContent="center"
-          >
+          <Button onClick={clockOut} variant="contained">
             Clock Out
           </Button>
         </Stack>

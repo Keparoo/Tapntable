@@ -7,6 +7,10 @@ The front end is implemented using React and Redux.
 ## Front-end
 * Using React and Redux to create the user interface
 
+## Deployment
+The frontend is currently deployed to surge:
+
+----
 ### Components
 * Servers
 * OrderCategories
@@ -40,7 +44,27 @@ The front end is implemented using React and Redux.
 * @mui/material
 * @mui/icons-material
 
+### Deployment using surge:
+Install surge globally:
+```
+$ npm install --global surge
+```
 
+In the Tapntable.js and anywhere else there are requests to localhost:3001 use the following:
+
+```
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+```
+
+Define the environment variable for the frontend app. YOUR_HEROKU_BACKEND_URL should be something like https://YOUR_BACKEND_APP_NAME.herokuapp.com.
+
+Run the following commands in the jobly-frontend folder
+
+```
+$ REACT_APP_BASE_URL=YOUR_HEROKU_BACKEND_URL npm run build
+$ cp build/index.html build/200.html
+$ surge build
+```
 
 ---
 

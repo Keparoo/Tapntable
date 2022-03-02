@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import {
   Typography,
   Container,

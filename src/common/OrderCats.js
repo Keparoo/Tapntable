@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { addItemToCheck } from '../actions/currentCheck';
 import {
   Container,
@@ -15,7 +15,7 @@ import { styled } from '@mui/material/styles';
 const OrderCats = () => {
   console.debug('OrderCats');
 
-  const items = useSelector((st) => st.items);
+  const items = useSelector((st) => st.items, shallowEqual);
   const dispatch = useDispatch();
   const [ showCat, setShowCat ] = useState(false);
   const [ currentCat, setCurrentCat ] = useState('');

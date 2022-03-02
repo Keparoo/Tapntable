@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { fetchItemsFromAPI } from '../actions/items';
 import { getOpenChecksFromAPI } from '../actions/checks';
@@ -27,8 +27,8 @@ const Servers = () => {
   console.debug('Servers');
 
   const history = useHistory();
-  const user = useSelector((st) => st.user);
-  const items = useSelector((st) => st.items);
+  const user = useSelector((st) => st.user, shallowEqual);
+  const items = useSelector((st) => st.items, shallowEqual);
   const dispatch = useDispatch();
 
   const [ isLoading, setIsLoading ] = useState(true);

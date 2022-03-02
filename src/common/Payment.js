@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import TapntableApi from '../api/api';
 import {
@@ -19,8 +19,8 @@ import PayAmountForm from './PayAmountForm';
 const Payment = ({ showPayment }) => {
   console.debug('Payment');
 
-  const user = useSelector((st) => st.user);
-  const check = useSelector((st) => st.currentCheck);
+  const user = useSelector((st) => st.user, shallowEqual);
+  const check = useSelector((st) => st.currentCheck, shallowEqual);
   const dispatch = useDispatch();
 
   const [ showPaymentAmountForm, setShowPaymentAmountForm ] = useState(false);

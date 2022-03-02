@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import TapntableApi from '../api/api';
@@ -26,7 +26,7 @@ const Payments = () => {
   const [ showAddTipForm, setShowAddTipForm ] = useState(false);
   const [ paymentId, setPaymentId ] = useState();
 
-  const user = useSelector((st) => st.user);
+  const user = useSelector((st) => st.user, shallowEqual);
   const dispatch = useDispatch();
 
   if (!user.pin) history.push('/');

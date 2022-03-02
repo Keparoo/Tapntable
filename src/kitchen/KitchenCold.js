@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import moment from 'moment';
 import TapntableApi from '../api/api';
 import {
@@ -16,7 +16,7 @@ import { useHistory } from 'react-router-dom';
 const Kitchen = () => {
   console.debug('Kitchen');
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const dispatch = useDispatch();
   const history = useHistory();
   const [ isLoading, setIsLoading ] = useState(true);

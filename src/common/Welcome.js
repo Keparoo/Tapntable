@@ -1,13 +1,13 @@
 import { Typography, Button, Container, Stack, Paper } from '@mui/material';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clearUserPin } from '../actions/user';
 import { isClockInOnly } from '../utils/helpers';
 import restaurantConfig from '../restaurantConfig.json';
 
 const Welcome = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const dispatch = useDispatch();
   const history = useHistory();
 

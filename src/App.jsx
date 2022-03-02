@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import useLocalStorage from './hooks/useLocalStorage';
 
 import jwt_decode from 'jwt-decode';
@@ -30,7 +30,7 @@ const App = () => {
   // Retrieve token from local storage if there is one
   const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
   const history = useHistory();
-  const user = useSelector((st) => st.user);
+  const user = useSelector((st) => st.user, shallowEqual);
 
   // Primary color: #546e7a, Secondary color: #fbc02d
   const theme = createTheme({

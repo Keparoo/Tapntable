@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { MANAGER, OWNER } from '../constants';
 import { AppBar, Link, Toolbar, Typography } from '@mui/material';
 
 const ServiceBarNavbar = () => {
-  const user = useSelector((st) => st.user);
+  const user = useSelector((st) => st.user, shallowEqual);
 
   return (
     <AppBar position="static">

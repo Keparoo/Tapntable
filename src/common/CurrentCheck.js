@@ -4,7 +4,7 @@ import TapntableApi from '../api/api';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import ItemNoteForm from './ItemNoteForm';
 import { v4 as uuid } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   Typography,
   Container,
@@ -30,8 +30,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   // const [seatNum, setSeatNum] = useState(1)
 
   // Get current user and check
-  const user = useSelector((st) => st.user);
-  const check = useSelector((st) => st.currentCheck);
+  const user = useSelector((st) => st.user, shallowEqual);
+  const check = useSelector((st) => st.currentCheck, shallowEqual);
   console.debug('CurrentCheck', check);
 
   const sendOrder = async () => {

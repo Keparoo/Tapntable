@@ -15,12 +15,8 @@ const CloseDay = () => {
   console.debug('CloseDay');
 
   const [ isLoading, setIsLoading ] = useState(true);
-  // const totals = useSelector((st) => st.totals, shallowEqual);
+  const totals = useSelector((st) => st.totals, shallowEqual);
   const user = useSelector((st) => st.user, shallowEqual);
-  const [ checks, setChecks ] = useState([]);
-  const [ payments, setPayments ] = useState([]);
-  // const [ items, setItems ] = useState([]);
-  // const [ userData, setUserData ] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(
@@ -28,24 +24,7 @@ const CloseDay = () => {
       console.debug('ItemList useEffect on Mount');
 
       async function fetchTotals() {
-        // await dispatch(fetchItemsFromAPI());
-        // await dispatch(getDayOpenFromAPI());
-        const dayOpen = await TapntableApi.getDayOpen();
-        console.log(dayOpen);
-        const checksRes = await TapntableApi.getDayChecks(dayOpen);
-        setChecks(checksRes);
-        const paymentsRes = await TapntableApi.getDayPayments(dayOpen);
-        setPayments(paymentsRes);
-        // const itemsRes = await TapntableApi.getDayItems(dayOpen);
-        // setItems(itemsRes);
-        // const userDataRes = await TapntableApi.getDayUserData(dayOpen);
-        // setUserData(userDataRes);
-
-        await dispatch(getDayChecksFromAPI(dayOpen));
-        await dispatch(getDayPaymentsFromAPI(dayOpen));
-        // await dispatch(getDayItemsFromAPI(dayOpen));
-        // await dispatch(getDayUserDataFromAPI(dayOpen));
-        // await dispatch(getDayTotalsFromAPI());
+        await dispatch(getDayTotalsFromAPI());
 
         setIsLoading(false);
       }
@@ -55,7 +34,7 @@ const CloseDay = () => {
     },
     [ dispatch, isLoading ]
   );
-  console.log(checks, payments);
+  // console.log(checks, payments);
 
   // Check for open checks
   // Check for open payments
@@ -77,6 +56,9 @@ const CloseDay = () => {
   return (
     <div>
       <h1>Close Day!</h1>
+      <p>DayOpen:</p>
+      <br />
+      <h6>Checks</h6>
     </div>
   );
 };

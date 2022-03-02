@@ -287,10 +287,9 @@ class TapntableApi {
   }
 }
 
-// for now, put token ("manager" / "password" on class)
+// for development, put token ("manager" / "password" on class)
 
 // role='manager'
-// TapntableApi.token =
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY0NjAwNTU1OX0.RAwhNdxeVIGECejHl4jxVD4EVaqDZcUACzQM8j6KZO8';
+// TapntableApi.token = '';
 
 export default TapntableApi;

@@ -17,10 +17,10 @@ const Homepage = () => {
 
   // Query API to identify PIN entered
   const getUser = (pin) => {
-    console.log('login', pin);
+    console.debug('login', pin);
 
     dispatch(fetchUserFromAPI(pin));
-    console.log('User Id: ', user);
+    console.debug('User Id: ', user);
   };
 
   const clockIn = async (userId) => {

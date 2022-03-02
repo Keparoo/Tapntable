@@ -288,9 +288,6 @@ class TapntableApi {
 }
 
 // for now, put token ("manager" / "password" on class)
-// Old token with role=10
-// TapntableApi.token =
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmFnZXIiLCJyb2xlSWQiOjEwLCJpYXQiOjE2NDQzNTYzNjN9.EcgASVCSRs2LGS3uG27KJ6Rr7nlKxi0CvtSfO6pVzIg';
 
 // role='manager'
 // TapntableApi.token =

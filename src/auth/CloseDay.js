@@ -53,6 +53,8 @@ const CloseDay = () => {
   // closeDay();
   // openDay();
 
+  console.log(totals);
+
   return (
     <div>
       <h1>Close Day!</h1>

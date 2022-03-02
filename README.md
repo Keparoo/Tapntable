@@ -1,4 +1,9 @@
 # Tapntable
+
+# Description
+Tapntable is a web app implementing a restaurant Point of Sale (POS). The backend is a RESTful API implemented in Node.js and Javascript using a Posgresql database.  
+The front end is implemented using React and Redux.  
+
 ## Front-end
 * Using React and Redux to create the user interface
 
@@ -14,9 +19,28 @@
 * ItemCard
 
 ### Redux store:
+* user
 * items
 * checks
+* payments
 * currentCheck
+* totals
+
+### Dependencies:
+* axios
+* jwt-decode
+* moment
+* react
+* react-dom
+* react-redux
+* react-router-dom
+* redux
+* redux-thunk
+* uuid
+* @mui/material
+* @mui/icons-material
+
+
 
 ---
 

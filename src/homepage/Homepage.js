@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -12,15 +12,17 @@ import ClockOut from '../common/ClockOut';
 const Homepage = () => {
   const user = useSelector((st) => st.user, shallowEqual);
   const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [ formErrors, setFormErrors ] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
 
   // Query API to identify PIN entered
-  const getUser = (pin) => {
+  const getUser = async (pin) => {
     console.debug('login', pin);
 
-    dispatch(fetchUserFromAPI(pin));
-    console.debug('User Id: ', user);
+    const res = await dispatch(fetchUserFromAPI(pin));
+    console.debug('User Id: ', user, res);
+    setFormErrors(res);
   };
 
   const clockIn = async (userId) => {
@@ -35,10 +37,22 @@ const Homepage = () => {
     dispatch(clearUserPin());
   };
 
+  const clearErrors = () => {
+    setFormErrors([]);
+  };
+
   if (!token) history.push('/login');
 
   // Enter pin to identify person
-  if (!user.id) return <UserPinForm login={getUser} align="center" />;
+  if (!user.id)
+    return (
+      <UserPinForm
+        errors={formErrors}
+        clearErrors={clearErrors}
+        login={getUser}
+        align="center"
+      />
+    );
 
   // If a log-in-only role
   if (user.id && isClockInOnly(user.role)) {

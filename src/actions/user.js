@@ -6,9 +6,14 @@ import { CLOCK_IN, CLOCK_OUT } from '../constants';
 
 export function fetchUserFromAPI(pin) {
   return async function(dispatch) {
-    const user = await TapntableApi.getUser(pin);
-    console.log('Got user', user);
-    return dispatch(getUser(user));
+    try {
+      const user = await TapntableApi.getUser(pin);
+      console.log('Got user', user);
+      return dispatch(getUser(user));
+    } catch (err) {
+      console.log('User Error', err);
+      return err;
+    }
   };
 }
 

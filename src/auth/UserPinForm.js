@@ -7,8 +7,9 @@ import {
   Paper,
   Typography
 } from '@mui/material';
+import Alert from '../common/Alert';
 
-const UserPinForm = ({ login }) => {
+const UserPinForm = ({ errors, clearErrors, login }) => {
   console.debug('UserPinForm');
 
   const [ pin, setPin ] = useState('');
@@ -27,6 +28,7 @@ const UserPinForm = ({ login }) => {
   const clear = () => {
     setPin('');
     setFormError(false);
+    clearErrors();
   };
 
   return (
@@ -63,6 +65,7 @@ const UserPinForm = ({ login }) => {
           <Button onClick={clear} variant="contained">
             Clear
           </Button>
+          {errors.length ? <Alert messages={errors} /> : null}
         </Box>
       </Paper>
     </Container>

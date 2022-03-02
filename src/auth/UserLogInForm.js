@@ -1,6 +1,7 @@
 import { Paper, Container, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Alert from '../common/Alert';
 // import TapntableApi from '../api/api';
 
 /* Render UserLogin form
@@ -14,6 +15,7 @@ const UserLoginForm = ({ login }) => {
   const [ form, setForm ] = useState({});
   const [ usernameFormError, setUsernameFormError ] = useState(false);
   const [ passwordFormError, setPasswordFormError ] = useState(false);
+  const [ formErrors, setFormErrors ] = useState([]);
   const history = useHistory();
 
   // Handle changes in the form
@@ -40,6 +42,7 @@ const UserLoginForm = ({ login }) => {
       console.log('Here is the error:', result.error);
       setUsernameFormError(true);
       setPasswordFormError(true);
+      setFormErrors(result.errors);
       setForm({ username: '', password: '' });
     }
   };
@@ -86,6 +89,7 @@ const UserLoginForm = ({ login }) => {
           error={passwordFormError}
           onSubmit={handleSubmit}
         />
+        {formErrors.length ? <Alert messages={formErrors} /> : null}
         <Button onClick={handleSubmit} variant="contained">
           Login
         </Button>

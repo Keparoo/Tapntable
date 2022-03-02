@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import TapntableApi from '../api/api';
-import { clearCurrentCheck } from '../actions/currentCheck';
+import {
+  clearCurrentCheck,
+  removeItemFromCheck
+} from '../actions/currentCheck';
 import ItemNoteForm from './ItemNoteForm';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -228,6 +231,12 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     setShowItemNoteForm(false);
   };
 
+  // Delete item from newItems
+  const removeItem = (arr, idx) => {
+    console.debug('removeItem', arr, idx);
+    dispatch(removeItemFromCheck({ arr, idx }));
+  };
+
   const renderCurrentCheck = () => {
     return (
       <Container sx={{ padding: '8px', width: 400 }}>
@@ -290,7 +299,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             {check.newItems.map((i, idx, arr) => (
               <ListItem key={idx} button disablePadding>
                 <ListItemButton sx={{ pr: 0, width: 2 }}>
-                  <MoreVertIcon />
+                  <MoreVertIcon onClick={() => removeItem(arr, idx)} />
                 </ListItemButton>
                 <ListItemText onClick={() => addNote(arr, idx)}>
                   <strong>{i.name}</strong>

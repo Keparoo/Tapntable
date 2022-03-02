@@ -2,7 +2,8 @@ import {
   ADD_TO_CHECK,
   CREATE_CHECK,
   LOAD_CURRENT_CHECK,
-  CLEAR_CURRENT_CHECK
+  CLEAR_CURRENT_CHECK,
+  REMOVE_FROM_CHECK
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -18,6 +19,13 @@ export function newCheck(check) {
 export function addItemToCheck(item) {
   return {
     type: ADD_TO_CHECK,
+    item
+  };
+}
+
+export function removeItemFromCheck(item) {
+  return {
+    type: REMOVE_FROM_CHECK,
     item
   };
 }

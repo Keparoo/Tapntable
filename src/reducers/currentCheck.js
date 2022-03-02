@@ -32,7 +32,13 @@ export default function newCheck(state = INITIAL_STATE, action) {
       };
 
     case REMOVE_FROM_CHECK:
-      return { ...state };
+      console.log('Remove from check', action.item);
+      const items = state.newItems;
+      console.log('Original Items', items);
+      const updatedItems = items.splice(action.item.idx, 1);
+      console.log('Updated Items', updatedItems);
+
+      return { ...state, newItems: updatedItems };
 
     case LOAD_CURRENT_CHECK:
       return {

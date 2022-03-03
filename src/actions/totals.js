@@ -1,13 +1,5 @@
 import TapntableApi from '../api/api';
-import {
-  GET_DAY_OPEN_TIME,
-  GET_DAY_CHECKS,
-  GET_DAY_PAYMENTS,
-  GET_DAY_USER_DATA,
-  GET_EMPLOYEE_HOURS,
-  GET_DAY_ORDERED_ITEMS,
-  GET_DAY_TOTALS
-} from './types';
+import { GET_DAY_OPEN_TIME, GET_EMPLOYEE_HOURS, GET_DAY_TOTALS } from './types';
 
 // Handle async API call for manager totals
 
@@ -22,62 +14,6 @@ function getDayOpen(dayOpen) {
   return {
     type: GET_DAY_OPEN_TIME,
     dayOpen
-  };
-}
-
-export function getDayChecksFromAPI(openTime) {
-  return async function(dispatch) {
-    const checks = await TapntableApi.getDayChecks(openTime);
-    return dispatch(getDayChecks(checks));
-  };
-}
-
-function getDayChecks(checks) {
-  return {
-    type: GET_DAY_CHECKS,
-    checks
-  };
-}
-
-export function getDayPaymentsFromAPI(openTime) {
-  return async function(dispatch) {
-    const payments = await TapntableApi.getDayPayments(openTime);
-    return dispatch(getDayPayments(payments));
-  };
-}
-
-function getDayPayments(payments) {
-  return {
-    type: GET_DAY_PAYMENTS,
-    payments
-  };
-}
-
-export function getDayItemsFromAPI(openTime) {
-  return async function(dispatch) {
-    const items = await TapntableApi.getDayItems(openTime);
-    return dispatch(getDayItems(items));
-  };
-}
-
-function getDayItems(items) {
-  return {
-    type: GET_DAY_ORDERED_ITEMS,
-    items
-  };
-}
-
-export function getDayUserDataFromAPI(openTime) {
-  return async function(dispatch) {
-    const userData = await TapntableApi.getDayUserData(openTime);
-    return dispatch(getDayUserData(userData));
-  };
-}
-
-function getDayUserData(userData) {
-  return {
-    type: GET_DAY_USER_DATA,
-    userData
   };
 }
 

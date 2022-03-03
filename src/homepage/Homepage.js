@@ -19,7 +19,6 @@ const Homepage = () => {
   // Query API to identify PIN entered
   const getUser = async (pin) => {
     console.debug('login', pin);
-
     const res = await dispatch(fetchUserFromAPI(pin));
     console.debug('User Id: ', user, res);
     setFormErrors(res);

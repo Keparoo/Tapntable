@@ -107,7 +107,7 @@ const UserLoginForm = ({ login }) => {
         </Stack>
 
         <Stack sx={{ width: '100%' }} spacing={2}>
-          {formErrors.length &&
+          {formErrors.length !== 0 &&
             formErrors.map((error) => <Alert severity="error">{error}</Alert>)}
         </Stack>
       </Paper>

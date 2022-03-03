@@ -1,7 +1,15 @@
-import { Paper, Container, TextField, Button } from '@mui/material';
+import {
+  Paper,
+  Container,
+  TextField,
+  Button,
+  Stack,
+  Alert,
+  Box
+} from '@mui/material';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Alert from '../common/Alert';
+// import Alert from '../common/Alert';
 // import TapntableApi from '../api/api';
 
 /* Render UserLogin form
@@ -54,46 +62,54 @@ const UserLoginForm = ({ login }) => {
   return (
     <Container maxWidth="sm" sx={{ marginTop: '12em' }}>
       <Paper
-        sx={{
-          '& > :not(style)': { m: 2, width: '25ch', mt: 4 }
-        }}
+        sx={{ padding: 8 }}
         component="form"
         noValidate
         align="center"
         autoComplete="on"
         onSubmit={handleSubmit}
+        elevation={3}
       >
-        <TextField
-          type="text"
-          id="username"
-          name="username"
-          label="Username"
-          variant="outlined"
-          autoFocus={true}
-          required={true}
-          helperText="Please enter a valid username"
-          value={form.username}
-          onChange={handleChange}
-          error={usernameFormError}
-        />
-        <TextField
-          type="password"
-          id="password"
-          name="password"
-          label="Password"
-          variant="outlined"
-          required={true}
-          helperText="Please enter a valid password"
-          value={form.password}
-          onChange={handleChange}
-          error={passwordFormError}
-          onSubmit={handleSubmit}
-        />
-        {formErrors.length ? <Alert messages={formErrors} /> : null}
-        <Button onClick={handleSubmit} variant="contained">
-          Login
-        </Button>
-        <Button onClick={cancel}>Cancel</Button>
+        <Box>
+          <TextField
+            type="text"
+            id="username"
+            name="username"
+            label="Username"
+            variant="outlined"
+            autoFocus={true}
+            required={true}
+            helperText="Please enter a valid username"
+            value={form.username}
+            onChange={handleChange}
+            error={usernameFormError}
+            sx={{ marginRight: '4px' }}
+          />
+          <TextField
+            type="password"
+            id="password"
+            name="password"
+            label="Password"
+            variant="outlined"
+            required={true}
+            helperText="Please enter a valid password"
+            value={form.password}
+            onChange={handleChange}
+            error={passwordFormError}
+            onSubmit={handleSubmit}
+          />
+        </Box>
+        <Stack direction="row" sx={{ margin: 2 }} justifyContent="center">
+          <Button onClick={handleSubmit} variant="contained">
+            Login
+          </Button>
+          <Button onClick={cancel}>Cancel</Button>
+        </Stack>
+
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          {formErrors.length &&
+            formErrors.map((error) => <Alert severity="error">{error}</Alert>)}
+        </Stack>
       </Paper>
     </Container>
   );

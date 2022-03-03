@@ -5,9 +5,10 @@ import {
   Button,
   Container,
   Paper,
-  Typography
+  Typography,
+  Alert,
+  Stack
 } from '@mui/material';
-import Alert from '../common/Alert';
 
 const UserPinForm = ({ errors, clearErrors, login }) => {
   console.debug('UserPinForm');
@@ -65,8 +66,12 @@ const UserPinForm = ({ errors, clearErrors, login }) => {
           <Button onClick={clear} variant="contained">
             Clear
           </Button>
-          {errors.length ? <Alert messages={errors} /> : null}
         </Box>
+
+        <Stack sx={{ width: '57%' }} spacing={2}>
+          {errors.length &&
+            errors.map((error) => <Alert severity="error">{error}</Alert>)}
+        </Stack>
       </Paper>
     </Container>
   );

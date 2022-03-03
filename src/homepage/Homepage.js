@@ -2,11 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { TOKEN_STORAGE_ID } from '../App';
 import { clearUserPin, fetchUserFromAPI, clockInUser } from '../actions/user';
 import { Button, Container, Paper, Stack } from '@mui/material';
-import UserPinForm from '../auth/UserPinForm';
-import { TOKEN_STORAGE_ID } from '../App';
 import { isClockInOnly } from '../utils/helpers';
+import UserPinForm from '../auth/UserPinForm';
 import ClockOut from '../common/ClockOut';
 
 const Homepage = () => {

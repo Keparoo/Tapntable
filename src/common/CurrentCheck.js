@@ -232,9 +232,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   };
 
   // Delete item from newItems
-  const removeItem = (arr, idx) => {
-    console.debug('removeItem', arr, idx);
-    dispatch(removeItemFromCheck({ arr, idx }));
+  const removeItem = (idx) => {
+    console.debug('removeItem', idx);
+    dispatch(removeItemFromCheck(idx));
   };
 
   const renderCurrentCheck = () => {
@@ -299,7 +299,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             {check.newItems.map((i, idx, arr) => (
               <ListItem key={idx} button disablePadding>
                 <ListItemButton sx={{ pr: 0, width: 2 }}>
-                  <MoreVertIcon onClick={() => removeItem(arr, idx)} />
+                  <MoreVertIcon onClick={() => removeItem(idx)} />
                 </ListItemButton>
                 <ListItemText onClick={() => addNote(arr, idx)}>
                   <strong>{i.name}</strong>

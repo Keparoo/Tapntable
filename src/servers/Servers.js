@@ -16,7 +16,7 @@ import OpenChecks from '../common/OpenChecks';
 import CheckForm from '../common/CheckForm';
 import CurrentCheck from '../common/CurrentCheck';
 import Spinner from '../common/Spinner';
-import OrderCategories from '../common/OrderCategories';
+// import OrderCategories from '../common/OrderCategories';
 import OrderCats from '../common/OrderCats';
 import Payment from '../common/Payment';
 import { Button, Stack, Grid } from '@mui/material';

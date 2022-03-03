@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { addItemToCheck } from '../actions/currentCheck';
 import {
@@ -30,26 +30,29 @@ const OrderCats = () => {
   // }));
 
   // Display items is category
-  const displayCategory = (cat) => {
+  const displayCategory = useCallback((cat) => {
     console.debug('displayCategory', cat);
     setShowCat(true);
     setCurrentCat(cat);
-  };
+  }, []);
 
   // Stop display of current category items
-  const close = () => {
+  const close = useCallback(() => {
     console.debug('close');
     setShowCat(false);
-  };
+  }, []);
 
   // Add item to current check
-  const addItem = (item) => {
-    console.debug('addItem', item);
-    dispatch(addItemToCheck(item));
-  };
+  const addItem = useCallback(
+    (item) => {
+      console.debug('addItem', item);
+      dispatch(addItemToCheck(item));
+    },
+    [ dispatch ]
+  );
 
   // View of items in category
-  const Category = ({ cat }) => {
+  const Category = memo(({ cat }) => {
     console.debug('Category', cat);
 
     const catItems = items.filter((i) => i.category === cat);
@@ -77,7 +80,7 @@ const OrderCats = () => {
         </Stack>
       </Paper>
     );
-  };
+  });
 
   // List of item categories and display of selected category items
   return (

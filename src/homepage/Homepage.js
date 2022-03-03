@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -25,7 +25,7 @@ const Homepage = () => {
     setFormErrors(res);
   };
 
-  const clockIn = async (userId) => {
+  const clockIn = (userId) => {
     console.debug('clockIn', userId);
     dispatch(clockInUser(user.pin));
     // Insert code to print login time on local receipt printer

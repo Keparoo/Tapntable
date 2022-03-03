@@ -261,7 +261,7 @@ class TapntableApi {
       event: CLOCK_IN,
       desc: true
     });
-    return res.logs[0].timestamp;
+    return res.logs[0].createdAt;
   }
 
   // Log event to user_logs: entityId is optional
@@ -277,12 +277,12 @@ class TapntableApi {
 
   static async getDayOpen() {
     let res = await this.request(`users/logs`, { event: OPEN_DAY, desc: true });
-    console.debug('***********Day Open', new Date(res.logs[0].timestamp));
-    return new Date(res.logs[0].timestamp);
+    console.debug('***********Day Open', new Date(res.logs[0].createdAt));
+    return new Date(res.logs[0].createdAt);
   }
 
-  static async getDayUserData(timestamp) {
-    let res = await this.request(`users/logs`, { after: timestamp });
+  static async getDayUserData(createdAt) {
+    let res = await this.request(`users/logs`, { after: createdAt });
     return res.logs;
   }
 }

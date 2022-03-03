@@ -21,7 +21,8 @@ import {
   ListItemButton,
   ListItemSecondaryAction
 } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
@@ -299,7 +300,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             {check.newItems.map((i, idx, arr) => (
               <ListItem key={idx} button disablePadding>
                 <ListItemButton sx={{ pr: 0, width: 2 }}>
-                  <MoreVertIcon onClick={() => removeItem(idx)} />
+                  <DeleteIcon onClick={() => removeItem(idx)} />
                 </ListItemButton>
                 <ListItemText onClick={() => addNote(arr, idx)}>
                   <strong>{i.name}</strong>

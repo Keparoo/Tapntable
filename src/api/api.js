@@ -87,12 +87,12 @@ class TapntableApi {
     return res.checks;
   }
 
-  // Return user's open checks where isVoid=false
+  // Return user's open checks where isVoid=false and closed_at is null
   static async getOpenChecks(userId) {
     let res = await this.request(`checks`, {
       userId,
       isVoid: false,
-      closedAt: undefined
+      isOpen: true
     });
     return res.checks;
   }
@@ -191,7 +191,7 @@ class TapntableApi {
   static async getAnyOpenPayments() {
     let res = await this.request(`payments`, {
       isVoid: false,
-      tipAmt: undefined
+      isOpen: true
     });
     return res.payments;
   }

@@ -68,12 +68,12 @@ const CloseDay = () => {
         <Typography variant="h3" align="center">
           Close Day!
         </Typography>
-        <p>
+        <Typography variant="body1">
           Day Opened:{' '}
           {totals.dayOpen && (
-            <span>{moment(totals.dayOpen).format('MM-DD-YYYY, h:mm a')}</span>
+            <span>{moment(totals.dayOpen).format('MM-DD-YYYY--h:mm a')}</span>
           )}
-        </p>
+        </Typography>
         <Typography variant="h4">Checks</Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 640 }} aria-label="Checks Table">

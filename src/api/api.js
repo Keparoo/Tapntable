@@ -97,10 +97,18 @@ class TapntableApi {
     return res.checks;
   }
 
+  // Return any open checks (regardless of user) where isVoid=false
+  static async getAnyOpenChecks() {
+    let res = await this.request(`checks`, {
+      isVoid: false,
+      isOpen: true
+    });
+    return res.checks;
+  }
+
   // Get all checks from the day
   static async getDayChecks(timestamp) {
     let res = await this.request(`checks`, { createdAt: timestamp });
-    console.debug('********************Checks', res);
     return res.checks;
   }
 
@@ -175,6 +183,15 @@ class TapntableApi {
       printedAt: loginTime,
       userId,
       isVoid: false
+    });
+    return res.payments;
+  }
+
+  // Return all open payments (tipAmt=null) regardless of user. Exclude voided payments
+  static async getAnyOpenPayments() {
+    let res = await this.request(`payments`, {
+      isVoid: false,
+      tipAmt: undefined
     });
     return res.payments;
   }

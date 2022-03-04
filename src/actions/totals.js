@@ -33,13 +33,23 @@ function getEmployeeHours(hours) {
 
 export function getDayTotalsFromAPI() {
   return async function(dispatch) {
+    const openChecks = await TapntableApi.getAnyOpenChecks();
+    const openPayments = await TapntableApi.getAnyOpenPayments();
     const dayOpen = await TapntableApi.getDayOpen();
     const checks = await TapntableApi.getDayChecks(dayOpen);
     const payments = await TapntableApi.getDayPayments(dayOpen);
     const items = await TapntableApi.getDayItems(dayOpen);
     const userData = await TapntableApi.getDayUserData(dayOpen);
     return dispatch(
-      getDayTotals({ dayOpen, checks, payments, items, userData })
+      getDayTotals({
+        openChecks,
+        openPayments,
+        dayOpen,
+        checks,
+        payments,
+        items,
+        userData
+      })
     );
   };
 }

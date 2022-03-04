@@ -70,7 +70,11 @@ const UserPinForm = ({ errors, clearErrors, login }) => {
 
         <Stack sx={{ width: '57%' }} spacing={2}>
           {errors.length !== 0 &&
-            errors.map((error) => <Alert severity="error">{error}</Alert>)}
+            errors.map((error) => (
+              <Alert key={error} severity="error">
+                {error}
+              </Alert>
+            ))}
         </Stack>
       </Paper>
     </Container>

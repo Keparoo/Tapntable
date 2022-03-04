@@ -277,7 +277,6 @@ class TapntableApi {
 
   static async getDayOpen() {
     let res = await this.request(`users/logs`, { event: OPEN_DAY, desc: true });
-    console.debug('***********Day Open', new Date(res.logs[0].createdAt));
     return new Date(res.logs[0].createdAt);
   }
 

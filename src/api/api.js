@@ -151,13 +151,13 @@ class TapntableApi {
     return res.ordItems;
   }
 
-  // Return all ordered items related to checkId
+  // Return all ordered items related to an orderId
   static async getOrderedItemsByOrder(query) {
     let res = await this.request(`ordered`, { orderId: query });
     return res.ordItems;
   }
 
-  // Return all ordered items from the day
+  // Return all ordered items from the day: sentAt >= timestamp
   static async getDayItems(timestamp) {
     let res = await this.request(`ordered`, { sentAt: timestamp });
     return res.ordItems;
@@ -170,12 +170,6 @@ class TapntableApi {
     let res = await this.request(`payments`, { checkId: query });
     return res.payments;
   }
-
-  // // Return a list of all payments related to checkId
-  // static async getOpenPayments(query) {
-  //   let res = await this.request(`payments`, { userId: query });
-  //   return res.payments;
-  // }
 
   // Return all open user payments (tipAmt=null) since last user login. Exclude voided payments
   static async getUserShiftPayments(loginTime, userId) {
@@ -260,16 +254,6 @@ class TapntableApi {
     );
     return res.user;
   }
-
-  // Log user cash-out
-  // static async cashOut(userId) {
-  //   let res = await this.request(
-  //     `users/logs`,
-  //     { userId, event: CASH_OUT },
-  //     'post'
-  //   );
-  //   return res.user;
-  // }
 
   // Return user's last clock-in time
   static async getUserClockInTime(id) {

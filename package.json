@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "REACT_APP_BASE_URL=https://tapntable.herokuapp.com npm run build && cp build/index.html build/200.html && surge build"
+    "deploy": "REACT_APP_BASE_URL=https://tapntable.herokuapp.com npm run build && cp build/index.html build/200.html && surge --domain https://zonked-board.surge.sh build"
   },
   "eslintConfig": {
     "extends": [ "react-app", "react-app/jest" ]

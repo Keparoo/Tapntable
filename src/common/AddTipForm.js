@@ -41,7 +41,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
         autoFocus={true}
       />
 
-      <Button onClick={handleSubmit} variant="contained">
+      <Button type="submit" onClick={handleSubmit} variant="contained">
         Add Tip & Close Payment
       </Button>
       <Button onClick={cancel} variant="contained" color="secondary">

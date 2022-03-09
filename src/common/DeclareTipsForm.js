@@ -54,7 +54,7 @@ const DeclaredTipsForm = ({ save, cancel }) => {
           onChange={handleChange}
         />
 
-        <Button onClick={handleSubmit} variant="contained">
+        <Button type="submit" onClick={handleSubmit} variant="contained">
           Submit
         </Button>
         <Button onClick={cancel} variant="contained">

@@ -72,7 +72,7 @@ const CheckForm = ({
           onChange={handleChange}
           error={numGuestsFormError}
         />
-        <Button onClick={handleSubmit} variant="contained">
+        <Button type="submit" onClick={handleSubmit} variant="contained">
           Create New Check
         </Button>
         <Button onClick={cancel} color="secondary">

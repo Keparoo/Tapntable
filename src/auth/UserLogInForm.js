@@ -5,7 +5,8 @@ import {
   Button,
   Stack,
   Alert,
-  Box
+  Box,
+  Typography
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +21,7 @@ import { useHistory } from 'react-router-dom';
 const UserLoginForm = ({ login }) => {
   console.debug('UserLoginForm');
 
-  const [ form, setForm ] = useState({});
+  const [ form, setForm ] = useState({ username: '', password: '' });
   const [ usernameFormError, setUsernameFormError ] = useState(false);
   const [ passwordFormError, setPasswordFormError ] = useState(false);
   const [ formErrors, setFormErrors ] = useState([]);
@@ -56,11 +57,14 @@ const UserLoginForm = ({ login }) => {
   };
 
   const cancel = () => {
-    history.push('/pin');
+    history.push('/');
   };
 
   return (
     <Container maxWidth="sm" sx={{ marginTop: '12em' }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        Please log in to validate terminal
+      </Typography>
       <Paper
         sx={{ padding: 8 }}
         component="form"
@@ -80,6 +84,7 @@ const UserLoginForm = ({ login }) => {
             autoFocus={true}
             required={true}
             helperText="Please enter a valid username"
+            autoComplete="username"
             value={form.username}
             onChange={handleChange}
             error={usernameFormError}
@@ -93,6 +98,7 @@ const UserLoginForm = ({ login }) => {
             variant="outlined"
             required={true}
             helperText="Please enter a valid password"
+            autoComplete="current-password"
             value={form.password}
             onChange={handleChange}
             error={passwordFormError}
@@ -100,7 +106,7 @@ const UserLoginForm = ({ login }) => {
           />
         </Box>
         <Stack direction="row" sx={{ margin: 2 }} justifyContent="center">
-          <Button onClick={handleSubmit} variant="contained">
+          <Button type="submit" onClick={handleSubmit} variant="contained">
             Login
           </Button>
           <Button onClick={cancel}>Cancel</Button>
@@ -108,7 +114,11 @@ const UserLoginForm = ({ login }) => {
 
         <Stack sx={{ width: '100%' }} spacing={2}>
           {formErrors.length !== 0 &&
-            formErrors.map((error) => <Alert severity="error">{error}</Alert>)}
+            formErrors.map((error) => (
+              <Alert key={error} severity="error">
+                {error}
+              </Alert>
+            ))}
         </Stack>
       </Paper>
     </Container>

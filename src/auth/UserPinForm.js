@@ -60,7 +60,7 @@ const UserPinForm = ({ errors, clearErrors, login }) => {
             error={formError}
           />
 
-          <Button onClick={handleSubmit} variant="contained">
+          <Button type="submit" onClick={handleSubmit} variant="contained">
             Submit
           </Button>
           <Button onClick={clear} variant="contained">

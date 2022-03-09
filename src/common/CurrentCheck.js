@@ -8,6 +8,7 @@ import {
 import ItemNoteForm from './ItemNoteForm';
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Typography,
   Container,
@@ -31,6 +32,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const dispatch = useDispatch();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
   const [ currItem, setCurrItem ] = useState({});
+  const history = useHistory;
   // const [seatNum, setSeatNum] = useState(1)
 
   // Get current user and check
@@ -186,6 +188,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const cancel = () => {
     dispatch(clearCurrentCheck());
     showOrderCats(false);
+    showPayment(false);
+    history.push('/');
   };
 
   // Show Pay Screen

@@ -53,6 +53,7 @@ const UserPinForm = ({ errors, clearErrors, login }) => {
             id="pin"
             name="pin"
             label="User Pin"
+            autoFocus={true}
             variant="outlined"
             value={pin}
             required

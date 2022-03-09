@@ -18,6 +18,10 @@ const PayAmountForm = ({ amount, save, cancel }) => {
     save({ ...form });
   }
 
+  const clear = () => {
+    setForm({ amount: 0 });
+  };
+
   return (
     <Box
       component="form"
@@ -35,6 +39,7 @@ const PayAmountForm = ({ amount, save, cancel }) => {
         name="amount"
         label="Balance"
         variant="outlined"
+        autoFocus={true}
         value={form.amount}
         onChange={handleChange}
       />
@@ -42,8 +47,8 @@ const PayAmountForm = ({ amount, save, cancel }) => {
       <Button type="submit" onClick={handleSubmit} variant="contained">
         Submit
       </Button>
-      <Button onClick={cancel} variant="contained" color="secondary">
-        Cancel
+      <Button onClick={clear} variant="contained" color="secondary">
+        Clear
       </Button>
     </Box>
   );

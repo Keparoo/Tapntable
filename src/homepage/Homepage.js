@@ -19,10 +19,11 @@ const Homepage = () => {
   // Query API to identify PIN entered
   const getUser = async (pin) => {
     console.debug('login', pin);
-    const error = await dispatch(fetchUserFromAPI(pin));
-
-    console.debug('User Id: ', user, error);
-    setFormErrors(error);
+    const res = await dispatch(fetchUserFromAPI(pin));
+    if (!res.success) {
+      console.debug('User Id: ', pin, res.error);
+      setFormErrors(res.error);
+    }
   };
 
   const clockIn = (userId) => {
@@ -35,6 +36,8 @@ const Homepage = () => {
   const cancelClockIn = () => {
     console.debug('cancel login');
     dispatch(clearUserPin());
+    setFormErrors([]);
+    history.push('/');
   };
 
   const clearErrors = () => {

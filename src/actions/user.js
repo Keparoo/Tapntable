@@ -9,10 +9,14 @@ export function fetchUserFromAPI(pin) {
     try {
       const user = await TapntableApi.getUser(pin);
       console.debug('fetchUserFromApi', user);
-      return dispatch(getUser(user));
-    } catch (err) {
-      console.error('User Error', err);
-      return err;
+      dispatch(getUser(user));
+      return { success: true };
+    } catch (error) {
+      console.error('User Error', error);
+      return {
+        success: false,
+        error
+      };
     }
   };
 }
@@ -31,10 +35,14 @@ export function clockInUser(pin) {
       const log = await TapntableApi.logEvent(user.id, CLOCK_IN);
       const clockedInUser = await TapntableApi.clockIn(user.id);
       console.debug('Clock In user', clockedInUser, log);
-      return dispatch(getUser(clockedInUser));
-    } catch (err) {
-      console.error('Error Clocking In', err);
-      return err;
+      dispatch(getUser(clockedInUser));
+      return { success: true };
+    } catch (error) {
+      console.error('Error Clocking In', error);
+      return {
+        success: false,
+        error
+      };
     }
   };
 }
@@ -45,10 +53,11 @@ export function clockOutUser(userId) {
       const log = await TapntableApi.logEvent(userId, CLOCK_OUT);
       const clockedOutUser = await TapntableApi.clockOut(userId);
       console.debug('Clock Out user', clockedOutUser, log);
-      return dispatch(clearUserPin());
-    } catch (err) {
-      console.error('Error Clocking Out', err);
-      return err;
+      dispatch(clearUserPin());
+      return { success: true };
+    } catch (error) {
+      console.error('Error Clocking Out', error);
+      return { success: false, error };
     }
   };
 }

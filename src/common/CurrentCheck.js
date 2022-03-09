@@ -32,7 +32,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const dispatch = useDispatch();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
   const [ currItem, setCurrItem ] = useState({});
-  const history = useHistory;
+  const history = useHistory();
   // const [seatNum, setSeatNum] = useState(1)
 
   // Get current user and check

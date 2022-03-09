@@ -99,8 +99,8 @@ const Kitchen = () => {
                   color="text.secondary"
                   gutterBottom
                 >
-                  OrderId: {o.id}
-                  <span style={{ float: 'right' }}>Check ID: </span>
+                  Order Id: {o.id}
+                  <span style={{ float: 'right' }}>Check ID: {o.checkId}</span>
                 </Typography>
                 <Typography variant="h5" component="div">
                   {o.displayName}

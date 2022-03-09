@@ -64,8 +64,13 @@ const CashOut = () => {
       declaredTips
     );
     console.debug('saveDeclaredTips', declaredTips, saveTipsRes);
-    setShowDeclaredTipsForm(false);
+
     setShowClockOut(true);
+  };
+
+  const cancelCashOut = () => {
+    setShowDeclaredTipsForm(false);
+    history.push('/');
   };
 
   if (isLoading) return <Spinner />;
@@ -89,7 +94,7 @@ const CashOut = () => {
       <Typography variant="h3" align="center">
         Cash Out
       </Typography>
-      <Paper elevation="6" sx={{ marginTop: 4, marginBottom: 4 }}>
+      <Paper elevation={6} sx={{ marginTop: 4, marginBottom: 4 }}>
         <Typography variant="body1" mx={10} pt={4}>
           MC Sales ${shiftResults.masterCardSales.toFixed(2)} <br />
           Visa Sales ${shiftResults.visaSales.toFixed(2)} <br />
@@ -124,7 +129,11 @@ const CashOut = () => {
 
       {showDeclaredTipsForm && (
         <Stack direction="row" spacing={2} align="center">
-          <DeclaredTipsForm save={saveDeclaredTips} justifyContent="center" />
+          <DeclaredTipsForm
+            save={saveDeclaredTips}
+            cancel={cancelCashOut}
+            justifyContent="center"
+          />
         </Stack>
       )}
       {showClockOut && (

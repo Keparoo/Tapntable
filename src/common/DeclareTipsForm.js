@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
-const DeclaredTipsForm = ({ save }) => {
+const DeclaredTipsForm = ({ save, cancel }) => {
   console.debug('DeclaredTipsForm');
 
   const [ form, setForm ] = useState({ declaredTips: 0 });
@@ -30,7 +30,7 @@ const DeclaredTipsForm = ({ save }) => {
       <Box
         component="form"
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' }
+          '& > :not(style)': { m: 1, width: '30ch' }
         }}
         noValidate
         align="center"
@@ -56,6 +56,9 @@ const DeclaredTipsForm = ({ save }) => {
 
         <Button onClick={handleSubmit} variant="contained">
           Submit
+        </Button>
+        <Button onClick={cancel} variant="contained">
+          Cancel
         </Button>
       </Box>
     </Container>

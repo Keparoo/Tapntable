@@ -13,8 +13,8 @@ import { clearCurrentCheck } from '../actions/currentCheck';
 import { TICKET_REFRESH_RATE } from '../constants';
 import { useHistory } from 'react-router-dom';
 
-const Kitchen = () => {
-  console.debug('Kitchen');
+const OrderTickets = ({ destinationId }) => {
+  console.debug('OrderTickets', destinationId);
 
   const user = useSelector((state) => state.user, shallowEqual);
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Kitchen = () => {
 
   useEffect(
     () => {
-      console.debug('Kitchen useEffect on Mount');
+      console.debug('OrderTickets useEffect on Mount');
 
       async function fetchItem() {
         dispatch(clearCurrentCheck());
@@ -39,8 +39,10 @@ const Kitchen = () => {
         // Get list of ordered items for order
         for (let order of ordersRes) {
           let orderItems = await TapntableApi.getOrderedItemsByOrder(order.id);
-          // Filter out items with destination other than kitchen-hot
-          orderItems = orderItems.filter((i) => i.destinationId === 1);
+          // Filter out items with destination other than destinationId
+          orderItems = orderItems.filter(
+            (i) => i.destinationId === destinationId
+          );
           order.items = orderItems;
         }
 
@@ -54,7 +56,7 @@ const Kitchen = () => {
         fetchItem();
       }
     },
-    [ dispatch, isLoading ]
+    [ dispatch, isLoading, destinationId ]
   );
 
   // Refresh the tickets on screen
@@ -75,7 +77,7 @@ const Kitchen = () => {
   };
 
   return (
-    <div className="Kitchen">
+    <div className="OrderTickets">
       <Container style={{ height: '40vh' }}>
         <Typography variant="h4" align="center">
           Open Orders
@@ -134,4 +136,4 @@ const Kitchen = () => {
   );
 };
 
-export default Kitchen;
+export default OrderTickets;

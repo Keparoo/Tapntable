@@ -15,6 +15,7 @@ import ClockOut from '../common/ClockOut';
 import Welcome from '../common/Welcome';
 import ManagerRoute from '../auth/ManagerRoute';
 import CloseDay from '../auth/CloseDay';
+import OrderTickets from '../common/orderTickets';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');
@@ -58,15 +59,15 @@ const Routes = ({ login, logout }) => {
       </Route>
 
       <Route exact path="/servicebar">
-        <ServiceBar />
+        <OrderTickets destinationId={3} />
       </Route>
 
       <Route exact path="/kitchen">
-        <Kitchen />
+        <OrderTickets destinationId={1} />
       </Route>
 
       <Route exact path="/kitchencold">
-        <KitchenCold />
+        <OrderTickets destinationId={2} />
       </Route>
 
       <ManagerRoute exact path="/closeday">

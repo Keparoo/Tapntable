@@ -64,7 +64,7 @@ class TapntableApi {
 
   // Get list of open orders from database filtered by destinationId
   static async getOpenOrders() {
-    let res = await this.request(`orders`, { completedAt: undefined });
+    let res = await this.request(`orders`, { isOpen: true });
     return res.orders;
   }
 

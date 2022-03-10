@@ -323,14 +323,18 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     secondary={
                       <React.Fragment>
                         {i.itemNote && (
-                          <Typography
-                            sx={{ display: 'inline', marginLeft: '1.3em' }}
-                            component="span"
-                            variant="body2"
-                            color="text.secondary"
-                          >
-                            {i.itemNote}
-                          </Typography>
+                          <List>
+                            {[ `${i.itemNote}`, 'mod2', 'mod3' ].map((m) => (
+                              <ListItem
+                                sx={{ display: 'inline', marginLeft: '1.3em' }}
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {m}
+                                <br />
+                              </ListItem>
+                            ))}
+                          </List>
                         )}
                       </React.Fragment>
                     }

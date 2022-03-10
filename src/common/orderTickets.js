@@ -7,7 +7,9 @@ import {
   Container,
   Card,
   CardActionArea,
-  CardContent
+  CardContent,
+  Button,
+  Stack
 } from '@mui/material';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import { TICKET_REFRESH_RATE } from '../constants';
@@ -132,6 +134,9 @@ const OrderTickets = ({ destinationId }) => {
           </Card>
         ))}
       </Container>
+      <Stack justifyContent="center">
+        <Button onClick={refreshTickets}>Refresh</Button>
+      </Stack>
     </div>
   );
 };

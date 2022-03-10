@@ -21,9 +21,13 @@ import {
   ListItemText,
   ListItemButton,
   ListItemSecondaryAction,
-  ListItemIcon
+  ListItemIcon,
+  Avatar,
+  ListItemAvatar,
+  IconButton
 } from '@mui/material';
 import StarBorder from '@mui/icons-material/StarBorder';
+import FolderIcon from '@mui/icons-material/Folder';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
@@ -302,51 +306,48 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           </List>
           {check.newItems.length !== 0 && <Divider>New Items</Divider>}
 
-          <List>
+          <List dense={true}>
             {check.newItems.map((i, idx, arr) => (
-              <ListItem key={idx} button disablePadding alignItems="flex-start">
-                <ListItemButton sx={{ pr: 0, width: 2 }}>
-                  <DeleteIcon onClick={() => removeItem(idx)} />
-                </ListItemButton>
-                <ListItemText
-                  onClick={() => addNote(arr, idx)}
-                  primary={
-                    <React.Fragment>
-                      <Typography sx={{ marginLeft: '1em' }} component="span">
-                        {i.name}
-                      </Typography>
-                    </React.Fragment>
-                  }
-                  secondary={
-                    <React.Fragment>
-                      {i.itemNote && (
-                        <Typography
-                          sx={{ display: 'inline', marginLeft: '1.3em' }}
-                          component="span"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          {i.itemNote}
-                        </Typography>
-                      )}
-                    </React.Fragment>
-                  }
-                />
-
-                {showItemNoteForm &&
-                currItem === idx && (
-                  <ItemNoteForm
-                    i={i}
-                    idx={idx}
-                    save={saveNote}
-                    cancel={cancelNote}
+              <React.Fragment>
+                <ListItem
+                  key={idx}
+                  alignItems="flex-start"
+                  secondaryAction={'$' + i.price}
+                >
+                  <IconButton onClick={() => removeItem(idx)}>
+                    <DeleteIcon />
+                  </IconButton>
+                  <ListItemText
+                    onClick={() => addNote(arr, idx)}
+                    primary={i.name}
+                    secondary={
+                      <React.Fragment>
+                        {i.itemNote && (
+                          <Typography
+                            sx={{ display: 'inline', marginLeft: '1.3em' }}
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                          >
+                            {i.itemNote}
+                          </Typography>
+                        )}
+                      </React.Fragment>
+                    }
                   />
-                )}
-
-                <ListItemSecondaryAction edge="end">
-                  ${i.price}
-                </ListItemSecondaryAction>
-              </ListItem>
+                </ListItem>
+                <ListItem>
+                  {showItemNoteForm &&
+                  currItem === idx && (
+                    <ItemNoteForm
+                      i={i}
+                      idx={idx}
+                      save={saveNote}
+                      cancel={cancelNote}
+                    />
+                  )}
+                </ListItem>
+              </React.Fragment>
             ))}
           </List>
         </Box>

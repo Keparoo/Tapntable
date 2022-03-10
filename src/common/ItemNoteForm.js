@@ -36,6 +36,7 @@ const ItemNoteForm = ({ i, save, cancel }) => {
         name="note"
         label="Note"
         variant="outlined"
+        autoFocus={true}
         value={form.note}
         onChange={handleChange}
       />

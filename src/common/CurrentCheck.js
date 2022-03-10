@@ -20,8 +20,10 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  ListItemIcon
 } from '@mui/material';
+import StarBorder from '@mui/icons-material/StarBorder';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
@@ -302,15 +304,35 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
           <List>
             {check.newItems.map((i, idx, arr) => (
-              <ListItem key={idx} button disablePadding>
+              <ListItem key={idx} button disablePadding alignItems="flex-start">
                 <ListItemButton sx={{ pr: 0, width: 2 }}>
                   <DeleteIcon onClick={() => removeItem(idx)} />
                 </ListItemButton>
-                <ListItemText onClick={() => addNote(arr, idx)}>
-                  <strong>{i.name}</strong>
-                  {i.itemNote && <span>{i.itemNote}</span>}
-                </ListItemText>
-                <ListItemSecondaryAction>${i.price}</ListItemSecondaryAction>
+                <ListItemText
+                  onClick={() => addNote(arr, idx)}
+                  primary={
+                    <React.Fragment>
+                      <Typography sx={{ marginLeft: '1em' }} component="span">
+                        {i.name}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                  secondary={
+                    <React.Fragment>
+                      {i.itemNote && (
+                        <Typography
+                          sx={{ display: 'inline', marginLeft: '1.3em' }}
+                          component="span"
+                          variant="body2"
+                          color="text.secondary"
+                        >
+                          {i.itemNote}
+                        </Typography>
+                      )}
+                    </React.Fragment>
+                  }
+                />
+
                 {showItemNoteForm &&
                 currItem === idx && (
                   <ItemNoteForm
@@ -320,6 +342,10 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     cancel={cancelNote}
                   />
                 )}
+
+                <ListItemSecondaryAction edge="end">
+                  ${i.price}
+                </ListItemSecondaryAction>
               </ListItem>
             ))}
           </List>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { fetchItemsFromAPI } from '../actions/items';
+import { fetchModsFromAPI } from '../actions/mods';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import {
   newCheck,
@@ -29,6 +30,7 @@ const Servers = () => {
   const history = useHistory();
   const user = useSelector((st) => st.user, shallowEqual);
   const items = useSelector((st) => st.items, shallowEqual);
+  // const mods = useSelector((st) => st.mods, shallowEqual);
   const dispatch = useDispatch();
 
   const [ isLoading, setIsLoading ] = useState(true);
@@ -44,6 +46,7 @@ const Servers = () => {
 
       async function fetchItem() {
         await dispatch(fetchItemsFromAPI());
+        await dispatch(fetchModsFromAPI());
         await dispatch(getOpenChecksFromAPI(user.id));
         dispatch(clearCurrentCheck());
         setIsLoading(false);

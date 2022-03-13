@@ -16,6 +16,7 @@ const OrderCats = () => {
   console.debug('OrderCats');
 
   const items = useSelector((st) => st.items, shallowEqual);
+  const mods = useSelector((st) => st.mods, shallowEqual);
   const dispatch = useDispatch();
   const [ showCat, setShowCat ] = useState(false);
   const [ currentCat, setCurrentCat ] = useState('');

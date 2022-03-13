@@ -1,7 +1,7 @@
 import TapntableApi from '../api/api';
 import { FETCH_MODS } from './types';
 
-export function getModsFromAPI() {
+export function fetchModsFromAPI() {
   return async function(dispatch) {
     const categories = await TapntableApi.getModCats();
     const groups = await TapntableApi.getModGroups();

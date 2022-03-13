@@ -42,6 +42,23 @@ class TapntableApi {
     return res.items;
   }
 
+  //**************Mods Queries*************************************** */
+
+  static async getMods(query) {
+    let res = await this.request(`mods`, query);
+    return res.mods;
+  }
+
+  static async getModGroups(query) {
+    let res = await this.request(`mods/modgroups/details`);
+    return res.modGroups;
+  }
+
+  static async getModCats(query) {
+    let res = await this.request(`mods/categories`);
+    return res.categories;
+  }
+
   //**************Orders Queries*************************************** */
 
   // Post a new order to database

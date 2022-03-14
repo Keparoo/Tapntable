@@ -304,12 +304,6 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     <React.Fragment>
                       <strong>{i.name}</strong>{' '}
                       <span style={{ float: 'right' }}>${i.price}</span>
-                      {i.itemNote && (
-                        <span>
-                          <br />
-                          {i.itemNote}
-                        </span>
-                      )}
                     </React.Fragment>
                   }
                   secondary={
@@ -330,6 +324,19 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                               <br />
                             </ListItem>
                           ))}
+                          {i.itemNote && (
+                            <ListItem
+                              sx={{
+                                display: 'inline',
+                                marginLeft: '1.3em'
+                              }}
+                              variant="body2"
+                              color="text.secondary"
+                              key={uuid()}
+                            >
+                              <strong>****{i.itemNote}</strong>
+                            </ListItem>
+                          )}
                         </List>
                       )}
                     </React.Fragment>
@@ -372,6 +379,19 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                 <br />
                               </ListItem>
                             ))}
+                            {i.itemNote && (
+                              <ListItem
+                                sx={{
+                                  display: 'inline',
+                                  marginLeft: '1.3em'
+                                }}
+                                variant="body2"
+                                color="text.secondary"
+                                key={uuid()}
+                              >
+                                <strong>****{i.itemNote}</strong>
+                              </ListItem>
+                            )}
                           </List>
                         )}
                       </React.Fragment>

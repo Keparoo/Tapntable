@@ -122,7 +122,9 @@ const OrderTickets = ({ destinationId }) => {
                       <span style={{ float: 'right' }}>Seat: {i.seatNum}</span>
                     </Typography>
                     <br />
-                    {i.mods.map((m) => <p key={m.modId}>{m.modName}</p>)}
+                    {i.mods.map((m) => (
+                      <Typography key={m.modId}>{m.modName}</Typography>
+                    ))}
                     <Typography variant="p">
                       {i.itemNote && <strong>****{i.itemNote}</strong>}
                     </Typography>

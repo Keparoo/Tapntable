@@ -85,6 +85,13 @@ const Servers = () => {
 
     //Calculate Check
     const items = await TapntableApi.getOrderedItems(check.id);
+
+    //Get related mods for item
+    for (const item of items) {
+      const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+      item.mods = mods;
+    }
+
     const payments = await TapntableApi.getPayments(check.id);
     const checkTotals = calculateCheck(check, items, payments);
     //Update Redux with check info

@@ -30,8 +30,8 @@ const ModCategories = ({ display }) => {
         alignItems="center"
       >
         {groups.map((g) => (
-          <Grid item key={g.id}>
-            <Button onClick={() => display(g.id)} variant="outlined">
+          <Grid item>
+            <Button key={g.id} onClick={() => display(g.id)} variant="outlined">
               {g.name}
             </Button>
           </Grid>

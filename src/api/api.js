@@ -30,7 +30,9 @@ class TapntableApi {
     }
   }
 
-  // Individual API routes
+  //*******************************************************************/
+  //                   Individual API routes                          */
+  //*******************************************************************/
 
   //**************Items Queries*************************************** */
 
@@ -62,6 +64,16 @@ class TapntableApi {
   static async getModCats(query) {
     let res = await this.request(`mods/categories`);
     return res.categories;
+  }
+
+  static async createItemMod(ordItemId, modId) {
+    let res = await this.request(`ordered/mods`, { ordItemId, modId }, 'post');
+    return res.ordItemMod;
+  }
+
+  static async getItemMods(query) {
+    let res = await this.request(`ordered/mods`, query);
+    return res.ordItemMods;
   }
 
   //**************Orders Queries*************************************** */

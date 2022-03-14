@@ -29,8 +29,8 @@ const ModGroup = ({ group, add, close }) => {
         alignItems="center"
       >
         {group.map((g) => (
-          <Grid item key={g.id}>
-            <Button onClick={() => add(g)} variant="outlined">
+          <Grid item>
+            <Button key={g.id} onClick={() => add(g)} variant="outlined">
               {g.modName}
             </Button>
           </Grid>

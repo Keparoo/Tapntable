@@ -73,7 +73,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
       check.newItems.length
     )
       console.error(
-        '****Warning, not being sent to order! Check item details****'
+        '****Warning, items not being sent to order! Check item details****'
       );
 
     console.debug(
@@ -119,7 +119,15 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           seatNum,
           item.itemNote
         );
-        console.debug('ordItem', ordItem);
+        console.debug('ordItem: ', ordItem);
+
+        // Post mods for ordered items to db
+        let itemMod;
+        for (const mod of item.mods) {
+          console.debug('***OrdItemId & modId', ordItem.id, mod.modId);
+          itemMod = await TapntableApi.createItemMod(ordItem.id, mod.modId);
+        }
+        console.debug('itemMod: ', itemMod);
       }
     };
 

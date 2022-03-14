@@ -53,6 +53,7 @@ const OrderCats = () => {
   const addItem = useCallback(
     (item) => {
       console.debug('addItem', item);
+      item.mods = [];
       dispatch(addItemToCheck(item));
     },
     [ dispatch ]
@@ -65,7 +66,6 @@ const OrderCats = () => {
       modGroupId: group
     });
     setCurrentModGroup(modsInGroup);
-    console.log('****modGroup:', modsInGroup);
     setShowModGroups(false);
     setShowMods(true);
   }, []);
@@ -79,9 +79,9 @@ const OrderCats = () => {
 
   // Add mod to current item
   const addMod = useCallback(
-    (item, mod) => {
-      console.debug('addMod', item, mod);
-      dispatch(addModToItem({ item, mod }));
+    (mod) => {
+      console.debug('addMod', mod);
+      dispatch(addModToItem(mod));
     },
     [ dispatch ]
   );
@@ -226,7 +226,9 @@ const OrderCats = () => {
       </Paper>
       {showCat && <Category cat={currentCat} />}
       {showModGroups && <ModCategories display={displayModGroup} />}
-      {showMods && <ModGroup group={currentModGroup} close={closeModGroup} />}
+      {showMods && (
+        <ModGroup group={currentModGroup} add={addMod} close={closeModGroup} />
+      )}
     </Container>
   );
 };

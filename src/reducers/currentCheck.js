@@ -4,11 +4,17 @@ import {
   REMOVE_FROM_CHECK,
   LOAD_CURRENT_CHECK,
   CLEAR_CURRENT_CHECK,
-  ADD_PAYMENT
+  ADD_PAYMENT,
+  ADD_MOD_TO_ITEM
 } from '../actions/types';
 import { floatToMoney } from '../utils/helpers';
 
-const INITIAL_STATE = { items: [], newItems: [], payments: [] };
+const INITIAL_STATE = {
+  items: [],
+  newItems: [],
+  payments: [],
+  currentItem: -1
+};
 export default function newCheck(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CREATE_CHECK:
@@ -21,14 +27,24 @@ export default function newCheck(state = INITIAL_STATE, action) {
         createdAt: date,
         items: [],
         newItems: [],
-        payments: []
+        payments: [],
+        currentItem: -1
       };
 
     case ADD_TO_CHECK:
+      state.currentItem++;
       return {
         ...state,
         subtotal: floatToMoney(+state.subtotal + +action.item.price),
         newItems: [ ...state.newItems, { ...action.item } ]
+      };
+
+    case ADD_MOD_TO_ITEM:
+      const updatedItems = [ ...state.newItems ];
+      updatedItems[state.currentItem].mods.push(action.mod);
+      return {
+        ...state,
+        newItems: updatedItems
       };
 
     case REMOVE_FROM_CHECK:
@@ -48,6 +64,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
         amountDue: action.check.checkTotals.amountDue,
         items: action.check.items,
         newItems: [],
+        currentItem: -1,
         payments: action.check.payments
       };
 

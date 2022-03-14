@@ -9,7 +9,7 @@ import {
   Stack
 } from '@mui/material';
 
-const ModGroup = ({ group, close }) => {
+const ModGroup = ({ group, add, close }) => {
   console.debug('ModGroup', group);
 
   const mods = useSelector((st) => st.mods.mods, shallowEqual);
@@ -30,7 +30,9 @@ const ModGroup = ({ group, close }) => {
       >
         {group.map((g) => (
           <Grid item key={g.id}>
-            <Button variant="outlined">{g.modName}</Button>
+            <Button onClick={() => add(g)} variant="outlined">
+              {g.modName}
+            </Button>
           </Grid>
         ))}
       </Grid>

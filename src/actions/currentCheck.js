@@ -44,9 +44,10 @@ export function clearCurrentCheck() {
   };
 }
 
-export function addModToItem() {
+export function addModToItem(mod) {
   return {
-    type: ADD_MOD_TO_ITEM
+    type: ADD_MOD_TO_ITEM,
+    mod
   };
 }
 

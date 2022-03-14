@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import moment from 'moment';
-import TapntableApi from '../api/api';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   clearCurrentCheck,
   removeItemFromCheck
 } from '../actions/currentCheck';
+import TapntableApi from '../api/api';
+import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
+
 import ItemNoteForm from './ItemNoteForm';
+
 import { v4 as uuid } from 'uuid';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import moment from 'moment';
+
 import {
   Typography,
   Container,
@@ -19,26 +23,18 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemButton,
-  ListItemSecondaryAction,
-  ListItemIcon,
-  Avatar,
-  ListItemAvatar,
   IconButton
 } from '@mui/material';
-import StarBorder from '@mui/icons-material/StarBorder';
-import FolderIcon from '@mui/icons-material/Folder';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
   const [ currItem, setCurrItem ] = useState({});
-  const history = useHistory();
   // const [seatNum, setSeatNum] = useState(1)
 
   // Get current user and check
@@ -121,10 +117,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         );
         console.debug('ordItem: ', ordItem);
 
-        // Post mods for ordered items to db
+        // Create ordered_item_mods for ordered items to db
         let itemMod;
         for (const mod of item.mods) {
-          console.debug('***OrdItemId & modId', ordItem.id, mod.modId);
           itemMod = await TapntableApi.createItemMod(ordItem.id, mod.modId);
         }
         console.debug('itemMod: ', itemMod);

@@ -299,16 +299,42 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           <List className="CurrentCheck-Items" dense={true}>
             {check.items.map((i) => (
               <ListItem key={uuid()}>
-                <ListItemText>
-                  <strong>{i.name}</strong>{' '}
-                  <span style={{ float: 'right' }}>${i.price}</span>
-                  {i.itemNote && (
-                    <span>
-                      <br />
-                      {i.itemNote}
-                    </span>
-                  )}
-                </ListItemText>
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <strong>{i.name}</strong>{' '}
+                      <span style={{ float: 'right' }}>${i.price}</span>
+                      {i.itemNote && (
+                        <span>
+                          <br />
+                          {i.itemNote}
+                        </span>
+                      )}
+                    </React.Fragment>
+                  }
+                  secondary={
+                    <React.Fragment>
+                      {i.mods.length !== 0 && (
+                        <List>
+                          {i.mods.map((m) => (
+                            <ListItem
+                              sx={{
+                                display: 'inline',
+                                marginLeft: '1.3em'
+                              }}
+                              variant="body2"
+                              color="text.secondary"
+                              key={m.modId}
+                            >
+                              {m.modName}
+                              <br />
+                            </ListItem>
+                          ))}
+                        </List>
+                      )}
+                    </React.Fragment>
+                  }
+                />
               </ListItem>
             ))}
           </List>

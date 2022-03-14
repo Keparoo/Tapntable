@@ -46,6 +46,11 @@ const OrderTickets = ({ destinationId }) => {
             (i) => i.destinationId === destinationId
           );
           order.items = orderItems;
+          //Get related mods for item
+          for (let item of order.items) {
+            const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+            item.mods = mods;
+          }
         }
 
         const filteredOrders = ordersRes.filter((o) => o.items.length !== 0);
@@ -117,6 +122,7 @@ const OrderTickets = ({ destinationId }) => {
                       <span style={{ float: 'right' }}>Seat: {i.seatNum}</span>
                     </Typography>
                     <br />
+                    {i.mods.map((m) => <p key={m.modId}>{m.modName}</p>)}
                     <Typography variant="p">
                       {i.itemNote && <strong>****{i.itemNote}</strong>}
                     </Typography>

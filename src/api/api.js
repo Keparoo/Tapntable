@@ -54,6 +54,11 @@ class TapntableApi {
     return res.modGroups;
   }
 
+  static async getModsInGroup(query) {
+    let res = await this.request(`mods/modgroups`, query);
+    return res.modsModGroups;
+  }
+
   static async getModCats(query) {
     let res = await this.request(`mods/categories`);
     return res.categories;

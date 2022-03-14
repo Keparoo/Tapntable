@@ -3,7 +3,8 @@ import {
   CREATE_CHECK,
   LOAD_CURRENT_CHECK,
   CLEAR_CURRENT_CHECK,
-  REMOVE_FROM_CHECK
+  REMOVE_FROM_CHECK,
+  ADD_MOD_TO_ITEM
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -40,6 +41,12 @@ export function getOpenCheck(check) {
 export function clearCurrentCheck() {
   return {
     type: CLEAR_CURRENT_CHECK
+  };
+}
+
+export function addModToItem() {
+  return {
+    type: ADD_MOD_TO_ITEM
   };
 }
 

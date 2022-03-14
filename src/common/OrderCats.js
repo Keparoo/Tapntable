@@ -1,6 +1,6 @@
 import React, { useState, memo, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { addItemToCheck } from '../actions/currentCheck';
+import { addItemToCheck, addModToItem } from '../actions/currentCheck';
 import {
   Container,
   Grid,
@@ -11,6 +11,9 @@ import {
   Stack
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import ModCategories from './ModCategories';
+import ModGroup from './ModGroup';
+import TapntableApi from '../api/api';
 
 const OrderCats = () => {
   console.debug('OrderCats');
@@ -20,6 +23,9 @@ const OrderCats = () => {
   const dispatch = useDispatch();
   const [ showCat, setShowCat ] = useState(false);
   const [ currentCat, setCurrentCat ] = useState('');
+  const [ showModGroups, setShowModGroups ] = useState(true);
+  const [ showMods, setShowMods ] = useState(false);
+  const [ currentModGroup, setCurrentModGroup ] = useState([]);
 
   // const Item = styled(ButtonBase)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
@@ -30,7 +36,7 @@ const OrderCats = () => {
   //   color: theme.palette.text.secondary
   // }));
 
-  // Display items is category
+  // Display items in category
   const displayCategory = useCallback((cat) => {
     console.debug('displayCategory', cat);
     setShowCat(true);
@@ -48,6 +54,34 @@ const OrderCats = () => {
     (item) => {
       console.debug('addItem', item);
       dispatch(addItemToCheck(item));
+    },
+    [ dispatch ]
+  );
+
+  // Display mods in mod group
+  const displayModGroup = useCallback(async (group) => {
+    console.debug('displayModGroup', group);
+    const modsInGroup = await TapntableApi.getModsInGroup({
+      modGroupId: group
+    });
+    setCurrentModGroup(modsInGroup);
+    console.log('****modGroup:', modsInGroup);
+    setShowModGroups(false);
+    setShowMods(true);
+  }, []);
+
+  // Stop display of current mod group
+  const closeModGroup = useCallback(() => {
+    console.debug('closeModGroup');
+    setShowMods(false);
+    setShowModGroups(true);
+  }, []);
+
+  // Add mod to current item
+  const addMod = useCallback(
+    (item, mod) => {
+      console.debug('addMod', item, mod);
+      dispatch(addModToItem({ item, mod }));
     },
     [ dispatch ]
   );
@@ -94,7 +128,7 @@ const OrderCats = () => {
           padding: '24px'
         }}
       >
-        <Typography variant="h2" align="center" gutterBottom>
+        <Typography variant="h3" align="center" gutterBottom>
           Order Categories
         </Typography>
         <Grid
@@ -191,6 +225,8 @@ const OrderCats = () => {
         </Grid>
       </Paper>
       {showCat && <Category cat={currentCat} />}
+      {showModGroups && <ModCategories display={displayModGroup} />}
+      {showMods && <ModGroup group={currentModGroup} close={closeModGroup} />}
     </Container>
   );
 };

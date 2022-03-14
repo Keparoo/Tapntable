@@ -16,3 +16,4 @@ export const GET_EMPLOYEE_HOURS = 'GET_EMPLOYEE_HOURS';
 export const GET_DAY_TOTALS = 'GET_DAY_TOTALS';
 
 export const FETCH_MODS = 'FETCH_MODS';
+export const ADD_MOD_TO_ITEM = 'ADD_MOD_TO_ITEM';

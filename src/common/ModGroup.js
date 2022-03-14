@@ -6,16 +6,15 @@ import {
   Paper,
   Typography,
   Button,
-  Stack,
-  Divider
+  Stack
 } from '@mui/material';
 
-const ModCategories = ({ display }) => {
-  console.debug('ModCategories');
+const ModGroup = ({ group, close }) => {
+  console.debug('ModGroup', group);
 
-  const categories = useSelector((st) => st.mods.categories, shallowEqual);
-  const groups = useSelector((st) => st.mods.groups, shallowEqual);
-  console.debug('Mod categories', categories);
+  const mods = useSelector((st) => st.mods.mods, shallowEqual);
+  console.debug('Mod groups', mods);
+  //get mods in mod group
 
   return (
     <Paper elevation={3} sx={{ padding: '24px', marginTop: '16px' }}>
@@ -29,20 +28,17 @@ const ModCategories = ({ display }) => {
         justifyContent="space-evenly"
         alignItems="center"
       >
-        {groups.map((g) => (
+        {group.map((g) => (
           <Grid item key={g.id}>
-            <Button onClick={() => display(g.id)} variant="outlined">
-              {g.name}
-            </Button>
+            <Button variant="outlined">{g.modName}</Button>
           </Grid>
         ))}
       </Grid>
+      <Stack sx={{ paddingTop: '36px' }}>
+        <Button onClick={close}>Close</Button>
+      </Stack>
     </Paper>
   );
 };
 
-export default ModCategories;
-
-// <Stack sx={{ paddingTop: '36px' }}>
-// <Button>Close</Button>
-// </Stack>
+export default ModGroup;

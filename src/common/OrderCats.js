@@ -41,6 +41,8 @@ const OrderCats = () => {
     console.debug('displayCategory', cat);
     setShowCat(true);
     setCurrentCat(cat);
+    setShowMods(false);
+    setShowModGroups(true);
   }, []);
 
   // Stop display of current category items

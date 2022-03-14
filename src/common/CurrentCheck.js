@@ -322,15 +322,19 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     primary={i.name}
                     secondary={
                       <React.Fragment>
-                        {i.itemNote && (
+                        {i.mods.length !== 0 && (
                           <List>
-                            {[ `${i.itemNote}`, 'mod2', 'mod3' ].map((m) => (
+                            {i.mods.map((m) => (
                               <ListItem
-                                sx={{ display: 'inline', marginLeft: '1.3em' }}
+                                sx={{
+                                  display: 'inline',
+                                  marginLeft: '1.3em'
+                                }}
                                 variant="body2"
                                 color="text.secondary"
+                                key={m.modId}
                               >
-                                {m}
+                                {m.modName}
                                 <br />
                               </ListItem>
                             ))}

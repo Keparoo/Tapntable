@@ -237,7 +237,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   // Save item note: Hide form
   const saveNote = (i, note) => {
-    console.debug('*****saveNote', i, note);
+    console.debug('saveNote', i, note);
     // item.item.itemNote = item.note;
     i.itemNote = note.note;
     console.debug('Item Note: ', note.note);
@@ -321,6 +321,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                               key={m.modId}
                             >
                               {m.modName}
+                              {m.modPrice && (
+                                <span style={{ float: 'right' }}>
+                                  ${m.modPrice}
+                                </span>
+                              )}
                               <br />
                             </ListItem>
                           ))}
@@ -350,17 +355,18 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           <List dense={true}>
             {check.newItems.map((i, idx, arr) => (
               <React.Fragment>
-                <ListItem
-                  key={idx}
-                  alignItems="flex-start"
-                  secondaryAction={'$' + i.price}
-                >
+                <ListItem key={idx} alignItems="flex-start">
                   <IconButton onClick={() => removeItem(idx)}>
                     <DeleteIcon />
                   </IconButton>
                   <ListItemText
                     onClick={() => addNote(arr, idx)}
-                    primary={i.name}
+                    primary={
+                      <React.Fragment>
+                        <strong>{i.name}</strong>{' '}
+                        <span style={{ float: 'right' }}>${i.price}</span>
+                      </React.Fragment>
+                    }
                     secondary={
                       <React.Fragment>
                         {i.mods.length !== 0 && (
@@ -376,6 +382,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                 key={m.modId}
                               >
                                 {m.modName}
+                                {m.modPrice && (
+                                  <span style={{ float: 'right' }}>
+                                    ${m.modPrice}
+                                  </span>
+                                )}
                                 <br />
                               </ListItem>
                             ))}

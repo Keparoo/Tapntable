@@ -43,13 +43,22 @@ const floatToMoney = (num) => {
 const calculateCheck = (check, items, payments) => {
   console.debug('calculateCheck', check, items, payments);
 
+  // Total any mod price additions
+  let modTotal = 0;
+  for (let item of items) {
+    if (item.mods.length !== 0) {
+      modTotal += item.mods.reduce((a, b) => +a + (+b.modPrice || 0), 0);
+    }
+  }
+
   const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0);
   const localTax = floatToMoney(subtotal * config.tax.localRate);
   const stateTax = floatToMoney(subtotal * config.tax.stateRate);
   const federalTax = floatToMoney(subtotal * config.tax.federalRate);
   const totalTax = localTax + stateTax + federalTax;
   const totalPaid = payments.reduce((a, b) => +a + (+b.subtotal || 0), 0);
-  const amountDue = subtotal + totalTax - totalPaid - check.discountTotal;
+  const amountDue =
+    subtotal + modTotal + totalTax - totalPaid - check.discountTotal;
   return {
     subtotal,
     localTax,

@@ -51,14 +51,13 @@ const calculateCheck = (check, items, payments) => {
     }
   }
 
-  const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0);
+  const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0) + modTotal;
   const localTax = floatToMoney(subtotal * config.tax.localRate);
   const stateTax = floatToMoney(subtotal * config.tax.stateRate);
   const federalTax = floatToMoney(subtotal * config.tax.federalRate);
   const totalTax = localTax + stateTax + federalTax;
   const totalPaid = payments.reduce((a, b) => +a + (+b.subtotal || 0), 0);
-  const amountDue =
-    subtotal + modTotal + totalTax - totalPaid - check.discountTotal;
+  const amountDue = subtotal + totalTax - totalPaid - check.discountTotal;
   return {
     subtotal,
     localTax,

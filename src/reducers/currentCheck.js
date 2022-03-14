@@ -44,6 +44,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
       updatedItems[state.currentItem].mods.push(action.mod);
       return {
         ...state,
+        subtotal: floatToMoney(+state.subtotal + +action.mod.modPrice),
         newItems: updatedItems
       };
 

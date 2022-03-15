@@ -14,6 +14,7 @@ import { styled } from '@mui/material/styles';
 import ModCategories from './ModCategories';
 import ModGroup from './ModGroup';
 import TapntableApi from '../api/api';
+import RequiredModGroup from './RequiredModGroup';
 
 const OrderCats = () => {
   console.debug('OrderCats');
@@ -27,6 +28,8 @@ const OrderCats = () => {
   const [ showModGroups, setShowModGroups ] = useState(false);
   const [ showMods, setShowMods ] = useState(false);
   const [ currentModGroup, setCurrentModGroup ] = useState([]);
+  const [ itemModGroups, setItemModGroups ] = useState([]);
+  const [ showRequiredModGroup, setShowRequiredModGroup ] = useState(false);
 
   // const Item = styled(ButtonBase)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
@@ -58,9 +61,11 @@ const OrderCats = () => {
       item.mods = [];
       dispatch(addItemToCheck(item));
       //it item has item mods show mods
-      const itemMods = await TapntableApi.getItemModGroups(item.id);
-      console.debug('itemMods', itemMods);
+      const itemModGroups = await TapntableApi.getItemModGroups(item.id);
+      console.debug('itemModGroups', itemModGroups);
+      setItemModGroups(itemModGroups);
       setShowModGroups(true);
+      setShowRequiredModGroup(true);
     },
     [ dispatch ]
   );
@@ -233,6 +238,7 @@ const OrderCats = () => {
         </Grid>
       </Paper>
       {showCat && <Category cat={currentCat} />}
+      {showRequiredModGroup && <RequiredModGroup />}
       {showModGroups && <ModCategories display={displayModGroup} />}
       {showMods && (
         <ModGroup group={currentModGroup} add={addMod} close={closeModGroup} />

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
-const ModGroup = ({ group, add, close }) => {
+const ModGroup = ({ group, name, add, close }) => {
   console.debug('ModGroup', group);
 
   const mods = useSelector((st) => st.mods.mods, shallowEqual);

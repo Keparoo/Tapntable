@@ -24,10 +24,10 @@ export function addItemToCheck(item) {
   };
 }
 
-export function removeItemFromCheck(idx) {
+export function removeItemFromCheck(item) {
   return {
     type: REMOVE_FROM_CHECK,
-    idx
+    item
   };
 }
 

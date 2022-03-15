@@ -50,8 +50,14 @@ export default function newCheck(state = INITIAL_STATE, action) {
 
     case REMOVE_FROM_CHECK:
       const items = [ ...state.newItems ];
-      items.splice(action.idx, 1);
-      return { ...state, newItems: items };
+      items.splice(action.item.idx, 1);
+      return {
+        ...state,
+        subtotal: floatToMoney(
+          +state.subtotal - +action.item.arr[action.item.idx].price
+        ),
+        newItems: items
+      };
 
     case LOAD_CURRENT_CHECK:
       return {

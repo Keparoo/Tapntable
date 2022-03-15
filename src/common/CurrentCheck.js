@@ -286,7 +286,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               )}
             </Typography>
 
-            <Typography variant="p">
+            <Typography>
               {check.createdAt && (
                 <span>
                   Created At:{' '}
@@ -303,30 +303,30 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
           {check.items.length !== 0 && <Divider>Sent Items</Divider>}
 
-          <List className="CurrentCheck-Items" dense={true}>
+          <List className="CurrentCheck-SentItems" dense={true}>
             {check.items.map((i) => (
               <ListItem key={uuid()}>
                 <ListItemText
                   primary={
-                    <React.Fragment>
+                    <React.Fragment key={uuid()}>
                       <strong>{i.name}</strong>{' '}
                       <span style={{ float: 'right' }}>${i.price}</span>
                     </React.Fragment>
                   }
                   secondary={
-                    <React.Fragment>
+                    <React.Fragment key={uuid()}>
                       {i.mods.length !== 0 && (
-                        <List>
+                        <ListItem component="span">
                           {i.mods.map((m) => (
                             <ListItem
                               sx={{
                                 display: 'inline',
                                 marginLeft: '1.3em'
                               }}
-                              component="p"
                               variant="body2"
                               color="text.secondary"
                               key={uuid()}
+                              component="span"
                             >
                               {m.modName}
                               {m.modPrice && (
@@ -343,7 +343,6 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                 display: 'inline',
                                 marginLeft: '1.3em'
                               }}
-                              component="p"
                               variant="body2"
                               color="text.secondary"
                               key={uuid()}
@@ -351,7 +350,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                               <strong>****{i.itemNote}</strong>
                             </ListItem>
                           )}
-                        </List>
+                        </ListItem>
                       )}
                     </React.Fragment>
                   }
@@ -361,11 +360,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           </List>
           {check.newItems.length !== 0 && <Divider>New Items</Divider>}
 
-          <List dense={true}>
+          <List className="CurrentCheck-NewItems" dense={true}>
             {check.newItems.map((i, idx, arr) => (
-              <React.Fragment>
-                <ListItem key={idx} alignItems="flex-start">
-                  <IconButton onClick={() => removeItem(arr, idx)}>
+              <React.Fragment key={uuid()}>
+                <ListItem key={uuid()} alignItems="flex-start">
+                  <IconButton key={uuid()} onClick={() => removeItem(arr, idx)}>
                     <DeleteIcon />
                   </IconButton>
                   <ListItemText
@@ -377,19 +376,19 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                       </React.Fragment>
                     }
                     secondary={
-                      <React.Fragment>
+                      <React.Fragment key={uuid()}>
                         {i.mods.length !== 0 && (
-                          <List>
+                          <List component="span">
                             {i.mods.map((m) => (
                               <ListItem
                                 sx={{
                                   display: 'inline',
                                   marginLeft: '1.3em'
                                 }}
-                                component="p"
                                 variant="body2"
                                 color="text.secondary"
                                 key={uuid()}
+                                component="span"
                               >
                                 {m.modName}
                                 {m.modPrice && (
@@ -406,7 +405,6 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                   display: 'inline',
                                   marginLeft: '1.3em'
                                 }}
-                                component="p"
                                 variant="body2"
                                 color="text.secondary"
                                 key={uuid()}

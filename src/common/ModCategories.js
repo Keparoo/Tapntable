@@ -1,5 +1,5 @@
-import React, { useState, memo, useCallback } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import React, { memo, useCallback } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import {
   Container,
   Grid,
@@ -31,12 +31,8 @@ const ModCategories = ({ display }) => {
         alignItems="center"
       >
         {groups.map((g) => (
-          <Grid item>
-            <Button
-              key={uuid()}
-              onClick={() => display(g.id)}
-              variant="outlined"
-            >
+          <Grid item key={uuid()}>
+            <Button onClick={() => display(g.id)} variant="outlined">
               {g.name}
             </Button>
           </Grid>

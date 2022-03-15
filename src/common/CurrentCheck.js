@@ -7,7 +7,6 @@ import {
 } from '../actions/currentCheck';
 import sendOrder from '../utils/sendOrder';
 import TapntableApi from '../api/api';
-import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
 
 import ItemNoteForm from './ItemNoteForm';
 
@@ -36,14 +35,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const history = useHistory();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
   const [ currItem, setCurrItem ] = useState({});
-  // const [seatNum, setSeatNum] = useState(1)
 
   // Get current user and check
   const user = useSelector((st) => st.user, shallowEqual);
   const check = useSelector((st) => st.currentCheck, shallowEqual);
   console.debug('CurrentCheck', check);
-
-  // const sendOrder = useSendOrder(check, user, reload, showOrderCats);
 
   const sendAndClear = () => {
     sendOrder(check, user, reload, showOrderCats);
@@ -195,6 +191,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                               variant="body2"
                               color="text.secondary"
                               key={uuid()}
+                              component="span"
                             >
                               <strong>****{i.itemNote}</strong>
                             </ListItem>
@@ -226,7 +223,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     }
                     secondary={
                       <React.Fragment key={uuid()}>
-                        {i.mods.length !== 0 && (
+                        {(i.mods.length !== 0 || i.itemNote) && (
                           <List component="span">
                             {i.mods.map((m) => (
                               <ListItem

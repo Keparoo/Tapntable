@@ -53,10 +53,13 @@ const OrderCats = () => {
 
   // Add item to current check
   const addItem = useCallback(
-    (item) => {
+    async (item) => {
       console.debug('addItem', item);
       item.mods = [];
       dispatch(addItemToCheck(item));
+      //it item has item mods show mods
+      const itemMods = await TapntableApi.getItemModGroups(item.id);
+      console.debug('itemMods', itemMods);
       setShowModGroups(true);
     },
     [ dispatch ]

@@ -76,6 +76,11 @@ class TapntableApi {
     return res.ordItemMods;
   }
 
+  static async getItemModGroups(itemId) {
+    let res = await this.request(`items/modgroups/${itemId}`);
+    return res.itemModGroups;
+  }
+
   //**************Orders Queries*************************************** */
 
   // Post a new order to database

@@ -20,10 +20,11 @@ const OrderCats = () => {
 
   const items = useSelector((st) => st.items, shallowEqual);
   const mods = useSelector((st) => st.mods, shallowEqual);
+  const currentCheck = useSelector((st) => st.currentCheck, shallowEqual);
   const dispatch = useDispatch();
   const [ showCat, setShowCat ] = useState(false);
   const [ currentCat, setCurrentCat ] = useState('');
-  const [ showModGroups, setShowModGroups ] = useState(true);
+  const [ showModGroups, setShowModGroups ] = useState(false);
   const [ showMods, setShowMods ] = useState(false);
   const [ currentModGroup, setCurrentModGroup ] = useState([]);
 
@@ -42,7 +43,6 @@ const OrderCats = () => {
     setShowCat(true);
     setCurrentCat(cat);
     setShowMods(false);
-    setShowModGroups(true);
   }, []);
 
   // Stop display of current category items
@@ -57,6 +57,7 @@ const OrderCats = () => {
       console.debug('addItem', item);
       item.mods = [];
       dispatch(addItemToCheck(item));
+      setShowModGroups(true);
     },
     [ dispatch ]
   );
@@ -83,9 +84,11 @@ const OrderCats = () => {
   const addMod = useCallback(
     (mod) => {
       console.debug('addMod', mod);
+      // No current item: prevent adding mod
+      if (currentCheck.currentItem < 0) return;
       dispatch(addModToItem(mod));
     },
-    [ dispatch ]
+    [ dispatch, currentCheck.currentItem ]
   );
 
   // View of items in category

@@ -20,7 +20,7 @@ const ModGroup = ({ group, add, close }) => {
   return (
     <Paper elevation={3} sx={{ padding: '24px', marginTop: '16px' }}>
       <Typography variant="h3" align="center" gutterBottom>
-        Mod Groups
+        {group[0].modGroupName}
       </Typography>
       <Grid
         container
@@ -38,7 +38,9 @@ const ModGroup = ({ group, add, close }) => {
         ))}
       </Grid>
       <Stack sx={{ paddingTop: '36px' }}>
-        <Button onClick={close}>Close</Button>
+        <Button key={uuid()} onClick={close}>
+          Close
+        </Button>
       </Stack>
     </Paper>
   );

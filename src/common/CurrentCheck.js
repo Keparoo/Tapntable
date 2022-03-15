@@ -323,6 +323,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                 display: 'inline',
                                 marginLeft: '1.3em'
                               }}
+                              component="p"
                               variant="body2"
                               color="text.secondary"
                               key={uuid()}
@@ -342,6 +343,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                 display: 'inline',
                                 marginLeft: '1.3em'
                               }}
+                              component="p"
                               variant="body2"
                               color="text.secondary"
                               key={uuid()}
@@ -384,6 +386,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                   display: 'inline',
                                   marginLeft: '1.3em'
                                 }}
+                                component="p"
                                 variant="body2"
                                 color="text.secondary"
                                 key={uuid()}
@@ -403,6 +406,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                   display: 'inline',
                                   marginLeft: '1.3em'
                                 }}
+                                component="p"
                                 variant="body2"
                                 color="text.secondary"
                                 key={uuid()}

@@ -43,6 +43,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
     }
     case ADD_MOD_TO_ITEM: {
       const updatedItems = [ ...state.newItems ];
+      console.log('UpdatedItems', updatedItems[state.currentItem]);
       updatedItems[state.currentItem].mods.push(action.mod);
       return {
         ...state,
@@ -51,6 +52,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
       };
     }
     case REMOVE_FROM_CHECK: {
+      state.currentItem--;
       const items = [ ...state.newItems ];
       items.splice(action.item.idx, 1);
       return {

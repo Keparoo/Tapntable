@@ -9,6 +9,7 @@ import {
   Stack,
   Divider
 } from '@mui/material';
+import { v4 as uuid } from 'uuid';
 
 const ModCategories = ({ display }) => {
   console.debug('ModCategories');
@@ -31,7 +32,11 @@ const ModCategories = ({ display }) => {
       >
         {groups.map((g) => (
           <Grid item>
-            <Button key={g.id} onClick={() => display(g.id)} variant="outlined">
+            <Button
+              key={uuid()}
+              onClick={() => display(g.id)}
+              variant="outlined"
+            >
               {g.name}
             </Button>
           </Grid>

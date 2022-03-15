@@ -31,15 +31,17 @@ export default function newCheck(state = INITIAL_STATE, action) {
         currentItem: -1
       };
 
-    case ADD_TO_CHECK:
+    case ADD_TO_CHECK: {
       state.currentItem++;
       return {
         ...state,
         subtotal: floatToMoney(+state.subtotal + +action.item.price),
+        amountDue: null,
+        totalTax: null,
         newItems: [ ...state.newItems, { ...action.item } ]
       };
-
-    case ADD_MOD_TO_ITEM:
+    }
+    case ADD_MOD_TO_ITEM: {
       const updatedItems = [ ...state.newItems ];
       updatedItems[state.currentItem].mods.push(action.mod);
       return {
@@ -47,8 +49,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
         subtotal: floatToMoney(+state.subtotal + +action.mod.modPrice),
         newItems: updatedItems
       };
-
-    case REMOVE_FROM_CHECK:
+    }
+    case REMOVE_FROM_CHECK: {
       const items = [ ...state.newItems ];
       items.splice(action.item.idx, 1);
       return {
@@ -58,8 +60,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
         ),
         newItems: items
       };
-
-    case LOAD_CURRENT_CHECK:
+    }
+    case LOAD_CURRENT_CHECK: {
       return {
         ...action.check.check,
         subtotal: action.check.checkTotals.subtotal,
@@ -74,7 +76,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
         currentItem: -1,
         payments: action.check.payments
       };
-
+    }
     case CLEAR_CURRENT_CHECK:
       return INITIAL_STATE;
 

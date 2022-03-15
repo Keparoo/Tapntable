@@ -325,7 +325,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                               }}
                               variant="body2"
                               color="text.secondary"
-                              key={m.modId}
+                              key={uuid()}
                             >
                               {m.modName}
                               {m.modPrice && (
@@ -386,7 +386,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                                 }}
                                 variant="body2"
                                 color="text.secondary"
-                                key={m.modId}
+                                key={uuid()}
                               >
                                 {m.modName}
                                 {m.modPrice && (

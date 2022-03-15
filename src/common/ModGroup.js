@@ -8,6 +8,7 @@ import {
   Button,
   Stack
 } from '@mui/material';
+import { v4 as uuid } from 'uuid';
 
 const ModGroup = ({ group, add, close }) => {
   console.debug('ModGroup', group);
@@ -30,7 +31,7 @@ const ModGroup = ({ group, add, close }) => {
       >
         {group.map((g) => (
           <Grid item>
-            <Button key={g.id} onClick={() => add(g)} variant="outlined">
+            <Button key={uuid()} onClick={() => add(g)} variant="outlined">
               {g.modName}
             </Button>
           </Grid>

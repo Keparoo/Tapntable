@@ -316,7 +316,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                   secondary={
                     <React.Fragment key={uuid()}>
                       {i.mods.length !== 0 && (
-                        <ListItem component="span">
+                        <List component="span">
                           {i.mods.map((m) => (
                             <ListItem
                               sx={{
@@ -350,7 +350,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                               <strong>****{i.itemNote}</strong>
                             </ListItem>
                           )}
-                        </ListItem>
+                        </List>
                       )}
                     </React.Fragment>
                   }

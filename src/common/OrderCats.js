@@ -18,7 +18,6 @@ import ModCategories from './ModCategories';
 import ModGroup from './ModGroup';
 import TapntableApi from '../api/api';
 import ReqModGroup from './ReqModGroup';
-import RequiredModDialogue from './ReqModDialogue';
 
 const OrderCats = () => {
   console.debug('OrderCats');
@@ -32,13 +31,12 @@ const OrderCats = () => {
   const [ showModGroups, setShowModGroups ] = useState(false);
   const [ showMods, setShowMods ] = useState(false);
   const [ currentModGroup, setCurrentModGroup ] = useState([]);
-  const [ requiredModGroups, setRequiredModGroups ] = useState([]);
+
   const [ optionalModGroups, setOptionalModGroups ] = useState([]);
-  const [ showRequiredModGroup, setShowRequiredModGroup ] = useState(false);
   const [ showOptionalModGroup, setShowOptionalModGroup ] = useState(false);
 
-  const [ requiredModGroupOpen, setRequiredModGroupOpen ] = useState(false);
-  const [ requiredMods, setRequiredMods ] = useState([]);
+  const [ requiredModGroups, setRequiredModGroups ] = useState([]);
+  const [ showRequiredModGroup, setShowRequiredModGroup ] = useState(false);
 
   // const Item = styled(ButtonBase)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
@@ -83,48 +81,31 @@ const OrderCats = () => {
     setRequiredModGroups(required);
     setOptionalModGroups(optional);
     console.debug('Item Required & Optional Groups', required, optional);
-    // show required one at a time. If cancelled: delete newItem
-    // show optional mods
+
+    //If there are required mods: show them
     required.length
       ? setShowRequiredModGroup(true)
       : setShowRequiredModGroup(false);
     setShowModGroups(true);
-  };
 
-  const addItem2 = async (item) => {
-    console.debug('addItem2');
-
-    item.mods = [];
-    dispatch(addItemToCheck(item));
-    // get item mods
-    const itemModGroups = await TapntableApi.getItemModGroups(item.id);
-    console.debug('itemModGroups', itemModGroups);
-
-    // separate required from optional
-    let required = [];
-    let optional = [];
-    for (let group of itemModGroups) {
-      mods.groups.find((g) => g.id === group.modGroupId).isRequired
-        ? required.push(group)
-        : optional.push(group);
+    let optMods = [];
+    for (let optionalMod of optional) {
+      const modsInGroup = await TapntableApi.getModsInGroup(
+        optionalMod.modGroupId
+      );
+      optMods.push(modsInGroup);
     }
-    console.debug('Item Required & Optional Groups', required, optional);
+    setOptionalModGroups(optMods);
+    console.debug('Optional Mods', optionalModGroups);
 
-    let requiredMods = {};
-    for (let group of required) {
-      requiredMods.title = group.modGroupName;
-      const mods = await TapntableApi.getModsInGroup(group.modGroupId);
-      requiredMods.mods = mods;
-    }
-    setRequiredMods(requiredMods);
-    console.debug('***requiredMods', requiredMods);
-
-    setRequiredModGroupOpen(true);
+    //If there are required mods: show them
+    optional.length
+      ? setShowOptionalModGroup(true)
+      : setShowOptionalModGroup(false);
     setShowModGroups(true);
   };
 
   const cancelAddItem = () => {
-    setRequiredModGroupOpen(false);
     dispatch(
       removeItemFromCheck({
         arr: currentCheck.newItems,
@@ -308,14 +289,18 @@ const OrderCats = () => {
           close={() => setShowRequiredModGroup(false)}
         />
       )}
+      {showOptionalModGroup &&
+        optionalModGroups.map((o) => (
+          <ModGroup
+            key={o.modId}
+            group={o}
+            add={addMod}
+            close={closeModGroup}
+          />
+        ))}
       {showModGroups && <ModCategories display={displayModGroup} />}
       {showMods && (
-        <ModGroup
-          group={currentModGroup}
-          add={addMod}
-          close={closeModGroup}
-          currItem={currentCheck.currentItem}
-        />
+        <ModGroup group={currentModGroup} add={addMod} close={closeModGroup} />
       )}
     </Container>
   );

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import TapntableApi from '../api/api';
 import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Dialog, Grid, Paper, Stack } from '@mui/material';
+import { Grid, Paper, Stack } from '@mui/material';
 import { v4 as uuid } from 'uuid';
-import { fetchModsFromAPI } from '../actions/mods';
-import { useSelector } from 'react-redux';
 import Spinner from './Spinner';
 
 const style = {
@@ -29,7 +26,7 @@ const style = {
 const RequiredModGroup = ({ groups, add, cancel, close }) => {
   console.debug('RequiredModGroup', groups);
 
-  const [ open, setOpen ] = useState(true);
+  const [ open ] = useState(true);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ currentModGroup, setCurrentModGroup ] = useState([]);
   const [ modGroupIdx, setModGroupIdx ] = useState(0);
@@ -56,6 +53,7 @@ const RequiredModGroup = ({ groups, add, cancel, close }) => {
   const addMod = (g) => {
     console.debug('Add Required Mod');
     add(g);
+    //Check if there another required mod
     if (modGroupIdx < groups.length - 1) {
       setModGroupIdx(modGroupIdx + 1);
       setIsLoading(true);

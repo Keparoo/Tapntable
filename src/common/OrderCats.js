@@ -57,7 +57,7 @@ const OrderCats = () => {
 
   // Stop display of current category items
   const close = useCallback(() => {
-    console.debug('close');
+    console.debug('Close category items');
     setShowCat(false);
   }, []);
 
@@ -67,10 +67,12 @@ const OrderCats = () => {
 
     item.mods = [];
     dispatch(addItemToCheck(item));
-    // get item mods
+
+    // Get Item Mods
     const itemModGroups = await TapntableApi.getItemModGroups(item.id);
     console.debug('itemModGroups', itemModGroups);
-    // separate required from optional
+
+    // Separate required from optional
     let required = [];
     let optional = [];
     for (let group of itemModGroups) {
@@ -82,7 +84,7 @@ const OrderCats = () => {
     setOptionalModGroups(optional);
     console.debug('Item Required & Optional Groups', required, optional);
 
-    //If there are required mods: show them
+    // If there are required mods: show them
     required.length
       ? setShowRequiredModGroup(true)
       : setShowRequiredModGroup(false);
@@ -98,14 +100,17 @@ const OrderCats = () => {
     setOptionalModGroups(optMods);
     console.debug('Optional Mods', optionalModGroups);
 
-    //If there are required mods: show them
+    // If there are optional mods: show them
     optional.length
       ? setShowOptionalModGroup(true)
       : setShowOptionalModGroup(false);
     setShowModGroups(true);
   };
 
+  // Cancel a required mod removing item from check
   const cancelAddItem = () => {
+    console.debug('Cancel added item');
+
     dispatch(
       removeItemFromCheck({
         arr: currentCheck.newItems,
@@ -117,6 +122,7 @@ const OrderCats = () => {
   // Display mods in mod group
   const displayModGroup = useCallback(async (groupId) => {
     console.debug('displayModGroup', groupId);
+
     const modsInGroup = await TapntableApi.getModsInGroup(groupId);
     setCurrentModGroup(modsInGroup);
     setShowModGroups(false);
@@ -141,7 +147,7 @@ const OrderCats = () => {
     [ dispatch, currentCheck.currentItem ]
   );
 
-  // View of items in category
+  // View of mods in mod category
   const Category = memo(({ cat }) => {
     console.debug('Category', cat);
 
@@ -289,6 +295,7 @@ const OrderCats = () => {
           close={() => setShowRequiredModGroup(false)}
         />
       )}
+
       {showOptionalModGroup &&
         optionalModGroups.map((o) => (
           <ModGroup
@@ -298,6 +305,7 @@ const OrderCats = () => {
             close={closeModGroup}
           />
         ))}
+
       {showModGroups && <ModCategories display={displayModGroup} />}
       {showMods && (
         <ModGroup group={currentModGroup} add={addMod} close={closeModGroup} />

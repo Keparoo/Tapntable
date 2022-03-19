@@ -69,7 +69,7 @@ const RequiredModGroup = ({ groups, add, cancel, close }) => {
     console.log('cancelAddItem');
     cancel();
     setModGroupIdx(0);
-    // setOpen(false);
+    close();
   };
 
   if (isLoading) return Spinner;

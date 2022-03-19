@@ -18,6 +18,7 @@ import ModCategories from './ModCategories';
 import ModGroup from './ModGroup';
 import TapntableApi from '../api/api';
 import ReqModGroup from './ReqModGroup';
+import { v4 as uuid } from 'uuid';
 
 const OrderCats = () => {
   console.debug('OrderCats');
@@ -82,7 +83,6 @@ const OrderCats = () => {
         : optional.push(group);
     }
     setRequiredModGroups(required);
-    setOptionalModGroups(optional);
     console.debug('Item Required & Optional Groups', required, optional);
 
     // If there are required mods: show them
@@ -166,7 +166,11 @@ const OrderCats = () => {
         >
           {catItems.map((i) => (
             <Grid item key={i.id}>
-              <Button onClick={() => addItem(i)} variant="contained">
+              <Button
+                key={uuid()}
+                onClick={() => addItem(i)}
+                variant="contained"
+              >
                 {i.name}
               </Button>
             </Grid>
@@ -286,6 +290,7 @@ const OrderCats = () => {
           </Grid>
         </Grid>
       </Paper>
+
       {showCat && <ItemCategory cat={currentCat} />}
 
       {showRequiredModGroup && (
@@ -308,6 +313,7 @@ const OrderCats = () => {
         ))}
 
       {showModGroups && <ModCategories display={displayModGroup} />}
+
       {showMods && (
         <ModGroup group={currentModGroup} add={addMod} close={closeModGroup} />
       )}

@@ -31,7 +31,7 @@ const ModGroup = ({ group, name, add, close }) => {
       >
         {group.map((g) => (
           <Grid item key={uuid()}>
-            <Button onClick={() => add(g)} variant="outlined">
+            <Button key={uuid()} onClick={() => add(g)} variant="outlined">
               {g.modName}
             </Button>
           </Grid>

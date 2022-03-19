@@ -6,7 +6,8 @@ import {
   Paper,
   Typography,
   Button,
-  Stack
+  Stack,
+  getBottomNavigationUtilityClass
 } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
@@ -31,16 +32,18 @@ const ModGroup = ({ group, name, add, close }) => {
       >
         {group.map((g) => (
           <Grid item key={uuid()}>
-            <Button key={uuid()} onClick={() => add(g)} variant="outlined">
+            <Button
+              onClick={() => add(g)}
+              variant="outlined"
+              color={g.modPrice ? 'secondary' : 'primary'}
+            >
               {g.modName}
             </Button>
           </Grid>
         ))}
       </Grid>
       <Stack sx={{ paddingTop: '36px' }}>
-        <Button key={uuid()} onClick={close}>
-          Close
-        </Button>
+        <Button onClick={close}>Close</Button>
       </Stack>
     </Paper>
   );

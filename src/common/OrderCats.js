@@ -91,6 +91,7 @@ const OrderCats = () => {
       : setShowRequiredModGroup(false);
     setShowModGroups(true);
 
+    // Get optional mods for each optional mod group
     let optMods = [];
     for (let optionalMod of optional) {
       const modsInGroup = await TapntableApi.getModsInGroup(

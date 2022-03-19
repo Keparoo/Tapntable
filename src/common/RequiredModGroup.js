@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid, Paper, Stack } from '@mui/material';
+import { Dialog, Grid, Paper, Stack } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
 const style = {
@@ -27,8 +27,8 @@ export default function RequiredModGroup() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const add = () => {
-    //nothing
+  const add = (g) => {
+    setOpen(false);
   };
 
   const close = () => {

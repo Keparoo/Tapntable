@@ -1,5 +1,5 @@
 import React, { useState, memo, useCallback } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import {
   Container,
   Grid,

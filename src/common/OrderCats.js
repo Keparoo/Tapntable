@@ -26,6 +26,7 @@ const OrderCats = () => {
   const mods = useSelector((st) => st.mods, shallowEqual);
   const currentCheck = useSelector((st) => st.currentCheck, shallowEqual);
   const dispatch = useDispatch();
+
   const [ showCat, setShowCat ] = useState(false);
   const [ currentCat, setCurrentCat ] = useState('');
   const [ showModGroups, setShowModGroups ] = useState(false);
@@ -147,8 +148,8 @@ const OrderCats = () => {
     [ dispatch, currentCheck.currentItem ]
   );
 
-  // View of mods in mod category
-  const Category = memo(({ cat }) => {
+  // View of menu item category
+  const ItemCategory = memo(({ cat }) => {
     console.debug('Category', cat);
 
     const catItems = items.filter((i) => i.category === cat);
@@ -285,7 +286,7 @@ const OrderCats = () => {
           </Grid>
         </Grid>
       </Paper>
-      {showCat && <Category cat={currentCat} />}
+      {showCat && <ItemCategory cat={currentCat} />}
 
       {showRequiredModGroup && (
         <ReqModGroup

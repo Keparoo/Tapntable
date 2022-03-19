@@ -105,9 +105,7 @@ const RequiredModGroup = ({ groups, add, cancel, close }) => {
               ))}
             </Grid>
             <Stack sx={{ paddingTop: '36px' }}>
-              <Button key={uuid()} onClick={cancelAddItem}>
-                Cancel
-              </Button>
+              <Button onClick={cancelAddItem}>Cancel</Button>
             </Stack>
           </Paper>
         </Fade>

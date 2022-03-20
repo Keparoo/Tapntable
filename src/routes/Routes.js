@@ -12,7 +12,7 @@ import ClockOut from '../pages/ClockOut';
 import Welcome from '../pages/Welcome';
 import ManagerRoute from '../auth/ManagerRoute';
 import CloseDay from '../pages/CloseDay';
-import OrderTickets from '../components/orderTickets';
+import OrderTickets from '../components/OrderTickets';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');

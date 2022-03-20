@@ -1,3 +1,4 @@
+import TapntableApi from '../api/api';
 import {
   ADD_TO_CHECK,
   CREATE_CHECK,
@@ -25,6 +26,15 @@ export function addItemToCheck(item) {
 }
 
 export function removeItemFromCheck(item) {
+  if (item.count !== null) {
+    console.log('*********Item count', item.arr[item.idx]);
+    const count = TapntableApi.setCount(
+      item.arr[item.idx].id,
+      item.arr[item.idx].count + 1
+    );
+    item.arr[item.idx].count += 1;
+    console.log('Remove item, add one to count', count);
+  }
   return {
     type: REMOVE_FROM_CHECK,
     item

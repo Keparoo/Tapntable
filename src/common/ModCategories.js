@@ -1,14 +1,6 @@
-import React, { memo, useCallback } from 'react';
+import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import {
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Stack,
-  Divider
-} from '@mui/material';
+import { Grid, Paper, Typography, Button } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
 const ModCategories = ({ display }) => {
@@ -43,7 +35,3 @@ const ModCategories = ({ display }) => {
 };
 
 export default ModCategories;
-
-// <Stack sx={{ paddingTop: '36px' }}>
-// <Button>Close</Button>
-// </Stack>

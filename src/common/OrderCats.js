@@ -11,7 +11,8 @@ import {
   Paper,
   Typography,
   Button,
-  Stack
+  Stack,
+  Badge
 } from '@mui/material';
 // import { styled } from '@mui/material/styles';
 import ModCategories from './ModCategories';
@@ -19,6 +20,7 @@ import ModGroup from './ModGroup';
 import TapntableApi from '../api/api';
 import ReqModGroup from './ReqModGroup';
 import { v4 as uuid } from 'uuid';
+import { fetchItemsFromAPI } from '../actions/items';
 
 const OrderCats = () => {
   console.debug('OrderCats');
@@ -64,50 +66,70 @@ const OrderCats = () => {
   }, []);
 
   // Add item to current check
-  const addItem = async (item) => {
-    console.debug('addItem', item);
+  const addItem = useCallback(
+    async (item) => {
+      console.debug('addItem', item);
 
-    item.mods = [];
-    dispatch(addItemToCheck(item));
+      //Query database is count > 0 if yes add item, if no display message and return
+      const itemCount = await TapntableApi.getCount(item.id);
+      if (itemCount === 0) {
+        console.debug(`****${item.name} is sold out`);
+        alert(`****${item.name} is sold out`);
+        return;
+      }
+      // There is an item count (not zero and not null)
+      if (itemCount > 0) {
+        //subtract 1 from itemCount
+        const newCount = await TapntableApi.setCount(item.id, itemCount - 1);
+        const itemToUpdate = items.filter((i) => i.id === item.id);
+        itemToUpdate[0].count--;
+        console.log('Item to update', itemToUpdate[0]);
+        console.log(`${item.name} count is now `, newCount);
+      }
 
-    // Get Item Mods
-    const itemModGroups = await TapntableApi.getItemModGroups(item.id);
-    console.debug('itemModGroups', itemModGroups);
+      item.mods = [];
+      dispatch(addItemToCheck(item));
 
-    // Separate required from optional
-    let required = [];
-    let optional = [];
-    for (let group of itemModGroups) {
-      mods.groups.find((g) => g.id === group.modGroupId).isRequired
-        ? required.push(group)
-        : optional.push(group);
-    }
-    setRequiredModGroups(required);
-    console.debug('Item Required & Optional Groups', required, optional);
+      // Get Item Mods
+      const itemModGroups = await TapntableApi.getItemModGroups(item.id);
+      console.debug('itemModGroups', itemModGroups);
 
-    // If there are required mods: show them
-    required.length
-      ? setShowRequiredModGroup(true)
-      : setShowRequiredModGroup(false);
-    setShowModGroups(true);
+      // Separate required from optional
+      let required = [];
+      let optional = [];
+      for (let group of itemModGroups) {
+        mods.groups.find((g) => g.id === group.modGroupId).isRequired
+          ? required.push(group)
+          : optional.push(group);
+      }
+      setRequiredModGroups(required);
+      console.debug('Item Required & Optional Groups', required, optional);
 
-    // Get optional mods for each optional mod group
-    let optMods = [];
-    for (let optionalMod of optional) {
-      const modsInGroup = await TapntableApi.getModsInGroup(
-        optionalMod.modGroupId
-      );
-      optMods.push(modsInGroup);
-    }
-    setOptionalModGroups(optMods);
-    console.debug('Optional Mods', optionalModGroups);
+      // If there are required mods: show them
+      required.length
+        ? setShowRequiredModGroup(true)
+        : setShowRequiredModGroup(false);
+      setShowModGroups(true);
 
-    // If there are optional mods: show them
-    optional.length
-      ? setShowOptionalModGroup(true)
-      : setShowOptionalModGroup(false);
-    setShowModGroups(true);
-  };
+      // Get optional mods for each optional mod group
+      let optMods = [];
+      for (let optionalMod of optional) {
+        const modsInGroup = await TapntableApi.getModsInGroup(
+          optionalMod.modGroupId
+        );
+        optMods.push(modsInGroup);
+      }
+      setOptionalModGroups(optMods);
+      console.debug('Optional Mods', optionalModGroups);
+
+      // If there are optional mods: show them
+      optional.length
+        ? setShowOptionalModGroup(true)
+        : setShowOptionalModGroup(false);
+      setShowModGroups(true);
+    },
+    [ dispatch, mods.groups, optionalModGroups, items ]
+  );
 
   // Cancel a required mod removing item from check
   const cancelAddItem = () => {
@@ -119,6 +141,8 @@ const OrderCats = () => {
         idx: currentCheck.currentItem
       })
     );
+    // Refetch items to update count badges
+    dispatch(fetchItemsFromAPI());
   };
 
   // Display mods in mod group
@@ -149,7 +173,7 @@ const OrderCats = () => {
     [ dispatch, currentCheck.currentItem ]
   );
 
-  // View of menu item category
+  // View of menu items in the passed in category
   const ItemCategory = memo(({ cat }) => {
     console.debug('Category', cat);
 
@@ -167,13 +191,16 @@ const OrderCats = () => {
         >
           {catItems.map((i) => (
             <Grid item key={i.id}>
-              <Button
-                key={uuid()}
-                onClick={() => addItem(i)}
-                variant="contained"
-              >
-                {i.name}
-              </Button>
+              <Badge badgeContent={i.count ? i.count : null} color="secondary">
+                <Button
+                  key={uuid()}
+                  onClick={() => addItem(i)}
+                  variant="contained"
+                  disabled={i.count === 0 ? true : false}
+                >
+                  {i.name}
+                </Button>
+              </Badge>
             </Grid>
           ))}
         </Grid>

@@ -26,6 +26,7 @@ import {
   IconButton
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { fetchItemsFromAPI } from '../actions/items';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
@@ -106,6 +107,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const removeItem = (arr, idx) => {
     console.debug('removeItem', arr, idx);
     dispatch(removeItemFromCheck({ arr, idx }));
+    // Refetch items to update count on buttons
+    dispatch(fetchItemsFromAPI());
   };
 
   const renderCurrentCheck = () => {

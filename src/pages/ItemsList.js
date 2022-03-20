@@ -15,14 +15,11 @@ import {
   Typography
 } from '@mui/material';
 
-/*  Render page with list of items and filter search form
-
-    On mount, renders list of all items in API
-
-    Routed to /items
-
-    Routes calls ItemList
-    ItmeList calls ItemCardList, SearchForm, Spinner
+/*  Render page with list of items in db where isActive=true
+ *
+ *   On mount, renders list of all items in API
+ *
+ *   Routed to /items
 */
 
 const ItemList = () => {
@@ -48,7 +45,6 @@ const ItemList = () => {
       if (isLoading) {
         fetchItem();
       }
-      // search();
     },
     [ dispatch, isLoading ]
   );

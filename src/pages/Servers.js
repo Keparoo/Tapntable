@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchItemsFromAPI } from '../actions/items';
 import { fetchModsFromAPI } from '../actions/mods';
 import { getOpenChecksFromAPI } from '../actions/checks';

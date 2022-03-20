@@ -118,7 +118,9 @@ const OrderTickets = ({ destinationId }) => {
                 {o.items.map((i) => (
                   <div key={i.id}>
                     <Typography variant="p">
-                      <strong>{i.name}</strong>{' '}
+                      <strong>
+                        {i.courseNum}: {i.name}
+                      </strong>{' '}
                       <span style={{ float: 'right' }}>Seat: {i.seatNum}</span>
                     </Typography>
                     <br />

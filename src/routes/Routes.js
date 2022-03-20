@@ -1,18 +1,18 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import Homepage from '../homepage/Homepage';
+import Homepage from '../pages/Homepage';
 import UserLoginForm from '../auth/UserLogInForm';
 import UserLogoutForm from '../auth/UserLogoutForm';
-import Servers from '../servers/Servers';
-import ItemsList from '../items/ItemsList';
-import Payments from '../common/Payments';
-import CashOut from '../common/CashOut';
-import ClockOut from '../common/ClockOut';
-import Welcome from '../common/Welcome';
+import Servers from '../pages/Servers';
+import ItemsList from '../pages/ItemsList';
+import Payments from '../pages/Payments';
+import CashOut from '../pages/CashOut';
+import ClockOut from '../pages/ClockOut';
+import Welcome from '../pages/Welcome';
 import ManagerRoute from '../auth/ManagerRoute';
-import CloseDay from '../auth/CloseDay';
-import OrderTickets from '../common/orderTickets';
+import CloseDay from '../pages/CloseDay';
+import OrderTickets from '../components/orderTickets';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');

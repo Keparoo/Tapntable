@@ -13,9 +13,9 @@ import { calculateShift } from '../utils/helpers';
 
 import { Typography, Button, Stack, Container, Paper } from '@mui/material';
 
-import Payments from './Payments';
-import Spinner from './Spinner';
-import DeclaredTipsForm from './DeclareTipsForm';
+// import Payments from './Payments';
+import Spinner from '../components/Spinner';
+import DeclaredTipsForm from '../components/DeclareTipsForm';
 
 const CashOut = () => {
   const [ isLoading, setIsLoading ] = useState(true);

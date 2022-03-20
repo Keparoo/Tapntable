@@ -4,8 +4,8 @@ import { fetchItemsFromAPI } from '../actions/items';
 
 // import TapntableApi from '../api/api';
 // import SearchForm from '../common/SearchForm';
-import ItemCardList from './ItemCardList';
-import Spinner from '../common/Spinner';
+import ItemCardList from '../components/ItemCardList';
+import Spinner from '../components/Spinner';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import { useHistory } from 'react-router-dom';
 

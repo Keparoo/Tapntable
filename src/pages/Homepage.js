@@ -7,11 +7,11 @@ import { clearUserPin, fetchUserFromAPI, clockInUser } from '../actions/user';
 import { Button, Container, Paper, Stack } from '@mui/material';
 import { isClockInOnly } from '../utils/helpers';
 import UserPinForm from '../auth/UserPinForm';
-import ClockOut from '../common/ClockOut';
+import ClockOut from './ClockOut';
 
 const Homepage = () => {
   const user = useSelector((st) => st.user, shallowEqual);
-  const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [ token ] = useLocalStorage(TOKEN_STORAGE_ID);
   const [ formErrors, setFormErrors ] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();

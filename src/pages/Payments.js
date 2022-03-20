@@ -5,8 +5,8 @@ import { clearCurrentCheck } from '../actions/currentCheck';
 import TapntableApi from '../api/api';
 import { CASH } from '../constants';
 
-import AddTipForm from './AddTipForm';
-import Spinner from './Spinner';
+import AddTipForm from '../components/AddTipForm';
+import Spinner from '../components/Spinner';
 
 import {
   Typography,

@@ -19,6 +19,7 @@ import ModCategories from './ModCategories';
 import ModGroup from './ModGroup';
 import TapntableApi from '../api/api';
 import ReqModGroup from './ReqModGroup';
+import ModalAlert from './ModalAlert';
 import { v4 as uuid } from 'uuid';
 import { fetchItemsFromAPI } from '../actions/items';
 
@@ -41,6 +42,15 @@ const OrderCats = () => {
 
   const [ requiredModGroups, setRequiredModGroups ] = useState([]);
   const [ showRequiredModGroup, setShowRequiredModGroup ] = useState(false);
+
+  const [ showAlert, setShowAlert ] = useState(false);
+  const [ alertData, setAlertData ] = useState({
+    type: '',
+    title: '',
+    message: '',
+    agreeButton: 'Close',
+    disagreeButton: null
+  });
 
   // const Item = styled(ButtonBase)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
@@ -65,6 +75,19 @@ const OrderCats = () => {
     setShowCat(false);
   }, []);
 
+  const closeAlert = (disagree = false) => {
+    console.debug('closeAlert, disagree=', disagree);
+
+    setAlertData({
+      type: '',
+      title: '',
+      message: '',
+      agreeButton: 'Close',
+      disagreeButton: null
+    });
+    setShowAlert(false);
+  };
+
   // Add item to current check
   const addItem = useCallback(
     async (item) => {
@@ -74,7 +97,13 @@ const OrderCats = () => {
       const itemCount = await TapntableApi.getCount(item.id);
       if (itemCount === 0) {
         console.debug(`****${item.name} is sold out`);
-        alert(`****${item.name} is sold out`);
+        setAlertData({
+          type: 'error',
+          title: 'Warning',
+          message: `****${item.name} is sold out`,
+          agreeButton: 'Close'
+        });
+        setShowAlert(true);
         return;
       }
       // There is an item count (not zero and not null)
@@ -344,6 +373,17 @@ const OrderCats = () => {
 
       {showMods && (
         <ModGroup group={currentModGroup} add={addMod} close={closeModGroup} />
+      )}
+
+      {showAlert && (
+        <ModalAlert
+          type={alertData.type}
+          title={alertData.title}
+          message={alertData.message}
+          agreeButton={alertData.agreeButton}
+          disagreeButton={alertData.disagreeButton}
+          close={closeAlert}
+        />
       )}
     </Container>
   );

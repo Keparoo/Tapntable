@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import Spinner from '../components/Spinner';
 import { clearCurrentCheck } from '../actions/currentCheck';
@@ -12,7 +12,8 @@ import {
   ListItem,
   ListItemText,
   Paper,
-  Typography
+  Typography,
+  Link
 } from '@mui/material';
 
 /*  Render page with list of items in db where isActive=true
@@ -63,10 +64,14 @@ const ItemList = () => {
         </Typography>
         <List>
           {items.map((i) => (
-            <Link key={i.id} to={`/items/${i.id}`}>
+            <Link
+              key={i.id}
+              to={`/items/${i.id}`}
+              component={RouterLink}
+              underline="none"
+            >
               <ListItem>
                 <ListItemText
-                  key={i.id}
                   primary={<strong>{i.name}</strong>}
                   secondary={
                     <React.Fragment>

@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
+import { Link } from 'react-router-dom';
 
-// import TapntableApi from '../api/api';
-// import SearchForm from '../common/SearchForm';
-import ItemCardList from '../components/ItemCardList';
 import Spinner from '../components/Spinner';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import { useHistory } from 'react-router-dom';
+import {
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography
+} from '@mui/material';
 
 /*  Render page with list of items and filter search form
 
     On mount, renders list of all items in API
-    On reload, if search is not undefined, filter search with search term
 
     Routed to /items
 
@@ -23,7 +28,6 @@ import { useHistory } from 'react-router-dom';
 const ItemList = () => {
   console.debug('ItemList');
 
-  // const [ items, setItems ] = useState([]);
   const items = useSelector((st) => st.items);
   const user = useSelector((st) => st.user);
   const dispatch = useDispatch();
@@ -49,29 +53,42 @@ const ItemList = () => {
     [ dispatch, isLoading ]
   );
 
-  // Run on search form submit: reloads companies with filtered results
-  // const search = async (query) => {
-  //   let items = await TapntableApi.getItems(query);
-  //   setItems(items);
-  // };
-
   if (isLoading) return <Spinner />;
 
   if (!isLoading && items.length === 0) {
     return <b>No items in database</b>;
   }
 
-  // <SearchForm setQuery={search} />
-
   return (
-    <div className="ItemList col-md-8 offset-md-2">
-      <h1 className="lead-1">Items List</h1>
-      {items.length ? (
-        <ItemCardList items={items} />
-      ) : (
-        <p className="lead">Sorry, no results were found!</p>
-      )}
-    </div>
+    <Container>
+      <Paper elevation={3}>
+        <Typography ml={2} mt={2} variant="h3" component="h1">
+          Restaurant Items
+        </Typography>
+        <List>
+          {items.map((i) => (
+            <Link key={i.id} to={`/items/${i.id}`}>
+              <ListItem>
+                <ListItemText
+                  key={i.id}
+                  primary={<strong>{i.name}</strong>}
+                  secondary={
+                    <React.Fragment>
+                      <strong>${i.price}</strong>, Category:{' '}
+                      <strong>{i.category}</strong>, Destination:{' '}
+                      <strong>{i.destination}</strong> Count:{' '}
+                      <strong>{i.count || 'None'}</strong> isActive:{' '}
+                      <strong>{i.isActive ? 'true' : 'false'}</strong> <br />
+                      {i.description}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </Paper>
+    </Container>
   );
 };
 

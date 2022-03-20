@@ -19,6 +19,9 @@ If disagreeButton is not null:
     show a button with disagree text and return disagree=true if clicked
 If agreeButton is clicked disagree=false is returned
 
+close function returns boolean disagree value
+
+Called by OrderCats
 */
 
 const ModalAlert = ({

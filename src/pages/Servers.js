@@ -17,8 +17,7 @@ import OpenChecks from '../components/OpenChecks';
 import CheckForm from '../components/CheckForm';
 import CurrentCheck from '../components/CurrentCheck';
 import Spinner from '../components/Spinner';
-// import OrderCategories from '../common/OrderCategories';
-import OrderCats from '../components/OrderCats';
+import OrderCategories from '../components/OrderCategories';
 import Payment from '../components/Payment';
 import { Button, Stack, Grid } from '@mui/material';
 import './Servers.css';
@@ -120,7 +119,7 @@ const Servers = () => {
       <Grid container>
         <Grid item xs={9}>
           {showPayment && <Payment showPayment={setShowPayment} />}
-          {showOrderCategories && <OrderCats />}
+          {showOrderCategories && <OrderCategories />}
         </Grid>
         <Grid item xs={3}>
           <CurrentCheck

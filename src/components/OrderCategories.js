@@ -23,7 +23,7 @@ import ModalAlert from './ModalAlert';
 import { v4 as uuid } from 'uuid';
 import { fetchItemsFromAPI } from '../actions/items';
 
-const OrderCats = () => {
+const OrderCategories = () => {
   console.debug('OrderCats');
 
   const items = useSelector((st) => st.items, shallowEqual);
@@ -389,4 +389,4 @@ const OrderCats = () => {
   );
 };
 
-export default OrderCats;
+export default OrderCategories;

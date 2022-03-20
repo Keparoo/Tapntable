@@ -72,7 +72,11 @@ const ItemList = () => {
             >
               <ListItem>
                 <ListItemText
-                  primary={<strong>{i.name}</strong>}
+                  primary={
+                    <React.Fragment>
+                      <strong>{i.name}</strong>, Id: {i.id}
+                    </React.Fragment>
+                  }
                   secondary={
                     <React.Fragment>
                       <strong>${i.price}</strong>, Category:{' '}

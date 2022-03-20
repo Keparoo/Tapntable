@@ -44,10 +44,12 @@ const Welcome = () => {
             Have a great shift!
           </Typography>
           <br />
-          <Typography variant="h4" align="center">
-            86 List
-          </Typography>
-          {items86.length &&
+          {itemsWithCount.length !== 0 && (
+            <Typography variant="h4" align="center">
+              86 List
+            </Typography>
+          )}
+          {items86.length !== 0 &&
             items86.map((i) => (
               <Box
                 sx={{
@@ -60,10 +62,12 @@ const Welcome = () => {
                 </List>
               </Box>
             ))}
-          <Typography variant="h4" align="center">
-            Items with Count
-          </Typography>
-          {itemsWithCount.length &&
+          {itemsWithCount.length !== 0 && (
+            <Typography variant="h4" align="center">
+              Items with Count
+            </Typography>
+          )}
+          {itemsWithCount.length !== 0 &&
             itemsWithCount.map((i) => (
               <Box
                 sx={{

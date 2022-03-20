@@ -1,5 +1,3 @@
-// import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-// import { clearCurrentCheck } from '../actions/currentCheck';
 import { KITCHEN_HOT, KITCHEN_COLD, BAR, NO_SEND } from '../constants';
 import TapntableApi from '../api/api';
 
@@ -69,13 +67,14 @@ const useSendOrder = async (check, user) => {
   }
 
   // Create ordered_items in database for each item in itemList
-  const createOrderedItems = async (itemList, orderId, checkId, seatNum) => {
+  const createOrderedItems = async (itemList, orderId, checkId) => {
     for (const item of itemList) {
       const ordItem = await TapntableApi.createOrdItem(
         item.id,
         orderId,
         checkId,
-        seatNum,
+        item.seatNum,
+        item.courseNum,
         item.itemNote
       );
       console.debug('ordItem: ', ordItem);
@@ -92,19 +91,19 @@ const useSendOrder = async (check, user) => {
   if (check.id) {
     // Create ordered items for Kitchen-Hot
     if (kitchenHotOrder.length) {
-      createOrderedItems(kitchenHotOrder, kitchenHotOrderRes.id, check.id, 1);
+      createOrderedItems(kitchenHotOrder, kitchenHotOrderRes.id, check.id);
     }
     // Create ordered items for Kitchen-Cold
     if (kitchenColdOrder.length) {
-      createOrderedItems(kitchenColdOrder, kitchenColdOrderRes.id, check.id, 1);
+      createOrderedItems(kitchenColdOrder, kitchenColdOrderRes.id, check.id);
     }
     // Create ordered items for Bar
     if (barOrder.length) {
-      createOrderedItems(barOrder, barOrderRes.id, check.id, 1);
+      createOrderedItems(barOrder, barOrderRes.id, check.id);
     }
     // Create ordered items for no-send (eg, fountain drinks)
     if (noSendOrder.length) {
-      createOrderedItems(noSendOrder, noSendOrderRes.id, check.id, 1);
+      createOrderedItems(noSendOrder, noSendOrderRes.id, check.id);
     }
   } else {
     // Create Check in db, get Check Id,
@@ -136,11 +135,11 @@ const useSendOrder = async (check, user) => {
     }
     // Create ordered items for Bar
     if (barOrder.length) {
-      createOrderedItems(barOrder, barOrderRes.id, checkRes.id, 1);
+      createOrderedItems(barOrder, barOrderRes.id, checkRes.id);
     }
     // Create ordered items for no-send (eg, fountain drinks)
     if (noSendOrder.length) {
-      createOrderedItems(noSendOrder, noSendOrderRes.id, checkRes.id, 1);
+      createOrderedItems(noSendOrder, noSendOrderRes.id, checkRes.id);
     }
   }
 

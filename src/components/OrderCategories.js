@@ -117,6 +117,8 @@ const OrderCategories = () => {
       }
 
       item.mods = [];
+      item.seatNum = 1;
+      item.courseNum = 1;
       dispatch(addItemToCheck(item));
 
       // Get Item Mods

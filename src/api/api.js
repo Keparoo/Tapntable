@@ -187,10 +187,17 @@ class TapntableApi {
   //**************Ordered_Items Queries*************************************** */
 
   // Post an ordered item to database
-  static async createOrdItem(itemId, orderId, checkId, seatNum, itemNote) {
+  static async createOrdItem(
+    itemId,
+    orderId,
+    checkId,
+    seatNum,
+    courseNum,
+    itemNote
+  ) {
     let res = await this.request(
       `ordered`,
-      { itemId, orderId, checkId, seatNum, itemNote },
+      { itemId, orderId, checkId, seatNum, courseNum, itemNote },
       'post'
     );
     return res.ordItem;

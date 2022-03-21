@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   clearCurrentCheck,
+  clearNewItems,
   removeItemFromCheck
 } from '../actions/currentCheck';
 import sendOrder from '../utils/sendOrder';
@@ -44,6 +45,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   const sendAndClear = () => {
     sendOrder(check, user, reload, showOrderCats);
+    // Clear new items to prevent check clear from increasing count
+    dispatch(clearNewItems());
     // Clear current check
     dispatch(clearCurrentCheck());
     // Return to server page (show open checks)
@@ -51,7 +54,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     showOrderCats(false);
   };
 
-  // Go back to OpenCheck
+  // Go back to OpenChecks
   const cancel = () => {
     dispatch(clearCurrentCheck());
     showOrderCats(false);

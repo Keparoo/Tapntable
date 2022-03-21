@@ -5,7 +5,8 @@ import {
   LOAD_CURRENT_CHECK,
   CLEAR_CURRENT_CHECK,
   ADD_PAYMENT,
-  ADD_MOD_TO_ITEM
+  ADD_MOD_TO_ITEM,
+  CLEAR_NEW_ITEMS
 } from '../actions/types';
 import TapntableApi from '../api/api';
 import { floatToMoney } from '../utils/helpers';
@@ -80,6 +81,10 @@ export default function newCheck(state = INITIAL_STATE, action) {
         payments: action.check.payments
       };
     }
+    case CLEAR_NEW_ITEMS:
+      state.newItems = [];
+      return { ...state };
+
     case CLEAR_CURRENT_CHECK:
       // If unsent items, check for count and reset in db
       // Cycle through new items: add 1 to count

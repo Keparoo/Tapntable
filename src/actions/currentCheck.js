@@ -5,7 +5,8 @@ import {
   LOAD_CURRENT_CHECK,
   CLEAR_CURRENT_CHECK,
   REMOVE_FROM_CHECK,
-  ADD_MOD_TO_ITEM
+  ADD_MOD_TO_ITEM,
+  CLEAR_NEW_ITEMS
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -66,9 +67,8 @@ export function addModToItem(mod) {
   };
 }
 
-// export function addPayment(payment) {
-//   return {
-//     type: ADD_PAYMENT,
-//     payment
-//   };
-// }
+export function clearNewItems() {
+  return {
+    type: CLEAR_NEW_ITEMS
+  };
+}

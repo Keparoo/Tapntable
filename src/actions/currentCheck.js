@@ -26,7 +26,12 @@ export function addItemToCheck(item) {
 }
 
 export function removeItemFromCheck(item) {
-  if (item.count !== null) {
+  console.log(
+    '88888888888888',
+    item.arr[item.idx].id,
+    item.arr[item.idx].count
+  );
+  if (item.arr[item.idx].count !== null) {
     console.log('*********Item count', item.arr[item.idx]);
     const count = TapntableApi.setCount(
       item.arr[item.idx].id,

@@ -53,6 +53,13 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   // Go back to OpenCheck
   const cancel = () => {
+    //Cycle through new items: add 1 to count
+    for (let item of check.newItems) {
+      if (item.count !== null) {
+        const count = TapntableApi.setCount(item.id, item.count + 1);
+        console.log('Cancel Check: increment count items', count);
+      }
+    }
     dispatch(clearCurrentCheck());
     showOrderCats(false);
     showPayment(false);
@@ -91,7 +98,6 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   // Save item note: Hide form
   const saveNote = (i, note) => {
     console.debug('saveNote', i, note);
-    // item.item.itemNote = item.note;
     i.itemNote = note.note;
     console.debug('Item Note: ', note.note);
     setShowItemNoteForm(false);

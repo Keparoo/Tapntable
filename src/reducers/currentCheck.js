@@ -7,6 +7,7 @@ import {
   ADD_PAYMENT,
   ADD_MOD_TO_ITEM
 } from '../actions/types';
+import TapntableApi from '../api/api';
 import { floatToMoney } from '../utils/helpers';
 
 const INITIAL_STATE = {
@@ -80,6 +81,16 @@ export default function newCheck(state = INITIAL_STATE, action) {
       };
     }
     case CLEAR_CURRENT_CHECK:
+      // If unsent items, check for count and reset in db
+      // Cycle through new items: add 1 to count
+      if (state.newItems.length !== 0) {
+        for (let item of state.newItems) {
+          if (item.count !== null) {
+            const count = TapntableApi.setCount(item.id, item.count + 1);
+            console.log('Cancel Check: increment count items', count);
+          }
+        }
+      }
       return INITIAL_STATE;
 
     case ADD_PAYMENT:

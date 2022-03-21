@@ -10,7 +10,7 @@ const CheckFunctions = () => {
         spacing={4}
         sx={{
           width: '106px',
-          marginTop: '17vh',
+          marginTop: '15vh',
           marginLeft: '0',
           padding: '6px'
         }}

@@ -119,14 +119,16 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   const renderCurrentCheck = () => {
     return (
-      <Container sx={{ padding: '8px', width: 400 }}>
+      <Container sx={{ padding: '8px', width: 400, marginRight: 0 }}>
         <Box
           px={1}
           py={2}
           sx={{
             height: '80vh',
             width: '100%',
-            maxWidth: 400,
+            maxWidth: 350,
+            minWidth: 300,
+            marginRight: 0,
             bgcolor: 'lightgray'
           }}
           style={{ overflow: 'auto' }}

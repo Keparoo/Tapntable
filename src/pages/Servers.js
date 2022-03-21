@@ -22,6 +22,7 @@ import Payment from '../components/Payment';
 import { Button, Stack, Grid } from '@mui/material';
 import './Servers.css';
 import { clearUserPin } from '../actions/user';
+import CheckFunctions from '../components/CheckFunctions';
 
 const Servers = () => {
   console.debug('Servers');
@@ -117,7 +118,7 @@ const Servers = () => {
   if (showPayment || showOrderCategories)
     return (
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           {showPayment && <Payment showPayment={setShowPayment} />}
           {showOrderCategories && <OrderCategories />}
         </Grid>
@@ -127,6 +128,9 @@ const Servers = () => {
             reload={setIsLoading}
             showPayment={setShowPayment}
           />
+        </Grid>
+        <Grid item xs={1}>
+          <CheckFunctions />
         </Grid>
       </Grid>
     );

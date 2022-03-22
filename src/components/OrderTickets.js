@@ -46,6 +46,16 @@ const OrderTickets = ({ destinationId }) => {
             (i) => i.destinationId === destinationId
           );
           order.items = orderItems;
+          if (orderItems[0]) {
+            console.log('++++++++++++++CheckId', orderItems[0].checkId);
+            order.checkId = orderItems[0].checkId;
+            order.tableNum = orderItems[0].tableNum;
+            console.log(
+              '+++++++++++++++TableNum, numGuests',
+              orderItems[0].tableNum,
+              orderItems[0].numGuests
+            );
+          }
           //Get related mods for item
           for (let item of order.items) {
             const mods = await TapntableApi.getItemMods({ ordItemId: item.id });

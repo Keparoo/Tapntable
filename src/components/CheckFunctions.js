@@ -1,8 +1,13 @@
-import { Button, Container, Divider, Paper, Stack } from '@mui/material';
+import { Button, Divider, Paper, Stack } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
+import { incrementCourse } from '../actions/currentCheck';
 
 const CheckFunctions = () => {
   console.debug('CheckFunctions');
+
+  const dispatch = useDispatch();
+  const check = useSelector((state) => state.currentCheck);
 
   return (
     <Paper elevation={3} sx={{ margin: '0px', width: '108px' }}>
@@ -16,7 +21,9 @@ const CheckFunctions = () => {
         }}
       >
         <Button variant="outlined">Seat</Button>
-        <Button variant="outlined">Course</Button>
+        <Button onClick={() => dispatch(incrementCourse())} variant="outlined">
+          Course {check.currentCourse}
+        </Button>
         <Button variant="outlined">Fire Course 2</Button>
         <Button variant="outlined">Fire Course 3</Button>
         <Divider />

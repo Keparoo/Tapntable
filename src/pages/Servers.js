@@ -83,10 +83,10 @@ const Servers = () => {
   const openCheck = async (check) => {
     console.debug('openCheck', check);
 
-    //Calculate Check
+    //Get check items
     const items = await TapntableApi.getOrderedItems(check.id);
 
-    //Get related mods for item
+    //Get related mods for items
     for (const item of items) {
       const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
       item.mods = mods;

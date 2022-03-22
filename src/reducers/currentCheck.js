@@ -6,7 +6,11 @@ import {
   CLEAR_CURRENT_CHECK,
   ADD_PAYMENT,
   ADD_MOD_TO_ITEM,
-  CLEAR_NEW_ITEMS
+  CLEAR_NEW_ITEMS,
+  INCREMENT_COURSE,
+  DECREMENT_COURSE,
+  INCREMENT_SEAT,
+  DECREMENT_SEAT
 } from '../actions/types';
 import TapntableApi from '../api/api';
 import { floatToMoney } from '../utils/helpers';
@@ -30,6 +34,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
         items: [],
         newItems: [],
         payments: [],
+        currentSeatNum: null,
+        currentCourse: 1,
         currentItem: -1
       };
 
@@ -77,6 +83,8 @@ export default function newCheck(state = INITIAL_STATE, action) {
         amountDue: action.check.checkTotals.amountDue,
         items: action.check.items,
         newItems: [],
+        currentSeatNum: null,
+        currentCourse: 1,
         currentItem: -1,
         payments: action.check.payments
       };
@@ -106,6 +114,22 @@ export default function newCheck(state = INITIAL_STATE, action) {
         amountDue,
         payments: [ ...state.payments, action.payment ]
       };
+
+    case INCREMENT_COURSE:
+      state.currentCourse += 1;
+      return { ...state };
+
+    case DECREMENT_COURSE:
+      state.currentCourse -= 1;
+      return { ...state };
+
+    case INCREMENT_SEAT:
+      state.currentSeatNum += 1;
+      return { ...state };
+
+    case DECREMENT_SEAT:
+      state.currentSeatNum -= 1;
+      return { ...state };
 
     default:
       return state;

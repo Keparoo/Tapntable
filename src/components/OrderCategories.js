@@ -117,8 +117,8 @@ const OrderCategories = () => {
       }
 
       item.mods = [];
-      item.seatNum = 1;
-      item.courseNum = 1;
+      item.seatNum = currentCheck.currentSeatNum;
+      item.courseNum = currentCheck.currentCourse;
       dispatch(addItemToCheck(item));
 
       // Get Item Mods
@@ -159,7 +159,14 @@ const OrderCategories = () => {
         : setShowOptionalModGroup(false);
       setShowModGroups(true);
     },
-    [ dispatch, mods.groups, optionalModGroups, items ]
+    [
+      dispatch,
+      mods.groups,
+      optionalModGroups,
+      items,
+      currentCheck.currentCourse,
+      currentCheck.currentSeatNum
+    ]
   );
 
   // Cancel a required mod removing item from check

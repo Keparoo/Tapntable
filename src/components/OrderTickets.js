@@ -166,6 +166,7 @@ const OrderTickets = ({ destinationId }) => {
                   ))}
 
                 {o.course2.length !== 0 && <Divider>Course 2</Divider>}
+                <br />
 
                 {o.course2 &&
                   o.course2.map((i) => (
@@ -192,6 +193,7 @@ const OrderTickets = ({ destinationId }) => {
                   ))}
 
                 {o.course3.length !== 0 && <Divider>Course 3</Divider>}
+                <br />
 
                 {o.course3 &&
                   o.course3.map((i) => (

@@ -13,6 +13,9 @@ export const DECREMENT_COURSE = 'DECREMENT_COURSE';
 export const INCREMENT_SEAT = 'INCREMENT_SEAT';
 export const DECREMENT_SEAT = 'DECREMENT_SEAT';
 
+export const FIRE_COURSE_2 = 'FIRE_COURSE_2';
+export const FIRE_COURSE_3 = 'FIRE_COURSE_3';
+
 export const ADD_PAYMENT = 'ADD_PAYMENT';
 export const GET_OPEN_PAYMENTS = 'GET_OPEN_PAYMENTS';
 

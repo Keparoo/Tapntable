@@ -119,6 +119,21 @@ class TapntableApi {
     return res.orders;
   }
 
+  static async fireCourse(orderId, courseNum) {
+    if (courseNum === 2) {
+      let res = await this.request(`orders/${orderId}`, {
+        fireCourse2: new Date()
+      });
+      return res.fireCourse2;
+    }
+    if (courseNum === 3) {
+      let res = await this.request(`orders${orderId}`, {
+        fireCourse3: new Date()
+      });
+      return res.fireCourse3;
+    }
+  }
+
   //**************Checks Queries*************************************** */
 
   // Post a new check to database

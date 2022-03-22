@@ -10,7 +10,9 @@ import {
   INCREMENT_COURSE,
   DECREMENT_COURSE,
   INCREMENT_SEAT,
-  DECREMENT_SEAT
+  DECREMENT_SEAT,
+  FIRE_COURSE_2,
+  FIRE_COURSE_3
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -92,5 +94,35 @@ export function incrementSeat() {
 export function decrementSeat() {
   return {
     type: DECREMENT_SEAT
+  };
+}
+
+export function fireCourse2InApi(orderId) {
+  const COURSE_NUM = 2;
+  return async function(dispatch) {
+    const course2Timestamp = await TapntableApi.fireCourse(orderId, COURSE_NUM);
+    console.debug('Fire Course 2', course2Timestamp);
+    return dispatch(fireCourse2());
+  };
+}
+
+function fireCourse2() {
+  return {
+    type: FIRE_COURSE_2
+  };
+}
+
+export function fireCourse3InApi(orderId) {
+  const COURSE_NUM = 3;
+  return async function(dispatch) {
+    const course3Timestamp = await TapntableApi.fireCourse(orderId, COURSE_NUM);
+    console.debug('Fire Course 3', course3Timestamp);
+    return dispatch(fireCourse3());
+  };
+}
+
+function fireCourse3() {
+  return {
+    type: FIRE_COURSE_3
   };
 }

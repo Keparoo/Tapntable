@@ -9,7 +9,8 @@ import {
   CardActionArea,
   CardContent,
   Button,
-  Stack
+  Stack,
+  Divider
 } from '@mui/material';
 import { clearCurrentCheck } from '../actions/currentCheck';
 import { TICKET_REFRESH_RATE } from '../constants';
@@ -36,34 +37,49 @@ const OrderTickets = ({ destinationId }) => {
 
         let ordersRes = await TapntableApi.getOpenOrders();
         // filter out completed orders
+
         if (ordersRes !== [])
           ordersRes = ordersRes.filter((o) => !o.completedAt);
         // Get list of ordered items for order
+
         for (let order of ordersRes) {
           let orderItems = await TapntableApi.getOrderedItemsByOrder(order.id);
           // Filter out items with destination other than destinationId
           orderItems = orderItems.filter(
             (i) => i.destinationId === destinationId
           );
-          order.items = orderItems;
+
+          // Separate items into courses
+          order.course1 = orderItems.filter((i) => i.courseNum === 1);
+          order.course2 = orderItems.filter((i) => i.courseNum === 2);
+          order.course3 = orderItems.filter((i) => i.courseNum === 3);
+
+          // Add check info to order
           if (orderItems[0]) {
-            console.log('++++++++++++++CheckId', orderItems[0].checkId);
             order.checkId = orderItems[0].checkId;
             order.tableNum = orderItems[0].tableNum;
-            console.log(
-              '+++++++++++++++TableNum, numGuests',
-              orderItems[0].tableNum,
-              orderItems[0].numGuests
-            );
+            order.numGuests = orderItems[0].numGuests;
           }
-          //Get related mods for item
-          for (let item of order.items) {
+
+          //Get related mods for items
+          for (let item of order.course1) {
+            const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+            item.mods = mods;
+          }
+          for (let item of order.course2) {
+            const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+            item.mods = mods;
+          }
+          for (let item of order.course3) {
             const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
             item.mods = mods;
           }
         }
 
-        const filteredOrders = ordersRes.filter((o) => o.items.length !== 0);
+        // Filter out any orders with no items
+        const filteredOrders = ordersRes.filter(
+          (o) => o.course1.length + o.course2.length + o.course3.length !== 0
+        );
 
         console.log('Order & Items', filteredOrders);
         setOrders(filteredOrders);
@@ -125,26 +141,82 @@ const OrderTickets = ({ destinationId }) => {
                   {o.displayName}
                 </Typography>
 
-                {o.items.map((i) => (
-                  <div key={i.id}>
-                    <Typography variant="p">
-                      <strong>
-                        {i.courseNum}: {i.name}
-                      </strong>{' '}
-                      <span style={{ float: 'right' }}>Seat: {i.seatNum}</span>
-                    </Typography>
-                    <br />
-                    {i.mods.map((m) => (
-                      <Typography key={m.modId}>{m.modName}</Typography>
-                    ))}
-                    <Typography variant="p">
-                      {i.itemNote && <strong>****{i.itemNote}</strong>}
-                    </Typography>
+                {o.course1 &&
+                  o.course1.map((i) => (
+                    <div key={i.id}>
+                      <Typography variant="p">
+                        <strong>{i.name}</strong>{' '}
+                        {i.seatNum && (
+                          <span style={{ float: 'right' }}>
+                            Seat: {i.seatNum}
+                          </span>
+                        )}
+                      </Typography>
+                      <br />
+                      {i.mods.map((m) => (
+                        <Typography key={m.modId}>{m.modName}</Typography>
+                      ))}
+                      <Typography variant="p">
+                        {i.itemNote && <strong>****{i.itemNote}</strong>}
+                      </Typography>
 
-                    <p>{i.count}</p>
-                    <p>{i.isVoid}</p>
-                  </div>
-                ))}
+                      <p>{i.count}</p>
+                      <p>{i.isVoid}</p>
+                    </div>
+                  ))}
+
+                {o.course2.length !== 0 && <Divider>Course 2</Divider>}
+
+                {o.course2 &&
+                  o.course2.map((i) => (
+                    <div key={i.id}>
+                      <Typography variant="p">
+                        <strong>{i.name}</strong>{' '}
+                        {i.seatNum && (
+                          <span style={{ float: 'right' }}>
+                            Seat: {i.seatNum}
+                          </span>
+                        )}
+                      </Typography>
+                      <br />
+                      {i.mods.map((m) => (
+                        <Typography key={m.modId}>{m.modName}</Typography>
+                      ))}
+                      <Typography variant="p">
+                        {i.itemNote && <strong>****{i.itemNote}</strong>}
+                      </Typography>
+
+                      <p>{i.count}</p>
+                      <p>{i.isVoid}</p>
+                    </div>
+                  ))}
+
+                {o.course3.length !== 0 && <Divider>Course 3</Divider>}
+
+                {o.course3 &&
+                  o.course3.map((i) => (
+                    <div key={i.id}>
+                      <Typography variant="p">
+                        <strong>{i.name}</strong>{' '}
+                        {i.seatNum && (
+                          <span style={{ float: 'right' }}>
+                            Seat: {i.seatNum}
+                          </span>
+                        )}
+                      </Typography>
+                      <br />
+                      {i.mods.map((m) => (
+                        <Typography key={m.modId}>{m.modName}</Typography>
+                      ))}
+                      <Typography variant="p">
+                        {i.itemNote && <strong>****{i.itemNote}</strong>}
+                      </Typography>
+
+                      <p>{i.count}</p>
+                      <p>{i.isVoid}</p>
+                    </div>
+                  ))}
+
                 <Typography variant="body2">
                   Sent: {o.sentAt && moment(o.sentAt).format('LT')}
                   <span style={{ float: 'right' }}>Table {o.tableNum}</span>

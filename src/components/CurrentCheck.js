@@ -161,7 +161,16 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                 <ListItemText
                   primary={
                     <React.Fragment key={uuid()}>
-                      <strong>{i.name}</strong>{' '}
+                      {(i.courseNum === 2 && !i.fireCourse2) ||
+                      (i.courseNum === 3 && !i.fireCourse3) ? (
+                        <span>
+                          <strong>
+                            <em>{i.name}</em>
+                          </strong>
+                        </span>
+                      ) : (
+                        <strong>{i.name}</strong>
+                      )}{' '}
                       <span style={{ float: 'right' }}>${i.price}</span>
                     </React.Fragment>
                   }

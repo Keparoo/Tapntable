@@ -121,16 +121,25 @@ class TapntableApi {
 
   static async fireCourse(orderId, courseNum) {
     if (courseNum === 2) {
-      let res = await this.request(`orders/${orderId}`, {
-        fireCourse2: new Date()
-      });
-      return res.fireCourse2;
+      let res = await this.request(
+        `orders/${orderId}`,
+        {
+          fireCourse2: new Date()
+        },
+        'patch'
+      );
+      console.log('*********************', res);
+      return res.order.fireCourse2;
     }
     if (courseNum === 3) {
-      let res = await this.request(`orders${orderId}`, {
-        fireCourse3: new Date()
-      });
-      return res.fireCourse3;
+      let res = await this.request(
+        `orders${orderId}`,
+        {
+          fireCourse3: new Date()
+        },
+        'patch'
+      );
+      return res.order.fireCourse3;
     }
   }
 

@@ -4,6 +4,8 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   clearCurrentCheck,
   clearNewItems,
+  fireCourse2InApi,
+  fireCourse3InApi,
   removeItemFromCheck
 } from '../actions/currentCheck';
 import sendOrder from '../utils/sendOrder';
@@ -28,6 +30,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { fetchItemsFromAPI } from '../actions/items';
+import ModalAlert from './ModalAlert';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
@@ -37,6 +40,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const history = useHistory();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
   const [ currItem, setCurrItem ] = useState({});
+  const [ showFireCourse, setShowFireCourse ] = useState(false);
+  const [ courseToFire, setCourseToFire ] = useState({});
 
   // Get current user and check
   const user = useSelector((st) => st.user, shallowEqual);
@@ -114,11 +119,27 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   };
 
   const fireCourse = (arr, idx) => {
-    console.log(
+    console.debug(
       `Fire Course order: ${arr[idx].orderId}, course: ${arr[idx].courseNum}`
     );
-    // Render modal asking Fire Course?
-    // If yes, fire course else close popup
+    setCourseToFire({ orderId: arr[idx].orderId, course: arr[idx].courseNum });
+    // Render modal asking Fire Course
+    setShowFireCourse(true);
+  };
+
+  const confirmFire = () => {
+    console.debug('confirmFire');
+    if (courseToFire.course === 2)
+      dispatch(fireCourse2InApi(courseToFire.orderId));
+    if (courseToFire.course === 3)
+      dispatch(fireCourse3InApi(courseToFire.orderId));
+    setShowFireCourse(false);
+  };
+
+  const cancelFire = () => {
+    console.debug('cancelFire');
+    setShowFireCourse(false);
+    setCourseToFire({});
   };
 
   const renderCurrentCheck = () => {
@@ -403,6 +424,18 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             )}
           </Stack>
         </div>
+
+        {showFireCourse && (
+          <ModalAlert
+            type="success"
+            title={`Fire Course ${courseToFire.course}`}
+            message="Are you sure?"
+            agreeButton={`Fire Course ${courseToFire.course}`}
+            disagreeButton="Cancel"
+            agree={confirmFire}
+            disagree={cancelFire}
+          />
+        )}
       </Container>
     );
   };

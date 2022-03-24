@@ -11,17 +11,14 @@ import {
 /* Alert Component for showing modal style messages
 
 Color of Title:
-typye=error: red
-typye=success: green
-typye=default: primary
+type=error: red
+type=success: green
+type=default: primary
 
-If disagreeButton is not null:
-    show a button with disagree text and return disagree=true if clicked
-If agreeButton is clicked disagree=false is returned
+Clicking both off modal and on disagree button closes modal and fires disagree callback
+Clicking on agree button closes modal and fires agree callback
 
-close function returns boolean disagree value
-
-Called by OrderCats
+Called by OrderCats, Current Check
 */
 
 const ModalAlert = ({
@@ -30,7 +27,8 @@ const ModalAlert = ({
   message,
   agreeButton,
   disagreeButton,
-  close
+  agree,
+  disagree
 }) => {
   console.debug(
     'Alert',
@@ -49,15 +47,15 @@ const ModalAlert = ({
   const [ open, setOpen ] = useState(true);
 
   // Send back disagree=false
-  const handleClose = () => {
+  const handleAgree = () => {
     setOpen(false);
-    close(false);
+    agree();
   };
 
   // Send back disagree=true
   const handleDisagree = () => {
     setOpen(false);
-    close(true);
+    disagree();
   };
 
   let textColor;
@@ -75,7 +73,7 @@ const ModalAlert = ({
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleDisagree}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -91,7 +89,7 @@ const ModalAlert = ({
         {disagreeButton && (
           <Button onClick={handleDisagree}>{disagreeButton}</Button>
         )}
-        <Button onClick={handleClose} autoFocus>
+        <Button onClick={handleAgree} autoFocus>
           {agreeButton}
         </Button>
       </DialogActions>

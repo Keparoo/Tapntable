@@ -121,6 +121,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
 
     case DECREMENT_COURSE:
       state.currentCourse -= 1;
+      if (state.currentCourse < 1) state.currentCourse = 1;
       return { ...state };
 
     case INCREMENT_SEAT:
@@ -129,6 +130,7 @@ export default function newCheck(state = INITIAL_STATE, action) {
 
     case DECREMENT_SEAT:
       state.currentSeatNum -= 1;
+      if (state.currentSeatNum < 1) state.currentSeatNum = null;
       return { ...state };
 
     default:

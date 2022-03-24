@@ -167,8 +167,8 @@ const OrderTickets = ({ destinationId }) => {
 
                 {o.course2.length !== 0 && <Divider>Course 2</Divider>}
                 {o.fireCourse2 && (
-                  <Typography variant="p">
-                    ****Fire Course 2****{moment(o.fireCourse2).format('LT')}
+                  <Typography variant="body1" align="center" color="secondary">
+                    ****Fire Course 2---{moment(o.fireCourse2).format('LT')}****
                   </Typography>
                 )}
                 <br />
@@ -199,8 +199,8 @@ const OrderTickets = ({ destinationId }) => {
 
                 {o.course3.length !== 0 && <Divider>Course 3</Divider>}
                 {o.fireCourse3 && (
-                  <Typography variant="p">
-                    ****Fire Course 3****{moment(o.fireCourse3).format('LT')}
+                  <Typography variant="body1" align="center" color="secondary">
+                    ****Fire Course 3---{moment(o.fireCourse3).format('LT')}****
                   </Typography>
                 )}
                 <br />

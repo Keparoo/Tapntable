@@ -1,7 +1,14 @@
 import { Button, Divider, Paper, Stack } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-import { incrementCourse, incrementSeat } from '../actions/currentCheck';
+import {
+  decrementCourse,
+  decrementSeat,
+  incrementCourse,
+  incrementSeat
+} from '../actions/currentCheck';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const CheckFunctions = () => {
   console.debug('CheckFunctions');
@@ -23,11 +30,46 @@ const CheckFunctions = () => {
         <Button onClick={() => dispatch(incrementSeat())} variant="outlined">
           Seat {check.currentSeatNum && check.currentSeatNum}
         </Button>
-        <Button onClick={() => dispatch(incrementCourse())} variant="outlined">
+        <Button variant="outlined" onClick={() => dispatch(incrementSeat())}>
+          <ArrowUpwardIcon />
+        </Button>
+        {check.currentSeatNum > 0 ? (
+          <Button variant="outlined" onClick={() => dispatch(decrementSeat())}>
+            <ArrowDownwardIcon />
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            onClick={() => dispatch(decrementSeat())}
+            disabled
+          >
+            <ArrowDownwardIcon />
+          </Button>
+        )}
+
+        <Button variant="outlined" onClick={() => dispatch(incrementCourse())}>
           Course {check.currentCourse}
         </Button>
-        <Button variant="outlined">Fire Course 2</Button>
-        <Button variant="outlined">Fire Course 3</Button>
+        <Button variant="outlined" onClick={() => dispatch(incrementCourse())}>
+          <ArrowUpwardIcon />
+        </Button>
+        {check.currentCourse > 1 ? (
+          <Button
+            variant="outlined"
+            onClick={() => dispatch(decrementCourse())}
+          >
+            <ArrowDownwardIcon />
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            onClick={() => dispatch(decrementCourse())}
+            disabled
+          >
+            <ArrowDownwardIcon />
+          </Button>
+        )}
+
         <Divider />
         <Button variant="outlined">Split</Button>
         <Button variant="outlined">Merge</Button>

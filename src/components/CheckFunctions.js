@@ -22,14 +22,25 @@ const CheckFunctions = () => {
         spacing={4}
         sx={{
           width: '106px',
-          marginTop: '15vh',
+          marginTop: '4vh',
           marginLeft: '0',
           padding: '6px'
         }}
       >
-        <Button onClick={() => dispatch(incrementSeat())} variant="outlined">
-          Seat {check.currentSeatNum && check.currentSeatNum}
-        </Button>
+        {check.currentSeatNum ? (
+          <Button
+            onClick={() => dispatch(incrementSeat())}
+            variant="contained"
+            color="secondary"
+          >
+            Seat {check.currentSeatNum}
+          </Button>
+        ) : (
+          <Button onClick={() => dispatch(incrementSeat())} variant="contained">
+            Seat
+          </Button>
+        )}
+
         <Button variant="outlined" onClick={() => dispatch(incrementSeat())}>
           <ArrowUpwardIcon />
         </Button>
@@ -38,16 +49,16 @@ const CheckFunctions = () => {
             <ArrowDownwardIcon />
           </Button>
         ) : (
-          <Button
-            variant="outlined"
-            onClick={() => dispatch(decrementSeat())}
-            disabled
-          >
+          <Button variant="outlined" disabled>
             <ArrowDownwardIcon />
           </Button>
         )}
 
-        <Button variant="outlined" onClick={() => dispatch(incrementCourse())}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => dispatch(incrementCourse())}
+        >
           Course {check.currentCourse}
         </Button>
         <Button variant="outlined" onClick={() => dispatch(incrementCourse())}>
@@ -61,11 +72,7 @@ const CheckFunctions = () => {
             <ArrowDownwardIcon />
           </Button>
         ) : (
-          <Button
-            variant="outlined"
-            onClick={() => dispatch(decrementCourse())}
-            disabled
-          >
+          <Button variant="outlined" disabled>
             <ArrowDownwardIcon />
           </Button>
         )}

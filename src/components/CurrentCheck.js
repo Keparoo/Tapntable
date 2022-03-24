@@ -113,6 +113,14 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     dispatch(fetchItemsFromAPI());
   };
 
+  const fireCourse = (arr, idx) => {
+    console.log(
+      `Fire Course order: ${arr[idx].orderId}, course: ${arr[idx].courseNum}`
+    );
+    // Render modal asking Fire Course?
+    // If yes, fire course else close popup
+  };
+
   const renderCurrentCheck = () => {
     return (
       <Container sx={{ padding: '8px', width: 400, marginRight: 0 }}>
@@ -155,21 +163,28 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
           {check.items.length !== 0 && <Divider>Sent Items</Divider>}
 
-          <List className="CurrentCheck-SentItems" dense={true}>
-            {check.items.map((i) => (
+          <List
+            className="CurrentCheck-SentItems"
+            dense={true}
+            disablePadding={true}
+          >
+            {check.items.map((i, idx, arr) => (
               <ListItem key={uuid()}>
                 <ListItemText
+                  onClick={() => fireCourse(arr, idx)}
                   primary={
                     <React.Fragment key={uuid()}>
                       {(i.courseNum === 2 && !i.fireCourse2) ||
                       (i.courseNum === 3 && !i.fireCourse3) ? (
-                        <span>
-                          <strong>
-                            <em>{i.name}</em>
-                          </strong>
-                        </span>
+                        <Typography color="primary" my={0}>
+                          {i.name}: c{i.courseNum}
+                          {i.seatNum && <span>, s{i.seatNum}</span>}
+                        </Typography>
                       ) : (
-                        <strong>{i.name}</strong>
+                        <span>
+                          <strong>{i.name}</strong>: c{i.courseNum}
+                          {i.seatNum && <span>, s{i.seatNum}</span>}
+                        </span>
                       )}{' '}
                       <span style={{ float: 'right' }}>${i.price}</span>
                     </React.Fragment>
@@ -177,7 +192,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                   secondary={
                     <React.Fragment key={uuid()}>
                       {i.mods.length !== 0 && (
-                        <List component="span">
+                        <List
+                          component="span"
+                          dense={true}
+                          disablePadding={true}
+                        >
                           {i.mods.map((m) => (
                             <ListItem
                               sx={{
@@ -222,7 +241,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           </List>
           {check.newItems.length !== 0 && <Divider>New Items</Divider>}
 
-          <List className="CurrentCheck-NewItems" dense={true}>
+          <List
+            className="CurrentCheck-NewItems"
+            dense={true}
+            disablePadding={true}
+          >
             {check.newItems.map((i, idx, arr) => (
               <React.Fragment key={uuid()}>
                 <ListItem key={uuid()} alignItems="flex-start">
@@ -235,12 +258,21 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                       <React.Fragment>
                         <strong>{i.name}</strong>{' '}
                         <span style={{ float: 'right' }}>${i.price}</span>
+                        <br />
+                        <span>
+                          Course: {i.courseNum}{' '}
+                          {i.seatNum && <span>, Seat:{i.seatNum}</span>}
+                        </span>
                       </React.Fragment>
                     }
                     secondary={
                       <React.Fragment key={uuid()}>
                         {(i.mods.length !== 0 || i.itemNote) && (
-                          <List component="span">
+                          <List
+                            component="span"
+                            dense={true}
+                            disablePadding={true}
+                          >
                             {i.mods.map((m) => (
                               <ListItem
                                 sx={{

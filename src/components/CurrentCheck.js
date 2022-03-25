@@ -31,6 +31,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { fetchItemsFromAPI } from '../actions/items';
 import ModalAlert from './ModalAlert';
+import SentItems from './SentItems';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
@@ -47,6 +48,17 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const user = useSelector((st) => st.user, shallowEqual);
   const check = useSelector((st) => st.currentCheck, shallowEqual);
   console.debug('CurrentCheck', check);
+
+  const [ course1Items, setCourse1Items ] = useState(
+    check.items.filter((i) => i.courseNum === 1)
+  );
+  const [ course2Items, setCourse2Items ] = useState(
+    check.items.filter((i) => i.courseNum === 2)
+  );
+  const [ course3Items, setCourse3Items ] = useState(
+    check.items.filter((i) => i.courseNum === 3)
+  );
+  console.debug('Course 1 & 2 Items', course1Items, course2Items, course3Items);
 
   const sendAndClear = () => {
     sendOrder(check, user, reload, showOrderCats);
@@ -184,82 +196,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
           {check.items.length !== 0 && <Divider>Sent Items</Divider>}
 
-          <List
-            className="CurrentCheck-SentItems"
-            dense={true}
-            disablePadding={true}
-          >
-            {check.items.map((i, idx, arr) => (
-              <ListItem key={uuid()}>
-                <ListItemText
-                  onClick={() => fireCourse(arr, idx)}
-                  primary={
-                    <React.Fragment key={uuid()}>
-                      {(i.courseNum === 2 && !i.fireCourse2) ||
-                      (i.courseNum === 3 && !i.fireCourse3) ? (
-                        <Typography color="primary" my={0}>
-                          {i.name}: c{i.courseNum}
-                          {i.seatNum && <span>, s{i.seatNum}</span>}
-                        </Typography>
-                      ) : (
-                        <span>
-                          <strong>{i.name}</strong>: c{i.courseNum}
-                          {i.seatNum && <span>, s{i.seatNum}</span>}
-                        </span>
-                      )}{' '}
-                      <span style={{ float: 'right' }}>${i.price}</span>
-                    </React.Fragment>
-                  }
-                  secondary={
-                    <React.Fragment key={uuid()}>
-                      {i.mods.length !== 0 && (
-                        <List
-                          component="span"
-                          dense={true}
-                          disablePadding={true}
-                        >
-                          {i.mods.map((m) => (
-                            <ListItem
-                              sx={{
-                                display: 'inline',
-                                marginLeft: '1.3em'
-                              }}
-                              variant="body2"
-                              color="text.secondary"
-                              key={uuid()}
-                              component="span"
-                            >
-                              {m.modName}
-                              {m.modPrice && (
-                                <span style={{ float: 'right' }}>
-                                  ${m.modPrice}
-                                </span>
-                              )}
-                              <br />
-                            </ListItem>
-                          ))}
-                          {i.itemNote && (
-                            <ListItem
-                              sx={{
-                                display: 'inline',
-                                marginLeft: '1.3em'
-                              }}
-                              variant="body2"
-                              color="text.secondary"
-                              key={uuid()}
-                              component="span"
-                            >
-                              <strong>****{i.itemNote}</strong>
-                            </ListItem>
-                          )}
-                        </List>
-                      )}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
+          <SentItems items={course1Items} fireCourse={fireCourse} />
+          {course2Items.length !== 0 && <Divider>Course 2</Divider>}
+          <SentItems items={course2Items} fireCourse={fireCourse} />
+          {course3Items.length !== 0 && <Divider>Course 3</Divider>}
+
           {check.newItems.length !== 0 && <Divider>New Items</Divider>}
 
           <List
@@ -444,3 +385,80 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 };
 
 export default CurrentCheck;
+
+// <List
+// className="CurrentCheck-SentItems"
+// dense={true}
+// disablePadding={true}
+// >
+// {check.items.map((i, idx, arr) => (
+//   <ListItem key={uuid()}>
+//     <ListItemText
+//       onClick={() => fireCourse(arr, idx)}
+//       primary={
+//         <React.Fragment key={uuid()}>
+//           {(i.courseNum === 2 && !i.fireCourse2) ||
+//           (i.courseNum === 3 && !i.fireCourse3) ? (
+//             <Typography color="primary" my={0}>
+//               {i.name}: c{i.courseNum}
+//               {i.seatNum && <span>, s{i.seatNum}</span>}
+//             </Typography>
+//           ) : (
+//             <span>
+//               <strong>{i.name}</strong>: c{i.courseNum}
+//               {i.seatNum && <span>, s{i.seatNum}</span>}
+//             </span>
+//           )}{' '}
+//           <span style={{ float: 'right' }}>${i.price}</span>
+//         </React.Fragment>
+//       }
+//       secondary={
+//         <React.Fragment key={uuid()}>
+//           {i.mods.length !== 0 && (
+//             <List
+//               component="span"
+//               dense={true}
+//               disablePadding={true}
+//             >
+//               {i.mods.map((m) => (
+//                 <ListItem
+//                   sx={{
+//                     display: 'inline',
+//                     marginLeft: '1.3em'
+//                   }}
+//                   variant="body2"
+//                   color="text.secondary"
+//                   key={uuid()}
+//                   component="span"
+//                 >
+//                   {m.modName}
+//                   {m.modPrice && (
+//                     <span style={{ float: 'right' }}>
+//                       ${m.modPrice}
+//                     </span>
+//                   )}
+//                   <br />
+//                 </ListItem>
+//               ))}
+//               {i.itemNote && (
+//                 <ListItem
+//                   sx={{
+//                     display: 'inline',
+//                     marginLeft: '1.3em'
+//                   }}
+//                   variant="body2"
+//                   color="text.secondary"
+//                   key={uuid()}
+//                   component="span"
+//                 >
+//                   <strong>****{i.itemNote}</strong>
+//                 </ListItem>
+//               )}
+//             </List>
+//           )}
+//         </React.Fragment>
+//       }
+//     />
+//   </ListItem>
+// ))}
+// </List>

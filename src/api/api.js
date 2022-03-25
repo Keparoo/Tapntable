@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CLOCK_IN, CASH, OPEN_DAY } from '../constants';
+import { CLOCK_IN, CASH, OPEN_DAY, LANGUAGE, TIMEZONE } from '../constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -124,18 +124,21 @@ class TapntableApi {
       let res = await this.request(
         `orders/${orderId}`,
         {
-          fireCourse2: new Date()
+          fireCourse2: new Date().toLocaleString(LANGUAGE, {
+            timeZone: TIMEZONE
+          })
         },
         'patch'
       );
-      console.log('*********************', res);
       return res.order.fireCourse2;
     }
     if (courseNum === 3) {
       let res = await this.request(
         `orders${orderId}`,
         {
-          fireCourse3: new Date()
+          fireCourse3: new Date().toLocaleString(LANGUAGE, {
+            timeZone: TIMEZONE
+          })
         },
         'patch'
       );

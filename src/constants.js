@@ -51,3 +51,7 @@ export const VOID_CHECK = 'void-check';
 
 // Ticket refresh rate in ms for Kitchen-Hot, Kitchen-Cold, Service-Bar
 export const TICKET_REFRESH_RATE = 90000;
+
+// Local time settings
+export const LANGUAGE = 'en-US';
+export const TIMEZONE = 'America/New_York';

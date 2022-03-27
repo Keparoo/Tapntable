@@ -135,6 +135,7 @@ const Servers = () => {
     return <NewCheckForm save={saveNewCheck} cancel={cancel} />;
   }
 
+  // View for adding items to a check
   // Render Payment, OrderCategories, CurrentCheck, and CheckFunctions Components
   if (showPayment || showOrderCategories)
     return (
@@ -157,7 +158,8 @@ const Servers = () => {
       </Grid>
     );
 
-  //Render OpenChecks Component and Create/Cancel New Check Buttons
+  // View for seeing user's current open checks and buttons to create a new check
+  // Render OpenChecks Component and Create/Cancel New Check Buttons
   return (
     <div className="Servers">
       <Grid container>

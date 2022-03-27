@@ -8,10 +8,10 @@ import {
   fireCourse3InApi,
   removeItemFromCheck
 } from '../actions/currentCheck';
+import { fetchItemsFromAPI } from '../actions/items';
+
 import sendOrder from '../utils/sendOrder';
 import TapntableApi from '../api/api';
-
-import ItemNoteForm from './ItemNoteForm';
 
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
@@ -29,10 +29,34 @@ import {
   IconButton
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { fetchItemsFromAPI } from '../actions/items';
+
+import ItemNoteForm from './ItemNoteForm';
 import ModalAlert from './ModalAlert';
 import SentItems from './SentItems';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+/**
+ * This component renders the current check and handles related functions
+ * 
+ * Component called by Servers
+ * 
+ * Component calls ItemNoteForm, ModalAlert, SentItems
+ *  
+ * This component displays:
+ *  items & mods already sent, separated by course,
+ *  new items & mods as they are added
+ *  Sent items may be fired by clicking on an item in the order
+ *    ModalAlert will confirm the firing
+ *  Items and mods are totaled, tax calculated and the result is displayed
+ * 
+ * A bank of buttons to Send Order, Cancel adding items, Print Check and Pay
+ *   are displayed under the check
+ * 
+ * Servers passes 3 arguments:
+ *  showOrderCats: boolean
+ *  reload: function: reload(true) will reload the /servers page
+ *  showPayment: boolean
+ */
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   console.debug('CurrentCheck');
@@ -75,6 +99,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   };
 
   // Calculate and Print Check
+  // Move this to an action
   const printCheck = async () => {
     const printCheck = await TapntableApi.printCheck(
       check.id,
@@ -398,80 +423,3 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 };
 
 export default CurrentCheck;
-
-// <List
-// className="CurrentCheck-SentItems"
-// dense={true}
-// disablePadding={true}
-// >
-// {check.items.map((i, idx, arr) => (
-//   <ListItem key={uuid()}>
-//     <ListItemText
-//       onClick={() => fireCourse(arr, idx)}
-//       primary={
-//         <React.Fragment key={uuid()}>
-//           {(i.courseNum === 2 && !i.fireCourse2) ||
-//           (i.courseNum === 3 && !i.fireCourse3) ? (
-//             <Typography color="primary" my={0}>
-//               {i.name}: c{i.courseNum}
-//               {i.seatNum && <span>, s{i.seatNum}</span>}
-//             </Typography>
-//           ) : (
-//             <span>
-//               <strong>{i.name}</strong>: c{i.courseNum}
-//               {i.seatNum && <span>, s{i.seatNum}</span>}
-//             </span>
-//           )}{' '}
-//           <span style={{ float: 'right' }}>${i.price}</span>
-//         </React.Fragment>
-//       }
-//       secondary={
-//         <React.Fragment key={uuid()}>
-//           {i.mods.length !== 0 && (
-//             <List
-//               component="span"
-//               dense={true}
-//               disablePadding={true}
-//             >
-//               {i.mods.map((m) => (
-//                 <ListItem
-//                   sx={{
-//                     display: 'inline',
-//                     marginLeft: '1.3em'
-//                   }}
-//                   variant="body2"
-//                   color="text.secondary"
-//                   key={uuid()}
-//                   component="span"
-//                 >
-//                   {m.modName}
-//                   {m.modPrice && (
-//                     <span style={{ float: 'right' }}>
-//                       ${m.modPrice}
-//                     </span>
-//                   )}
-//                   <br />
-//                 </ListItem>
-//               ))}
-//               {i.itemNote && (
-//                 <ListItem
-//                   sx={{
-//                     display: 'inline',
-//                     marginLeft: '1.3em'
-//                   }}
-//                   variant="body2"
-//                   color="text.secondary"
-//                   key={uuid()}
-//                   component="span"
-//                 >
-//                   <strong>****{i.itemNote}</strong>
-//                 </ListItem>
-//               )}
-//             </List>
-//           )}
-//         </React.Fragment>
-//       }
-//     />
-//   </ListItem>
-// ))}
-// </List>

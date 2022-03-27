@@ -3,7 +3,7 @@ import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
 const SentItems = ({ items, fireCourse }) => {
-  console.debug('SentItems', items, fireCourse);
+  console.debug('SentItems', items);
 
   return (
     <List className="SentItems" dense={true} disablePadding={true}>

@@ -10,15 +10,23 @@ import {
   INCREMENT_COURSE,
   DECREMENT_COURSE,
   INCREMENT_SEAT,
-  DECREMENT_SEAT
+  DECREMENT_SEAT,
+  FIRE_COURSE_2,
+  FIRE_COURSE_3
 } from '../actions/types';
 import TapntableApi from '../api/api';
 import { floatToMoney } from '../utils/helpers';
 
 const INITIAL_STATE = {
   items: [],
+  subtotal: 0,
+  course1Items: [],
+  course2Items: [],
+  course3Items: [],
   newItems: [],
   payments: [],
+  currentSeatNum: null,
+  currentCourse: 1,
   currentItem: -1
 };
 export default function newCheck(state = INITIAL_STATE, action) {
@@ -32,6 +40,9 @@ export default function newCheck(state = INITIAL_STATE, action) {
         subtotal: 0,
         createdAt: date,
         items: [],
+        course1Items: [],
+        course2Items: [],
+        course3Items: [],
         newItems: [],
         payments: [],
         currentSeatNum: null,
@@ -82,6 +93,9 @@ export default function newCheck(state = INITIAL_STATE, action) {
         totalPaid: action.check.checkTotals.totalPaid,
         amountDue: action.check.checkTotals.amountDue,
         items: action.check.items,
+        course1Items: action.check.items.filter((i) => i.courseNum === 1),
+        course2Items: action.check.items.filter((i) => i.courseNum === 2),
+        course3Items: action.check.items.filter((i) => i.courseNum === 3),
         newItems: [],
         currentSeatNum: null,
         currentCourse: 1,
@@ -131,6 +145,12 @@ export default function newCheck(state = INITIAL_STATE, action) {
     case DECREMENT_SEAT:
       state.currentSeatNum -= 1;
       if (state.currentSeatNum < 1) state.currentSeatNum = null;
+      return { ...state };
+
+    case FIRE_COURSE_2:
+      return { ...state };
+
+    case FIRE_COURSE_3:
       return { ...state };
 
     default:

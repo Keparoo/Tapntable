@@ -46,19 +46,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   // Get current user and check
   const user = useSelector((st) => st.user, shallowEqual);
-  const check = useSelector((st) => st.currentCheck, shallowEqual);
+  const check = useSelector((st) => st.currentCheck);
   console.debug('CurrentCheck', check);
-
-  const [ course1Items, setCourse1Items ] = useState(
-    check.items.filter((i) => i.courseNum === 1)
-  );
-  const [ course2Items, setCourse2Items ] = useState(
-    check.items.filter((i) => i.courseNum === 2)
-  );
-  const [ course3Items, setCourse3Items ] = useState(
-    check.items.filter((i) => i.courseNum === 3)
-  );
-  console.debug('Course 1 & 2 Items', course1Items, course2Items, course3Items);
 
   const sendAndClear = () => {
     sendOrder(check, user, reload, showOrderCats);
@@ -141,10 +130,17 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
 
   const confirmFire = () => {
     console.debug('confirmFire');
-    if (courseToFire.course === 2)
-      dispatch(fireCourse2InApi(courseToFire.orderId));
-    if (courseToFire.course === 3)
-      dispatch(fireCourse3InApi(courseToFire.orderId));
+
+    if (courseToFire.course === 2) {
+      dispatch(fireCourse2InApi(courseToFire.orderId, check));
+      console.log('The course 2 items are', check.course2Items);
+    }
+
+    if (courseToFire.course === 3) {
+      dispatch(fireCourse3InApi(courseToFire.orderId, check));
+      console.log('The course 3 items are', check.course3Items);
+    }
+
     setShowFireCourse(false);
   };
 
@@ -194,12 +190,29 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
             </Typography>
           </header>
 
-          {check.items.length !== 0 && <Divider>Sent Items</Divider>}
+          {check.items.length !== 0 && <Divider>Sent Items, Course 1</Divider>}
 
-          <SentItems items={course1Items} fireCourse={fireCourse} />
-          {course2Items.length !== 0 && <Divider>Course 2</Divider>}
-          <SentItems items={course2Items} fireCourse={fireCourse} />
-          {course3Items.length !== 0 && <Divider>Course 3</Divider>}
+          <SentItems items={check.course1Items} fireCourse={fireCourse} />
+
+          {check.course2Items && (
+            <React.Fragment>
+              {check.course2Items.length !== 0 && (
+                <Divider>Sent Items, Course 2</Divider>
+              )}
+
+              <SentItems items={check.course2Items} fireCourse={fireCourse} />
+            </React.Fragment>
+          )}
+
+          {check.course3Items && (
+            <React.Fragment>
+              {check.course3Items.length !== 0 && (
+                <Divider>Sent Items, Course 3</Divider>
+              )}
+
+              <SentItems items={check.course3Items} fireCourse={fireCourse} />
+            </React.Fragment>
+          )}
 
           {check.newItems.length !== 0 && <Divider>New Items</Divider>}
 

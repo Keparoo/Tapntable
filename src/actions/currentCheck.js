@@ -1,4 +1,5 @@
 import TapntableApi from '../api/api';
+import { calculateCheck } from '../utils/helpers';
 import {
   ADD_TO_CHECK,
   CREATE_CHECK,
@@ -44,6 +45,28 @@ export function removeItemFromCheck(item) {
   return {
     type: REMOVE_FROM_CHECK,
     item
+  };
+}
+
+export function getCheckDetailsFromAPI(check) {
+  console.debug('getCheckDetailsFromAPI', check);
+
+  return async function(dispatch) {
+    //Get check items
+    const items = await TapntableApi.getOrderedItems(check.id);
+    console.log('The items now are:', items);
+
+    //Get related mods for items
+    for (const item of items) {
+      const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+      item.mods = mods;
+    }
+
+    const payments = await TapntableApi.getPayments(check.id);
+    const checkTotals = calculateCheck(check, items, payments);
+    console.log('The checkTotals are', checkTotals);
+
+    return dispatch(getOpenCheck({ check, items, payments, checkTotals }));
   };
 }
 
@@ -97,11 +120,28 @@ export function decrementSeat() {
   };
 }
 
-export function fireCourse2InApi(orderId) {
+export function fireCourse2InApi(orderId, check) {
   const COURSE_NUM = 2;
   return async function(dispatch) {
     const course2Timestamp = await TapntableApi.fireCourse(orderId, COURSE_NUM);
     console.debug('Fire Course 2', course2Timestamp);
+
+    //Get check items
+    const items = await TapntableApi.getOrderedItems(check.id);
+    console.log('The items now are:', items);
+
+    //Get related mods for items
+    for (const item of items) {
+      const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+      item.mods = mods;
+    }
+
+    const payments = await TapntableApi.getPayments(check.id);
+    const checkTotals = calculateCheck(check, items, payments);
+    console.log('The checkTotals are', checkTotals);
+
+    dispatch(getOpenCheck({ check, items, payments, checkTotals }));
+
     return dispatch(fireCourse2());
   };
 }
@@ -112,11 +152,43 @@ function fireCourse2() {
   };
 }
 
-export function fireCourse3InApi(orderId) {
+// export function fireCourse3InApi(orderId) {
+//   const COURSE_NUM = 3;
+//   return async function(dispatch) {
+//     const course3Timestamp = await TapntableApi.fireCourse(orderId, COURSE_NUM);
+//     console.debug('Fire Course 3', course3Timestamp);
+//     return dispatch(fireCourse3());
+//   };
+// }
+
+// function fireCourse3() {
+//   return {
+//     type: FIRE_COURSE_3
+//   };
+// }
+
+export function fireCourse3InApi(orderId, check) {
   const COURSE_NUM = 3;
   return async function(dispatch) {
     const course3Timestamp = await TapntableApi.fireCourse(orderId, COURSE_NUM);
     console.debug('Fire Course 3', course3Timestamp);
+
+    //Get check items
+    const items = await TapntableApi.getOrderedItems(check.id);
+    console.log('The items now are:', items);
+
+    //Get related mods for items
+    for (const item of items) {
+      const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
+      item.mods = mods;
+    }
+
+    const payments = await TapntableApi.getPayments(check.id);
+    const checkTotals = calculateCheck(check, items, payments);
+    console.log('The checkTotals are', checkTotals);
+
+    dispatch(getOpenCheck({ check, items, payments, checkTotals }));
+
     return dispatch(fireCourse3());
   };
 }

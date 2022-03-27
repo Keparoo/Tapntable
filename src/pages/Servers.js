@@ -6,13 +6,10 @@ import { fetchModsFromAPI } from '../actions/mods';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import {
   newCheck,
-  getOpenCheck,
-  clearCurrentCheck
+  clearCurrentCheck,
+  getCheckDetailsFromAPI
 } from '../actions/currentCheck';
 import { clearUserPin } from '../actions/user';
-
-import TapntableApi from '../api/api';
-import { calculateCheck } from '../utils/helpers';
 
 import OpenChecks from '../components/OpenChecks';
 import NewCheckForm from '../components/NewCheckForm';
@@ -100,21 +97,7 @@ const Servers = () => {
   const openCheck = async (check) => {
     console.debug('openCheck', check);
 
-    //Get check items
-    const items = await TapntableApi.getOrderedItems(check.id);
-    console.log('The item now are:', items);
-
-    //Get related mods for items
-    for (const item of items) {
-      const mods = await TapntableApi.getItemMods({ ordItemId: item.id });
-      item.mods = mods;
-    }
-
-    const payments = await TapntableApi.getPayments(check.id);
-    const checkTotals = calculateCheck(check, items, payments);
-    // Update Redux currentCheck with check info
-    dispatch(getOpenCheck({ check, items, payments, checkTotals }));
-
+    dispatch(getCheckDetailsFromAPI(check));
     setShowOrderCategories(true);
   };
 
@@ -149,7 +132,6 @@ const Servers = () => {
             showOrderCats={setShowOrderCategories}
             reload={setIsLoading}
             showPayment={setShowPayment}
-            reloadCheck={openCheck}
           />
         </Grid>
         <Grid item xs={1}>

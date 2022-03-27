@@ -50,7 +50,6 @@ const calculateCheck = (check, items, payments) => {
       modTotal += item.mods.reduce((a, b) => +a + (+b.modPrice || 0), 0);
     }
   }
-
   const subtotal = items.reduce((a, b) => +a + (+b.price || 0), 0) + modTotal;
   const localTax = floatToMoney(subtotal * config.tax.localRate);
   const stateTax = floatToMoney(subtotal * config.tax.stateRate);
@@ -58,6 +57,7 @@ const calculateCheck = (check, items, payments) => {
   const totalTax = localTax + stateTax + federalTax;
   const totalPaid = payments.reduce((a, b) => +a + (+b.subtotal || 0), 0);
   const amountDue = subtotal + totalTax - totalPaid - check.discountTotal;
+
   return {
     subtotal,
     localTax,

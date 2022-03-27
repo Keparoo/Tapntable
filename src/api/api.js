@@ -134,7 +134,7 @@ class TapntableApi {
     }
     if (courseNum === 3) {
       let res = await this.request(
-        `orders${orderId}`,
+        `orders/${orderId}`,
         {
           fireCourse3: new Date().toLocaleString(LANGUAGE, {
             timeZone: TIMEZONE

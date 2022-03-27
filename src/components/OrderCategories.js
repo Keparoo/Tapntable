@@ -5,6 +5,7 @@ import {
   removeItemFromCheck,
   addModToItem
 } from '../actions/currentCheck';
+import { fetchItemsFromAPI } from '../actions/items';
 import {
   Container,
   Grid,
@@ -15,13 +16,13 @@ import {
   Badge
 } from '@mui/material';
 // import { styled } from '@mui/material/styles';
+import TapntableApi from '../api/api';
 import ModCategories from './ModCategories';
 import ModGroup from './ModGroup';
-import TapntableApi from '../api/api';
 import ReqModGroup from './ReqModGroup';
 import ModalAlert from './ModalAlert';
+
 import { v4 as uuid } from 'uuid';
-import { fetchItemsFromAPI } from '../actions/items';
 
 const OrderCategories = () => {
   console.debug('OrderCats');

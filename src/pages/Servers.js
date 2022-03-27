@@ -9,20 +9,30 @@ import {
   getOpenCheck,
   clearCurrentCheck
 } from '../actions/currentCheck';
+import { clearUserPin } from '../actions/user';
+
 import TapntableApi from '../api/api';
 import { calculateCheck } from '../utils/helpers';
-// import config from '../restaurantConfig.json';
 
 import OpenChecks from '../components/OpenChecks';
-import CheckForm from '../components/CheckForm';
+import NewCheckForm from '../components/NewCheckForm';
 import CurrentCheck from '../components/CurrentCheck';
-import Spinner from '../components/Spinner';
 import OrderCategories from '../components/OrderCategories';
 import Payment from '../components/Payment';
+import Spinner from '../components/Spinner';
+
 import { Button, Stack, Grid } from '@mui/material';
 import './Servers.css';
-import { clearUserPin } from '../actions/user';
+
 import CheckFunctions from '../components/CheckFunctions';
+
+/**
+ * The main page for creating and managing orders
+ * 
+ * Called by Routes and routed to /servers
+ * 
+ * Components Called: OpenChecks, CheckForm, CurrentCheck, CheckFunctions, OrderCategories, Payment, Spinner
+ */
 
 const Servers = () => {
   console.debug('Servers');
@@ -30,16 +40,17 @@ const Servers = () => {
   const history = useHistory();
   const user = useSelector((st) => st.user, shallowEqual);
   const items = useSelector((st) => st.items, shallowEqual);
-  // const mods = useSelector((st) => st.mods, shallowEqual);
   const dispatch = useDispatch();
 
   const [ isLoading, setIsLoading ] = useState(true);
   const [ showOrderCategories, setShowOrderCategories ] = useState(false);
-  const [ showCheckForm, setShowCheckForm ] = useState(false);
+  const [ showNewCheckForm, setShowNewCheckForm ] = useState(false);
   const [ showPayment, setShowPayment ] = useState(false);
 
   if (!user.pin) history.push('/');
 
+  // Load from API: items, mods, current user's open checks into redux store
+  // Clear the current check in redux store
   useEffect(
     () => {
       console.debug('ItemList useEffect on Mount');
@@ -58,33 +69,40 @@ const Servers = () => {
     [ dispatch, isLoading, user.id ]
   );
 
+  // Create a new empty check in redux store with current timestamp, tableNum and numGuests
   const saveNewCheck = (tableNum, numGuests) => {
     console.debug('AddCheckInfo', tableNum, numGuests);
 
-    setShowCheckForm(false);
+    setShowNewCheckForm(false);
     dispatch(newCheck({ tableNum, numGuests }));
     setShowOrderCategories(true);
   };
 
+  // Cancel creation of new empty check in redux store
   const cancel = () => {
     console.debug('Cancel NewCheck Form');
-    setShowCheckForm(false);
+    setShowNewCheckForm(false);
     setShowOrderCategories(false);
   };
 
+  // Show CheckForm to create new empty check
   const createNewCheck = () => {
     console.debug('createNewCheck');
 
     //Ask what table & how many customers
-    setShowCheckForm(true);
+    setShowNewCheckForm(true);
     setShowOrderCategories(true);
   };
 
+  // Open existing check: retrieve items, mods, and payments from API
+  // Calculate the check
+  // Update the redux store: currentCheck with info
   const openCheck = async (check) => {
     console.debug('openCheck', check);
 
     //Get check items
     const items = await TapntableApi.getOrderedItems(check.id);
+    console.log('The item now are:', items);
 
     //Get related mods for items
     for (const item of items) {
@@ -94,12 +112,13 @@ const Servers = () => {
 
     const payments = await TapntableApi.getPayments(check.id);
     const checkTotals = calculateCheck(check, items, payments);
-    //Update Redux with check info
+    // Update Redux currentCheck with check info
     dispatch(getOpenCheck({ check, items, payments, checkTotals }));
 
     setShowOrderCategories(true);
   };
 
+  // Log user out of terminal by clearing current user pin
   const exit = () => {
     dispatch(clearUserPin());
     history.push('/');
@@ -111,10 +130,12 @@ const Servers = () => {
     return <b>No items in database</b>;
   }
 
-  if (showCheckForm) {
-    return <CheckForm save={saveNewCheck} cancel={cancel} />;
+  // Render form to create new check
+  if (showNewCheckForm) {
+    return <NewCheckForm save={saveNewCheck} cancel={cancel} />;
   }
 
+  // Render Payment, OrderCategories, CurrentCheck, and CheckFunctions Components
   if (showPayment || showOrderCategories)
     return (
       <Grid container>
@@ -127,6 +148,7 @@ const Servers = () => {
             showOrderCats={setShowOrderCategories}
             reload={setIsLoading}
             showPayment={setShowPayment}
+            reloadCheck={openCheck}
           />
         </Grid>
         <Grid item xs={1}>
@@ -135,6 +157,7 @@ const Servers = () => {
       </Grid>
     );
 
+  //Render OpenChecks Component and Create/Cancel New Check Buttons
   return (
     <div className="Servers">
       <Grid container>

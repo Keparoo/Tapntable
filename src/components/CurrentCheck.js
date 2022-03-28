@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 // Redux
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -70,6 +70,17 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const [ currItem, setCurrItem ] = useState({});
   const [ showFireCourse, setShowFireCourse ] = useState(false);
   const [ courseToFire, setCourseToFire ] = useState({});
+
+  const itemsEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    itemsEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  // Scroll to bottom of check on every render
+  useEffect(() => {
+    scrollToBottom()
+  });
 
   // Get current user and check
   const user = useSelector((st) => st.user, shallowEqual);
@@ -336,6 +347,8 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               </React.Fragment>
             ))}
           </List>
+
+          <div ref={itemsEndRef} />
         </Box>
 
         <footer style={{ marginTop: 'auto' }}>

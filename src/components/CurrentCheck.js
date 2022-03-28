@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+
+// Redux
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   clearCurrentCheck,
   clearNewItems,
   fireCourse2InApi,
   fireCourse3InApi,
+  printCheckToAPI,
   removeItemFromCheck
 } from '../actions/currentCheck';
 import { fetchItemsFromAPI } from '../actions/items';
 
+// Utilities
 import sendOrder from '../utils/sendOrder';
-import TapntableApi from '../api/api';
 
+// External Packages
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 
+// Material UI
 import {
   Typography,
   Container,
@@ -30,10 +34,10 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+// React Components
 import ItemNoteForm from './ItemNoteForm';
 import ModalAlert from './ModalAlert';
 import SentItems from './SentItems';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 /**
  * This component renders the current check and handles related functions
@@ -59,10 +63,9 @@ import SentItems from './SentItems';
  */
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
-  console.debug('CurrentCheck');
+  console.debug('CurrentCheck', showOrderCats, showPayment);
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
   const [ currItem, setCurrItem ] = useState({});
   const [ showFireCourse, setShowFireCourse ] = useState(false);
@@ -73,6 +76,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const check = useSelector((st) => st.currentCheck);
   console.debug('CurrentCheck', check);
 
+  // Send newItems to API, exit current check
   const sendAndClear = () => {
     sendOrder(check, user, reload, showOrderCats);
     // Clear new items to prevent check clear from increasing count
@@ -84,40 +88,41 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     showOrderCats(false);
   };
 
-  // Go back to OpenChecks
+  // Exit current check and view current user's open checks
   const cancel = () => {
     dispatch(clearCurrentCheck());
     showOrderCats(false);
     showPayment(false);
-    history.push('/');
   };
 
-  // Show Pay Screen
+  // Display Payment Component
   const pay = () => {
     showOrderCats(false);
     showPayment(true);
   };
 
   // Calculate and Print Check
-  // Move this to an action
-  const printCheck = async () => {
-    const printCheck = await TapntableApi.printCheck(
-      check.id,
-      check.subtotal,
-      check.localTax,
-      check.stateTax,
-      check.federalTax
+  const printCheck = () => {
+    dispatch(
+      printCheckToAPI(
+        check.id,
+        check.subtotal,
+        check.localTax,
+        check.stateTax,
+        check.federalTax
+      )
     );
-    console.log('printCheck', printCheck);
+
     dispatch(clearCurrentCheck());
     reload(true);
     showOrderCats(false);
     // Insert logic to print at local printer when available
   };
 
-  // Add an item note: Show form
+  // Show form to add item note
   const addNote = (arr, idx) => {
     console.debug('addNote', idx, arr);
+
     setShowItemNoteForm(true);
     setCurrItem(idx);
   };
@@ -125,12 +130,13 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   // Save item note: Hide form
   const saveNote = (i, note) => {
     console.debug('saveNote', i, note);
+
     i.itemNote = note.note;
     console.debug('Item Note: ', note.note);
     setShowItemNoteForm(false);
   };
 
-  // Cancel item note: Hide form
+  // Cancel adding item note: Hide form
   const cancelNote = () => {
     console.debug('cancelNote');
     setShowItemNoteForm(false);
@@ -139,11 +145,13 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   // Delete item from newItems
   const removeItem = (arr, idx) => {
     console.debug('removeItem', arr, idx);
+
     dispatch(removeItemFromCheck({ arr, idx }));
     // Refetch items to update count on buttons
     dispatch(fetchItemsFromAPI());
   };
 
+  // Display modal asking to confirm firing course, set course & orderId to fire
   const fireCourse = (arr, idx) => {
     console.debug(
       `Fire Course order: ${arr[idx].orderId}, course: ${arr[idx].courseNum}`
@@ -153,6 +161,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     setShowFireCourse(true);
   };
 
+  // Send fire to API and redux store
   const confirmFire = () => {
     console.debug('confirmFire');
 
@@ -169,6 +178,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     setShowFireCourse(false);
   };
 
+  // Cancel firing of course
   const cancelFire = () => {
     console.debug('cancelFire');
     setShowFireCourse(false);

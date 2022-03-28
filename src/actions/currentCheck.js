@@ -13,7 +13,8 @@ import {
   INCREMENT_SEAT,
   DECREMENT_SEAT,
   FIRE_COURSE_2,
-  FIRE_COURSE_3
+  FIRE_COURSE_3,
+  PRINT_CHECK
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -179,3 +180,30 @@ function fireCourse3() {
     type: FIRE_COURSE_3
   };
 }
+
+export function printCheckToAPI(
+  checkId,
+  subtotal,
+  localTax,
+  stateTax,
+  federalTax
+) {
+  return async function(dispatch) {
+    const printCheckRes = await TapntableApi.printCheck(
+      checkId,
+      subtotal,
+      localTax,
+      stateTax,
+      federalTax
+    );
+    console.debug('printCheck', printCheckRes);
+    // Insert logic to print at local printer when available?
+    return dispatch(printCheck());
+  };
+}
+
+const printCheck = () => {
+  return {
+    type: PRINT_CHECK
+  };
+};

@@ -128,7 +128,6 @@ export function fireCourse2InApi(orderId, check) {
 
     //Get check items
     const items = await TapntableApi.getOrderedItems(check.id);
-    console.log('The items now are:', items);
 
     //Get related mods for items
     for (const item of items) {
@@ -138,7 +137,6 @@ export function fireCourse2InApi(orderId, check) {
 
     const payments = await TapntableApi.getPayments(check.id);
     const checkTotals = calculateCheck(check, items, payments);
-    console.log('The checkTotals are', checkTotals);
 
     dispatch(getOpenCheck({ check, items, payments, checkTotals }));
 
@@ -152,21 +150,6 @@ function fireCourse2() {
   };
 }
 
-// export function fireCourse3InApi(orderId) {
-//   const COURSE_NUM = 3;
-//   return async function(dispatch) {
-//     const course3Timestamp = await TapntableApi.fireCourse(orderId, COURSE_NUM);
-//     console.debug('Fire Course 3', course3Timestamp);
-//     return dispatch(fireCourse3());
-//   };
-// }
-
-// function fireCourse3() {
-//   return {
-//     type: FIRE_COURSE_3
-//   };
-// }
-
 export function fireCourse3InApi(orderId, check) {
   const COURSE_NUM = 3;
   return async function(dispatch) {
@@ -175,7 +158,6 @@ export function fireCourse3InApi(orderId, check) {
 
     //Get check items
     const items = await TapntableApi.getOrderedItems(check.id);
-    console.log('The items now are:', items);
 
     //Get related mods for items
     for (const item of items) {
@@ -185,7 +167,6 @@ export function fireCourse3InApi(orderId, check) {
 
     const payments = await TapntableApi.getPayments(check.id);
     const checkTotals = calculateCheck(check, items, payments);
-    console.log('The checkTotals are', checkTotals);
 
     dispatch(getOpenCheck({ check, items, payments, checkTotals }));
 

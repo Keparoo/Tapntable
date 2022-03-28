@@ -2,6 +2,16 @@ import React from 'react';
 import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
+/**
+ * 
+ * Component renders a list of items that have been sent
+ * 
+ * Arguments:
+ * items: list of the items to render
+ * fireCourse: function to fire a course
+ *  
+ */
+
 const SentItems = ({ items, fireCourse }) => {
   console.debug('SentItems', items);
 

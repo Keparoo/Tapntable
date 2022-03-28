@@ -7,7 +7,9 @@ export const GET_OPEN_CHECKS = 'GET_OPEN_CHECKS';
 export const LOAD_CURRENT_CHECK = 'LOAD_CURRENT_CHECK';
 export const CLEAR_CURRENT_CHECK = 'CLEAR_CURRENT_CHECK';
 export const CLEAR_NEW_ITEMS = 'CLEAR_NEW_ITEMS';
+export const ADD_PAYMENT = 'ADD_PAYMENT';
 export const PRINT_CHECK = 'PRINT_CHECK';
+export const CLOSE_CHECK = 'CLOSE_CHECK';
 
 export const INCREMENT_COURSE = 'INCREMENT_COURSE';
 export const DECREMENT_COURSE = 'DECREMENT_COURSE';
@@ -17,7 +19,6 @@ export const DECREMENT_SEAT = 'DECREMENT_SEAT';
 export const FIRE_COURSE_2 = 'FIRE_COURSE_2';
 export const FIRE_COURSE_3 = 'FIRE_COURSE_3';
 
-export const ADD_PAYMENT = 'ADD_PAYMENT';
 export const GET_OPEN_PAYMENTS = 'GET_OPEN_PAYMENTS';
 
 export const FETCH_USER = 'FETCH_USER';

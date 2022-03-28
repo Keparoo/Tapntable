@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+
+// Redux
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getOpenChecksFromAPI } from '../actions/checks';
 import TapntableApi from '../api/api';
+
+// Constants
 import {
   CASH,
   MASTER_CARD,
@@ -14,7 +18,28 @@ import {
 } from '../constants';
 
 import { Typography, Stack, Button, Container, Paper } from '@mui/material';
+
+// React Components
 import PayAmountForm from './PayAmountForm';
+import { addPaymentToAPI, closeCheckInAPI } from '../actions/currentCheck';
+import { floatToMoney } from '../utils/helpers';
+
+/**
+ * 
+ * Component handles creating payments for a check
+ * Buttons are displayed to choose the payment type (MC, Visa, Cash, etc.)
+ * 
+ * Called by Servers
+ * 
+ * Calls PayAmountForm: for entering the payment amount
+ * 
+ * User Note: cash payments should be done after all credit/electronic as a cash payment
+ *  will automatically pay the balance of the check and close the check.
+ * 
+ * Arguments:
+ *  showPayment: function: showPayment(false) turns off display of this component
+ *  
+ */
 
 const Payment = ({ showPayment }) => {
   console.debug('Payment');
@@ -27,6 +52,7 @@ const Payment = ({ showPayment }) => {
   const [ paymentType, setPaymentType ] = useState('');
 
   // Post new payment to db
+  // move this to an action
   const savePayment = async ({ amount }) => {
     console.debug('savePayment', amount);
 
@@ -36,26 +62,29 @@ const Payment = ({ showPayment }) => {
       return;
     }
 
-    const newPayment = await TapntableApi.postPayment(
-      check.id,
-      paymentType,
-      +amount
-    );
-    console.log('New Credit Payment Made', newPayment);
+    dispatch(addPaymentToAPI(check.id, paymentType, amount));
 
-    if (check.amountDue - amount === 0) {
-      const closeCheck = await TapntableApi.closeCheck(
-        check.id,
-        check.subtotal,
-        check.localTax,
-        check.stateTax,
-        check.federalTax
+    if (floatToMoney(check.amountDue) - amount === 0) {
+      // const closeCheck = await TapntableApi.closeCheck(
+      //   check.id,
+      //   check.subtotal,
+      //   check.localTax,
+      //   check.stateTax,
+      //   check.federalTax
+      // );
+      // console.log('Close check', closeCheck);
+      dispatch(
+        closeCheckInAPI(
+          check.id,
+          check.subtotal,
+          check.localTax,
+          check.federalTax
+        )
       );
-      console.log('Close check', closeCheck);
     }
 
     showPayment(false);
-    await dispatch(getOpenChecksFromAPI(user.id));
+    dispatch(getOpenChecksFromAPI(user.id));
   };
 
   // Close PayAmount form
@@ -75,27 +104,39 @@ const Payment = ({ showPayment }) => {
   };
 
   // Pay by cash: Should be done after all credit payments-- Check is closed
-  const cash = async () => {
+  const cash = () => {
     console.log(cash);
 
-    const newPayment = await TapntableApi.postPayment(
-      check.id,
-      CASH,
-      check.amountDue
-    );
-    console.log('New Cash Payment Made', newPayment);
-    const closeCheck = await TapntableApi.closeCheck(
-      check.id,
-      check.subtotal,
-      check.localTax,
-      check.stateTax,
-      check.federalTax
+    // const newPayment = await TapntableApi.postPayment(
+    //   check.id,
+    //   CASH,
+    //   check.amountDue
+    // );
+    // console.debug('Cash Payment Made', newPayment);
+
+    dispatch(addPaymentToAPI(check.id, CASH, check.amountDue));
+    console.debug('Cash Payment Made');
+
+    // const closeCheck = await TapntableApi.closeCheck(
+    //   check.id,
+    //   check.subtotal,
+    //   check.localTax,
+    //   check.stateTax,
+    //   check.federalTax
+    // );
+    // console.debug('Close check', closeCheck);
+    dispatch(
+      closeCheckInAPI(
+        check.id,
+        check.subtotal,
+        check.localTax,
+        check.federalTax
+      )
     );
 
-    console.log('Close check', closeCheck);
     showPayment(false);
     // Update redux open checks
-    await dispatch(getOpenChecksFromAPI(user.id));
+    dispatch(getOpenChecksFromAPI(user.id));
   };
 
   return (

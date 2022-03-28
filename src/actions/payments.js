@@ -5,6 +5,7 @@ import { GET_OPEN_PAYMENTS } from './types';
 
 export function getOpenPaymentsFromAPI(loginTime, userId) {
   console.log('In Action', userId);
+
   return async function(dispatch) {
     const payments = await TapntableApi.getUserShiftPayments(loginTime, userId);
     console.log('Payments from API', payments);

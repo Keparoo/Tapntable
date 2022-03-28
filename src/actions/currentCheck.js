@@ -14,7 +14,9 @@ import {
   DECREMENT_SEAT,
   FIRE_COURSE_2,
   FIRE_COURSE_3,
-  PRINT_CHECK
+  PRINT_CHECK,
+  ADD_PAYMENT,
+  CLOSE_CHECK
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -181,6 +183,27 @@ function fireCourse3() {
   };
 }
 
+export function addPaymentToAPI(checkId, paymentType, amount) {
+  console.debug('addPaymentToAPI');
+
+  return async function(dispatch) {
+    const newPayment = await TapntableApi.postPayment(
+      checkId,
+      paymentType,
+      +amount
+    );
+    console.log('New Credit Payment Made', newPayment);
+    // Check if check is payed and close
+    return dispatch(addPayment());
+  };
+}
+
+const addPayment = () => {
+  return {
+    type: ADD_PAYMENT
+  };
+};
+
 export function printCheckToAPI(
   checkId,
   subtotal,
@@ -205,5 +228,31 @@ export function printCheckToAPI(
 const printCheck = () => {
   return {
     type: PRINT_CHECK
+  };
+};
+
+export function closeCheckInAPI(
+  checkId,
+  subtotal,
+  localTax,
+  stateTax,
+  federalTax
+) {
+  return async function(dispatch) {
+    const closeCheckRes = await TapntableApi.closeCheck(
+      checkId,
+      subtotal,
+      localTax,
+      stateTax,
+      federalTax
+    );
+    console.debug('Close check', closeCheckRes);
+    return dispatch(closeCheck());
+  };
+}
+
+const closeCheck = () => {
+  return {
+    type: CLOSE_CHECK
   };
 };

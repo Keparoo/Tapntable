@@ -121,13 +121,14 @@ export default function newCheck(state = INITIAL_STATE, action) {
       return INITIAL_STATE;
 
     case ADD_PAYMENT:
-      const amountDue = floatToMoney(state.amountDue - action.payment.subtotal);
+      // const amountDue = floatToMoney(state.amountDue - action.payment.subtotal);
 
-      return {
-        ...state,
-        amountDue,
-        payments: [ ...state.payments, action.payment ]
-      };
+      // return {
+      //   ...state,
+      //   amountDue,
+      //   payments: [ ...state.payments, action.payment ]
+      // };
+      return { ...state };
 
     case INCREMENT_COURSE:
       state.currentCourse += 1;

@@ -46,12 +46,11 @@ class TapntableApi {
 
   static async getCount(itemId) {
     let res = await this.request(`items/${itemId}`);
-    console.log('Count res', res.item.count);
     return res.item.count;
   }
 
   static async setCount(itemId, count) {
-    console.log('setCount', itemId, count);
+    console.debug('setCount', itemId, count);
     let res = await this.request(`items/${itemId}`, { count }, 'patch');
     return res.item.count;
   }

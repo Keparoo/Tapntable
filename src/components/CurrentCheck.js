@@ -57,13 +57,13 @@ import SentItems from './SentItems';
  *   are displayed under the check
  * 
  * Servers passes 3 arguments:
- *  showOrderCats: boolean
+ *  showOrderCats: function: showOrderCats(true) will display the Order Categories
  *  reload: function: reload(true) will reload the /servers page
- *  showPayment: boolean
+ *  showPayment: function: showPayment(true) will display the Payment Component
  */
 
 const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
-  console.debug('CurrentCheck', showOrderCats, showPayment);
+  console.debug('CurrentCheck');
 
   const dispatch = useDispatch();
   const [ showItemNoteForm, setShowItemNoteForm ] = useState(false);
@@ -71,15 +71,15 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
   const [ showFireCourse, setShowFireCourse ] = useState(false);
   const [ courseToFire, setCourseToFire ] = useState({});
 
-  const itemsEndRef = useRef(null)
+  const itemsEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    itemsEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    itemsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
-  // Scroll to bottom of check on every render
+  // Scroll to bottom of check on every render (each time item added)
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   });
 
   // Get current user and check

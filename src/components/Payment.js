@@ -65,14 +65,6 @@ const Payment = ({ showPayment }) => {
     dispatch(addPaymentToAPI(check.id, paymentType, amount));
 
     if (floatToMoney(check.amountDue) - amount === 0) {
-      // const closeCheck = await TapntableApi.closeCheck(
-      //   check.id,
-      //   check.subtotal,
-      //   check.localTax,
-      //   check.stateTax,
-      //   check.federalTax
-      // );
-      // console.log('Close check', closeCheck);
       dispatch(
         closeCheckInAPI(
           check.id,
@@ -84,6 +76,7 @@ const Payment = ({ showPayment }) => {
     }
 
     showPayment(false);
+    // Update redux open checks
     dispatch(getOpenChecksFromAPI(user.id));
   };
 
@@ -107,24 +100,9 @@ const Payment = ({ showPayment }) => {
   const cash = () => {
     console.log(cash);
 
-    // const newPayment = await TapntableApi.postPayment(
-    //   check.id,
-    //   CASH,
-    //   check.amountDue
-    // );
-    // console.debug('Cash Payment Made', newPayment);
-
     dispatch(addPaymentToAPI(check.id, CASH, check.amountDue));
     console.debug('Cash Payment Made');
 
-    // const closeCheck = await TapntableApi.closeCheck(
-    //   check.id,
-    //   check.subtotal,
-    //   check.localTax,
-    //   check.stateTax,
-    //   check.federalTax
-    // );
-    // console.debug('Close check', closeCheck);
     dispatch(
       closeCheckInAPI(
         check.id,

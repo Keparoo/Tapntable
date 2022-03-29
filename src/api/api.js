@@ -200,6 +200,12 @@ class TapntableApi {
     return res.check;
   }
 
+  // Update numGuests on Check
+  static async updateNumGuests(checkId, numGuests) {
+    let res = await this.request(`checks/${checkId}`, { numGuests }, 'patch');
+    return res.check;
+  }
+
   // Close check: timestamp and update subtotal and tax (timestamp not null indicates check closed)
   static async closeCheck(checkId, subtotal, localTax, stateTax, federalTax) {
     let res = await this.request(
@@ -245,6 +251,12 @@ class TapntableApi {
   static async getDayItems(timestamp) {
     let res = await this.request(`ordered`, { sentAt: timestamp });
     return res.ordItems;
+  }
+
+  // Update the CheckId (used when moving and item to another check)
+  static async updateCheckId(ordItemId, checkId) {
+    let res = await this.request(`ordered/${ordItemId}`, { checkId }, 'patch');
+    return res.ordItem;
   }
 
   //**************Payments Queries*************************************** */

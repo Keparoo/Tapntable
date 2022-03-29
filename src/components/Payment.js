@@ -53,6 +53,7 @@ const Payment = ({ showPayment }) => {
   const [ showPaymentAmountForm, setShowPaymentAmountForm ] = useState(false);
   const [ paymentType, setPaymentType ] = useState('');
 
+  // Close check in API
   const closeCheck = async (
     checkId,
     subtotal,

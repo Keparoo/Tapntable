@@ -26,12 +26,12 @@ const SentItems = ({ items, fireCourse }) => {
                 {(i.courseNum === 2 && !i.fireCourse2) ||
                 (i.courseNum === 3 && !i.fireCourse3) ? (
                   <Typography color="primary" my={0}>
-                    {i.name}: c{i.courseNum}
+                    {i.name}
                     {i.seatNum && <span>, s{i.seatNum}</span>}
                   </Typography>
                 ) : (
                   <span>
-                    <strong>{i.name}</strong>: c{i.courseNum}
+                    <strong>{i.name}</strong>
                     {i.seatNum && <span>, s{i.seatNum}</span>}
                   </span>
                 )}{' '}

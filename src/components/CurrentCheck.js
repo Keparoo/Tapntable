@@ -202,13 +202,15 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         <Box
           px={1}
           py={2}
+          borderRadius="10px"
           sx={{
             height: '79vh',
             width: '100%',
             maxWidth: 350,
             minWidth: 300,
             marginRight: 0,
-            bgcolor: 'lightgray'
+            bgcolor: 'lightgray',
+            boarderRadius: '25%'
           }}
           style={{ overflow: 'auto' }}
         >
@@ -221,7 +223,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               )}
             </Typography>
 
-            <Typography mx={2}>
+            <Typography mx={2} mb={1}>
               {check.createdAt && (
                 <span>
                   Created At:{' '}
@@ -351,11 +353,11 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           <div ref={itemsEndRef} />
         </Box>
 
-        <footer style={{ marginTop: 'auto' }}>
+        <footer>
           <div className="CurrentCheck-Totals">
             <div className="CurrentCheck-Payments">
               {check.payments.map((p) => (
-                <Typography key={uuid()} mx={2} style={{ dispaly: 'inline' }}>
+                <Typography key={uuid()} mx={2} style={{ display: 'inline' }}>
                   Payment&mdash;{p.type}{' '}
                   <span style={{ float: 'right' }}>
                     <strong>${p.subtotal}</strong>

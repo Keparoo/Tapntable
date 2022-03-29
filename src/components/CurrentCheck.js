@@ -203,7 +203,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           px={1}
           py={2}
           sx={{
-            height: '80vh',
+            height: '79vh',
             width: '100%',
             maxWidth: 350,
             minWidth: 300,
@@ -221,7 +221,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               )}
             </Typography>
 
-            <Typography>
+            <Typography mx={2}>
               {check.createdAt && (
                 <span>
                   Created At:{' '}
@@ -352,19 +352,17 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
         </Box>
 
         <footer style={{ marginTop: 'auto' }}>
-          <div
-            className="CurrentCheck-Payments"
-            style={{ position: 'absolute', bottom: '13em' }}
-          >
-            {check.payments.map((p) => (
-              <p key={uuid()} style={{ dispaly: 'inline' }}>
-                Payment------{p.type}----{' '}
-                <span style={{ float: 'right' }}>${p.subtotal}</span>
-              </p>
-            ))}
-          </div>
-
           <div className="CurrentCheck-Totals">
+            <div className="CurrentCheck-Payments">
+              {check.payments.map((p) => (
+                <Typography key={uuid()} mx={2} style={{ dispaly: 'inline' }}>
+                  Payment&mdash;{p.type}{' '}
+                  <span style={{ float: 'right' }}>
+                    <strong>${p.subtotal}</strong>
+                  </span>
+                </Typography>
+              ))}
+            </div>
             <Typography variant="p" sx={{ padding: '6px' }}>
               {(check.subtotal || check.subtotal === 0) && (
                 <span style={{ float: 'right', paddingRight: '16px' }}>

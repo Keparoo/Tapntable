@@ -17,6 +17,7 @@ import CurrentCheck from '../components/CurrentCheck';
 import OrderCategories from '../components/OrderCategories';
 import Payment from '../components/Payment';
 import Spinner from '../components/Spinner';
+// import SplitCheck from '../components/SplitCheck';
 
 import { Button, Stack, Grid } from '@mui/material';
 import './Servers.css';
@@ -43,6 +44,7 @@ const Servers = () => {
   const [ showOrderCategories, setShowOrderCategories ] = useState(false);
   const [ showNewCheckForm, setShowNewCheckForm ] = useState(false);
   const [ showPayment, setShowPayment ] = useState(false);
+  // const [ showSplitCheck, setShowSplitCheck ] = useState(false);
 
   if (!user.pin) history.push('/');
 
@@ -106,6 +108,11 @@ const Servers = () => {
     dispatch(clearUserPin());
     history.push('/');
   };
+
+  // Show split check component
+  // const splitCheck = () => {
+  //   setShowSplitCheck(true);
+  // };
 
   if (isLoading) return <Spinner />;
 

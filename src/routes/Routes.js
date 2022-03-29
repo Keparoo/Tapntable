@@ -13,6 +13,7 @@ import Welcome from '../pages/Welcome';
 import ManagerRoute from '../auth/ManagerRoute';
 import CloseDay from '../pages/CloseDay';
 import OrderTickets from '../components/OrderTickets';
+import SplitCheck from '../components/SplitCheck';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');
@@ -65,6 +66,10 @@ const Routes = ({ login, logout }) => {
 
       <Route exact path="/kitchencold">
         <OrderTickets destinationId={2} />
+      </Route>
+
+      <Route exact path="/splitcheck">
+        <SplitCheck />
       </Route>
 
       <ManagerRoute exact path="/closeday">

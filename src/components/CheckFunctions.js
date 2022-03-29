@@ -1,4 +1,5 @@
 import { Button, Divider, Paper, Stack } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import {
@@ -15,6 +16,7 @@ const CheckFunctions = () => {
 
   const dispatch = useDispatch();
   const check = useSelector((state) => state.currentCheck);
+  const history = useHistory();
 
   return (
     <Paper elevation={3} sx={{ margin: '0px', width: '108px' }}>
@@ -78,7 +80,9 @@ const CheckFunctions = () => {
         )}
 
         <Divider />
-        <Button variant="outlined">Split</Button>
+        <Button onClick={() => history.push('/splitcheck')} variant="outlined">
+          Split
+        </Button>
         <Button variant="outlined">Merge</Button>
         <Button variant="outlined">Transfer</Button>
         <Button variant="outlined">Discount</Button>

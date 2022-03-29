@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { Stack, Typography } from '@mui/material';
 import TapntableApi from '../api/api';
+import { v4 as uuid } from 'uuid';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -99,6 +100,8 @@ export default function SplitCheck() {
     }
 
     // Subtract 1 from numGuests of original check
+    // To implement: query user to # of guests moving to new check
+    // To implement: split by seat number
     const NEW_NUM_GUESTS = currentCheck.numGuests - 1 || 1;
     const updateNumGuests = await TapntableApi.updateNumGuests(
       currentCheck.id,
@@ -140,7 +143,51 @@ export default function SplitCheck() {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.name}`} />
+              <ListItemText
+                id={labelId}
+                primary={`${value.name}`}
+                secondary={
+                  <React.Fragment key={uuid()}>
+                    {(value.mods.length !== 0 || value.itemNote) && (
+                      <List component="span" dense={true} disablePadding={true}>
+                        {value.mods.map((m) => (
+                          <ListItem
+                            sx={{
+                              display: 'inline',
+                              marginLeft: '1.3em'
+                            }}
+                            variant="body2"
+                            color="text.secondary"
+                            key={uuid()}
+                            component="span"
+                          >
+                            {m.modName}
+                            {m.modPrice && (
+                              <span style={{ float: 'right' }}>
+                                ${m.modPrice}
+                              </span>
+                            )}
+                            <br />
+                          </ListItem>
+                        ))}
+                        {value.itemNote && (
+                          <ListItem
+                            sx={{
+                              display: 'inline',
+                              marginLeft: '1.3em'
+                            }}
+                            variant="body2"
+                            color="text.secondary"
+                            key={uuid()}
+                          >
+                            <strong>****{value.itemNote}</strong>
+                          </ListItem>
+                        )}
+                      </List>
+                    )}
+                  </React.Fragment>
+                }
+              />
             </ListItem>
           );
         })}
@@ -203,18 +250,18 @@ export default function SplitCheck() {
       </Grid>
 
       <Stack direction="row" justifyContent="center" spacing={2} mt={4}>
-        <Button variant="contained" onClick={saveChecks}>
-          Split Check
-        </Button>
         {right.length === 0 ? (
-          <Button variant="contained" color="secondary" onClick={cancelSplit}>
-            Cancel
+          <Button variant="contained" onClick={saveChecks} disabled>
+            Split Check
           </Button>
         ) : (
-          <Button variant="contained" color="secondary" onClick={cancelSplit}>
-            Done
+          <Button variant="contained" onClick={saveChecks}>
+            Split Check
           </Button>
         )}
+        <Button variant="contained" color="secondary" onClick={cancelSplit}>
+          Done
+        </Button>
       </Stack>
     </React.Fragment>
   );

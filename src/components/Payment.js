@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 // Redux
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getOpenChecksFromAPI } from '../actions/checks';
-import TapntableApi from '../api/api';
 
 // Constants
 import {
@@ -17,11 +16,14 @@ import {
   VENMO
 } from '../constants';
 
+// Utilities
+import TapntableApi from '../api/api';
+
 import { Typography, Stack, Button, Container, Paper } from '@mui/material';
 
 // React Components
 import PayAmountForm from './PayAmountForm';
-import { addPaymentToAPI, closeCheckInAPI } from '../actions/currentCheck';
+import { addPaymentToAPI } from '../actions/currentCheck';
 import { floatToMoney } from '../utils/helpers';
 
 /**
@@ -51,10 +53,27 @@ const Payment = ({ showPayment }) => {
   const [ showPaymentAmountForm, setShowPaymentAmountForm ] = useState(false);
   const [ paymentType, setPaymentType ] = useState('');
 
+  const closeCheck = async (
+    checkId,
+    subtotal,
+    localTax,
+    stateTax,
+    federalTax
+  ) => {
+    const closeCheckRes = await TapntableApi.closeCheck(
+      checkId,
+      subtotal,
+      localTax,
+      stateTax,
+      federalTax
+    );
+    console.debug('Close check', closeCheckRes);
+    return closeCheckRes;
+  };
+
   // Post new payment to db
-  // move this to an action
   const savePayment = async ({ amount }) => {
-    console.debug('savePayment', amount);
+    console.debug('savePayment - Credit Payment', amount);
 
     if (amount > check.amountDue) amount = check.amountDue;
     if (amount <= 0) {
@@ -65,14 +84,13 @@ const Payment = ({ showPayment }) => {
     dispatch(addPaymentToAPI(check.id, paymentType, amount));
 
     if (floatToMoney(check.amountDue) - amount === 0) {
-      dispatch(
-        closeCheckInAPI(
-          check.id,
-          check.subtotal,
-          check.localTax,
-          check.federalTax
-        )
+      const closeCheckRes = await closeCheck(
+        check.id,
+        check.subtotal,
+        check.localTax,
+        check.federalTax
       );
+      console.log('Close Check', closeCheckRes);
     }
 
     showPayment(false);
@@ -89,7 +107,7 @@ const Payment = ({ showPayment }) => {
   };
 
   // Pay by credit
-  const credit = async (type) => {
+  const credit = (type) => {
     console.debug('pay', type);
 
     setPaymentType(type);
@@ -97,20 +115,18 @@ const Payment = ({ showPayment }) => {
   };
 
   // Pay by cash: Should be done after all credit payments-- Check is closed
-  const cash = () => {
-    console.log(cash);
+  const cash = async () => {
+    console.debug('Make Cash Payment');
 
     dispatch(addPaymentToAPI(check.id, CASH, check.amountDue));
-    console.debug('Cash Payment Made');
 
-    dispatch(
-      closeCheckInAPI(
-        check.id,
-        check.subtotal,
-        check.localTax,
-        check.federalTax
-      )
+    const closeCheckRes = await closeCheck(
+      check.id,
+      check.subtotal,
+      check.localTax,
+      check.federalTax
     );
+    console.log('Close Check', closeCheckRes);
 
     showPayment(false);
     // Update redux open checks

@@ -15,8 +15,7 @@ import {
   FIRE_COURSE_2,
   FIRE_COURSE_3,
   PRINT_CHECK,
-  ADD_PAYMENT,
-  CLOSE_CHECK
+  ADD_PAYMENT
 } from './types';
 
 // Handle async API call for list of blog titles
@@ -231,28 +230,28 @@ const printCheck = () => {
   };
 };
 
-export function closeCheckInAPI(
-  checkId,
-  subtotal,
-  localTax,
-  stateTax,
-  federalTax
-) {
-  return async function(dispatch) {
-    const closeCheckRes = await TapntableApi.closeCheck(
-      checkId,
-      subtotal,
-      localTax,
-      stateTax,
-      federalTax
-    );
-    console.debug('Close check', closeCheckRes);
-    return dispatch(closeCheck());
-  };
-}
+// export function closeCheckInAPI(
+//   checkId,
+//   subtotal,
+//   localTax,
+//   stateTax,
+//   federalTax
+// ) {
+//   return async function(dispatch) {
+//     const closeCheckRes = await TapntableApi.closeCheck(
+//       checkId,
+//       subtotal,
+//       localTax,
+//       stateTax,
+//       federalTax
+//     );
+//     console.debug('Close check', closeCheckRes);
+//     return dispatch(closeCheck());
+//   };
+// }
 
-const closeCheck = () => {
-  return {
-    type: CLOSE_CHECK
-  };
-};
+// const closeCheck = () => {
+//   return {
+//     type: CLOSE_CHECK
+//   };
+// };

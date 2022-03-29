@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
+// Redux
 import { useSelector } from 'react-redux';
+
+// Material UI
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,24 +14,28 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { Stack, Typography } from '@mui/material';
+
+// Utilities
 import TapntableApi from '../api/api';
 import { v4 as uuid } from 'uuid';
 
 function not(a, b) {
-  return a.filter((value) => b.indexOf(value) === -1);
+  return a.filter((item) => b.indexOf(item) === -1);
 }
 
 function intersection(a, b) {
-  return a.filter((value) => b.indexOf(value) !== -1);
+  return a.filter((item) => b.indexOf(item) !== -1);
 }
 
 /**
  * 
- * Component splits the current check into 2 checks
+ * This Page splits the current check into 2 checks
  * 
  * Creates a new check with the items moved over and updates old check
+ * Database is updated
+ * This can be done multiple times
  * 
- * 
+ * Called by /Routes: routed at /splitcheck
  */
 
 export default function SplitCheck() {
@@ -43,12 +51,12 @@ export default function SplitCheck() {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
+  const handleToggle = (item) => () => {
+    const currentIndex = checked.indexOf(item);
     const newChecked = [ ...checked ];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(item);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -78,6 +86,8 @@ export default function SplitCheck() {
     setRight([]);
   };
 
+  // Create new check with moved items, update original check
+  // Clear new check area so another split can be performed
   const saveChecks = async () => {
     console.debug('saveChecks', left, right);
 
@@ -112,6 +122,7 @@ export default function SplitCheck() {
     setRight([]);
   };
 
+  // Exit split check page and return to /servers
   const cancelSplit = () => {
     console.debug('cancelSplit');
     history.push('/servers');
@@ -123,19 +134,19 @@ export default function SplitCheck() {
       sx={{ width: 400, height: '80vh', overflow: 'auto', marginTop: '4em' }}
     >
       <List dense component="div" role="list">
-        {items.map((value) => {
-          const labelId = `transfer-list-item-${value}-label`;
+        {items.map((item) => {
+          const labelId = `transfer-list-item-${item}-label`;
 
           return (
             <ListItem
-              key={value.id}
+              key={item.id}
               role="listitem"
               button
-              onClick={handleToggle(value)}
+              onClick={handleToggle(item)}
             >
               <ListItemIcon>
                 <Checkbox
-                  checked={checked.indexOf(value) !== -1}
+                  checked={checked.indexOf(item) !== -1}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{
@@ -145,12 +156,18 @@ export default function SplitCheck() {
               </ListItemIcon>
               <ListItemText
                 id={labelId}
-                primary={`${value.name}`}
+                primary={
+                  <React.Fragment>
+                    <strong>{item.name}</strong>
+                    <span style={{ float: 'right' }}>${item.price}</span>
+                    <br />
+                  </React.Fragment>
+                }
                 secondary={
                   <React.Fragment key={uuid()}>
-                    {(value.mods.length !== 0 || value.itemNote) && (
+                    {(item.mods.length !== 0 || item.itemNote) && (
                       <List component="span" dense={true} disablePadding={true}>
-                        {value.mods.map((m) => (
+                        {item.mods.map((m) => (
                           <ListItem
                             sx={{
                               display: 'inline',
@@ -170,7 +187,7 @@ export default function SplitCheck() {
                             <br />
                           </ListItem>
                         ))}
-                        {value.itemNote && (
+                        {item.itemNote && (
                           <ListItem
                             sx={{
                               display: 'inline',
@@ -180,7 +197,7 @@ export default function SplitCheck() {
                             color="text.secondary"
                             key={uuid()}
                           >
-                            <strong>****{value.itemNote}</strong>
+                            <strong>****{item.itemNote}</strong>
                           </ListItem>
                         )}
                       </List>
@@ -199,14 +216,16 @@ export default function SplitCheck() {
   return (
     <React.Fragment>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid item>Original Check</Grid>
+        <Grid item>
+          <Typography variant="h5">Original Check</Typography>
+        </Grid>
         <Grid item>{customList(left)}</Grid>
         <Grid item>
           <Grid container direction="column" alignItems="center">
             <Button
-              sx={{ my: 0.5 }}
-              variant="outlined"
-              size="small"
+              sx={{ my: 1 }}
+              variant="contained"
+              size="large"
               onClick={handleAllRight}
               disabled={left.length === 0}
               aria-label="move all right"
@@ -214,9 +233,9 @@ export default function SplitCheck() {
               ≫
             </Button>
             <Button
-              sx={{ my: 0.5 }}
-              variant="outlined"
-              size="small"
+              sx={{ my: 1 }}
+              variant="contained"
+              size="large"
               onClick={handleCheckedRight}
               disabled={leftChecked.length === 0}
               aria-label="move selected right"
@@ -224,9 +243,9 @@ export default function SplitCheck() {
               &gt;
             </Button>
             <Button
-              sx={{ my: 0.5 }}
-              variant="outlined"
-              size="small"
+              sx={{ my: 1 }}
+              variant="contained"
+              size="large"
               onClick={handleCheckedLeft}
               disabled={rightChecked.length === 0}
               aria-label="move selected left"
@@ -234,9 +253,9 @@ export default function SplitCheck() {
               &lt;
             </Button>
             <Button
-              sx={{ my: 0.5 }}
-              variant="outlined"
-              size="small"
+              sx={{ my: 1 }}
+              variant="contained"
+              size="large"
               onClick={handleAllLeft}
               disabled={right.length === 0}
               aria-label="move all left"
@@ -246,7 +265,9 @@ export default function SplitCheck() {
           </Grid>
         </Grid>
         <Grid item>{customList(right)}</Grid>
-        <Grid item>New Check</Grid>
+        <Grid item>
+          <Typography variant="h5">New Check</Typography>
+        </Grid>
       </Grid>
 
       <Stack direction="row" justifyContent="center" spacing={2} mt={4}>

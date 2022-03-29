@@ -40,7 +40,7 @@ const SentItems = ({ items, fireCourse }) => {
             }
             secondary={
               <React.Fragment key={uuid()}>
-                {i.mods.length !== 0 && (
+                {(i.mods.length !== 0 || i.itemNote) && (
                   <List component="span" dense={true} disablePadding={true}>
                     {i.mods.map((m) => (
                       <ListItem

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+// React Components
 import Homepage from '../pages/Homepage';
 import UserLoginForm from '../auth/UserLogInForm';
 import UserLogoutForm from '../auth/UserLogoutForm';
@@ -13,7 +14,7 @@ import Welcome from '../pages/Welcome';
 import ManagerRoute from '../auth/ManagerRoute';
 import CloseDay from '../pages/CloseDay';
 import OrderTickets from '../components/OrderTickets';
-import SplitCheck from '../components/SplitCheck';
+import SplitCheck from '../pages/SplitCheck';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');

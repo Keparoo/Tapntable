@@ -1,4 +1,6 @@
 import React, { useState, memo, useCallback } from 'react';
+
+// Redux
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   addItemToCheck,
@@ -6,6 +8,8 @@ import {
   addModToItem
 } from '../actions/currentCheck';
 import { fetchItemsFromAPI } from '../actions/items';
+
+// Material UI
 import {
   Container,
   Grid,
@@ -16,13 +20,27 @@ import {
   Badge
 } from '@mui/material';
 // import { styled } from '@mui/material/styles';
+
+// Utilities
 import TapntableApi from '../api/api';
+import { v4 as uuid } from 'uuid';
+
+// React Components
 import ModCategories from './ModCategories';
 import ModGroup from './ModGroup';
 import ReqModGroup from './ReqModGroup';
 import ModalAlert from './ModalAlert';
 
-import { v4 as uuid } from 'uuid';
+/**
+ * Component Renders the item categories lists, optional and required mods
+ * 
+ * This component handles the logic of adding an item and it's mods to a check
+ * 
+ * Called by Servers
+ * 
+ * Calls: ModCategories, ModGroup, ReqModGroup, ModalAlert
+ * 
+ */
 
 const OrderCategories = () => {
   console.debug('OrderCats');

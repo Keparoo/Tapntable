@@ -110,6 +110,16 @@ const Navbar = () => {
         >
           Items
         </Link>
+        <Link
+          color="inherit"
+          sx={{ mr: 2 }}
+          component={RouterLink}
+          to="/itemcount"
+          underline="none"
+        >
+          Item Count
+        </Link>
+
         {user.role === MANAGER || user.role === OWNER ? (
           <Link
             color="inherit"

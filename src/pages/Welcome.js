@@ -58,7 +58,7 @@ const Welcome = () => {
                 }}
               >
                 <List>
-                  <ListItem>{i.name}</ListItem>
+                  <ListItem key={i.id}>{i.name}</ListItem>
                 </List>
               </Box>
             ))}
@@ -76,8 +76,8 @@ const Welcome = () => {
                 }}
               >
                 <List>
-                  <ListItem>
-                    {i.name} {i.count}
+                  <ListItem key={i.id}>
+                    {i.name} <strong>{i.count}</strong>
                   </ListItem>
                 </List>
               </Box>

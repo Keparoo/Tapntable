@@ -15,6 +15,7 @@ import ManagerRoute from '../auth/ManagerRoute';
 import CloseDay from '../pages/CloseDay';
 import OrderTickets from '../components/OrderTickets';
 import SplitCheck from '../pages/SplitCheck';
+import ItemCount from '../pages/ItemCount';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');
@@ -71,6 +72,10 @@ const Routes = ({ login, logout }) => {
 
       <Route exact path="/splitcheck">
         <SplitCheck />
+      </Route>
+
+      <Route exact path="/itemcount">
+        <ItemCount />
       </Route>
 
       <ManagerRoute exact path="/closeday">

@@ -1,5 +1,5 @@
 import TapntableApi from '../api/api';
-import { FETCH_ITEMS, INCREMENT_ITEM_COUNT } from './types';
+import { FETCH_ITEMS } from './types';
 
 // Handle async API call for list of items
 

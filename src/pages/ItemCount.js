@@ -31,7 +31,7 @@ const ItemCount = () => {
         </Typography>
         <List>
           {items.map((i) => (
-            <ListItem key={i.id}>
+            <ListItem key={i.id} sx={{ cursor: 'pointer' }}>
               <ListItemText
                 onClick={() => updateCount(i)}
                 primary={

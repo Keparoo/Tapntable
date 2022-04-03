@@ -20,6 +20,7 @@ const SentItems = ({ items, fireCourse }) => {
       {items.map((i, idx, arr) => (
         <ListItem key={uuid()}>
           <ListItemText
+            sx={{ cursor: 'pointer' }}
             onClick={() => fireCourse(arr, idx)}
             primary={
               <React.Fragment key={uuid()}>

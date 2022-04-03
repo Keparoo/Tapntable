@@ -167,6 +167,12 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
     console.debug(
       `Fire Course order: ${arr[idx].orderId}, course: ${arr[idx].courseNum}`
     );
+    // Fire course 1 not allowed: course 1 is an automatic fire
+    if (arr[idx].courseNum === 1) return;
+    // Item course alread fired
+    if (arr[idx].courseNum === 2 && arr[idx].fireCourse2) return;
+    if (arr[idx].courseNum === 3 && arr[idx].fireCourse3) return;
+
     setCourseToFire({ orderId: arr[idx].orderId, course: arr[idx].courseNum });
     // Render modal asking Fire Course
     setShowFireCourse(true);
@@ -276,6 +282,7 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                     <DeleteIcon />
                   </IconButton>
                   <ListItemText
+                    sx={{ cursor: 'pointer' }}
                     onClick={() => addNote(arr, idx)}
                     primary={
                       <React.Fragment>

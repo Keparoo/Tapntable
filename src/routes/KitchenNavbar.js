@@ -27,6 +27,7 @@ const KitchenNavbar = () => {
         >
           Login
         </Link>
+
         {user.role === MANAGER || user.role === OWNER ? (
           <Link
             color="inherit"
@@ -38,6 +39,7 @@ const KitchenNavbar = () => {
             Logout
           </Link>
         ) : null}
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -52,11 +54,22 @@ const KitchenNavbar = () => {
           color="inherit"
           sx={{ mr: 2 }}
           component={RouterLink}
+          to="/welcome"
+          underline="none"
+        >
+          Welcome
+        </Link>
+
+        <Link
+          color="inherit"
+          sx={{ mr: 2 }}
+          component={RouterLink}
           to="/kitchen"
           underline="none"
         >
           Kitchen Hot
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}

@@ -27,6 +27,7 @@ const Navbar = () => {
         >
           Login
         </Link>
+
         {user.role === MANAGER || user.role === OWNER ? (
           <Link
             color="inherit"
@@ -38,6 +39,7 @@ const Navbar = () => {
             Logout
           </Link>
         ) : null}
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -47,6 +49,17 @@ const Navbar = () => {
         >
           Home
         </Link>
+
+        <Link
+          color="inherit"
+          sx={{ mr: 2 }}
+          component={RouterLink}
+          to="/welcome"
+          underline="none"
+        >
+          Welcome
+        </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -56,6 +69,7 @@ const Navbar = () => {
         >
           Servers
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -65,6 +79,7 @@ const Navbar = () => {
         >
           Payments
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -74,6 +89,7 @@ const Navbar = () => {
         >
           Cash Out
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -83,6 +99,7 @@ const Navbar = () => {
         >
           Kitchen Hot
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -92,6 +109,7 @@ const Navbar = () => {
         >
           Kitchen Cold
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -101,6 +119,7 @@ const Navbar = () => {
         >
           Service Bar
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -110,6 +129,7 @@ const Navbar = () => {
         >
           Items
         </Link>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}

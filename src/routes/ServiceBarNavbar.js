@@ -38,6 +38,7 @@ const ServiceBarNavbar = () => {
             Logout
           </Link>
         ) : null}
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -46,6 +47,16 @@ const ServiceBarNavbar = () => {
           underline="none"
         >
           Home
+        </Link>
+
+        <Link
+          color="inherit"
+          sx={{ mr: 2 }}
+          component={RouterLink}
+          to="/welcome"
+          underline="none"
+        >
+          Welcome
         </Link>
 
         <Link

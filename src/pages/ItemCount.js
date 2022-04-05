@@ -10,15 +10,31 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import ItemSearchForm from '../components/ItemSearchForm';
+import UpdateItemCount from '../components/UpdateItemCount';
 
 const ItemCount = () => {
   console.debug('ItemCount');
 
   const items = useSelector((st) => st.items.filter((i) => i.count));
+  const [ showUpdateItemCount, setShowUpdateItemCount ] = useState(false);
+  const [ currentItem, setCurrentItem ] = useState({});
 
   const updateCount = (item) => {
     console.debug('updateCount', item);
+    setCurrentItem(item);
+    setShowUpdateItemCount(true);
   };
+
+  const cancel = () => {
+    setShowUpdateItemCount(false);
+    setCurrentItem({});
+  };
+
+  const updateItemCount = (item, count) => {
+    console.debug('updateItemCount', item, count);
+    setShowUpdateItemCount(false);
+  };
+
   // Display all items with count
   // Input for item to search for
   // checkbox for isActive
@@ -62,6 +78,13 @@ const ItemCount = () => {
           <ItemSearchForm updateCount={updateCount} />
         </Paper>
       </Container>
+      {showUpdateItemCount && (
+        <UpdateItemCount
+          item={currentItem}
+          disagree={cancel}
+          agree={updateItemCount}
+        />
+      )}
     </React.Fragment>
   );
 };

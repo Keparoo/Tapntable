@@ -125,3 +125,7 @@ const ItemSearchForm = ({ updateCount }) => {
 };
 
 export default ItemSearchForm;
+
+/* Item categories
+(1, 'Appetizer'),  (2, 'Soup'), (3, 'Salad'), (4, 'Sandwich'), (5, 'Entree'), (6, 'Addition'), (7, 'Dessert'), (8, 'Favorites'), (9, 'Beverage'), (10, 'Beer'), (11, 'Wine'), (12, 'Liquor'),(13, 'Children'), (14, 'Carryout'), (15, 'Delivery')
+*/

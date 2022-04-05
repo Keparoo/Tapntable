@@ -47,7 +47,7 @@ const ItemSearchForm = ({ save, cancel }) => {
           type="text"
           id="item"
           name="item"
-          label="Item"
+          label="Item Filter"
           variant="outlined"
           value={item}
           onChange={filter}

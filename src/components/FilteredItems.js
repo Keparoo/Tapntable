@@ -55,6 +55,16 @@ const ItemList = ({ items }) => {
   // if (!isLoading && items.length === 0) {
   //   return <b>No items in database</b>;
   // }
+  if (items.length === 0)
+    return (
+      <Container>
+        <Paper elevation={3}>
+          <Typography ml={2} mt={2} variant="h3" component="h1">
+            No items match
+          </Typography>
+        </Paper>
+      </Container>
+    );
 
   return (
     <Container>

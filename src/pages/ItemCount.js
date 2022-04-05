@@ -1,5 +1,6 @@
 import React, { useState, memo, useCallback } from 'react';
 import {
+  Button,
   Container,
   List,
   ListItem,
@@ -8,6 +9,7 @@ import {
   Typography
 } from '@mui/material';
 import { useSelector } from 'react-redux';
+import ItemSearchForm from '../components/ItemSearchForm';
 
 const ItemCount = () => {
   console.debug('ItemCount');
@@ -24,33 +26,43 @@ const ItemCount = () => {
   // Option to make item active/inactive
   // Input for count
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ marginTop: '24px' }}>
-        <Typography variant="h3" align="center">
-          Item Count
-        </Typography>
-        <List>
-          {items.map((i) => (
-            <ListItem key={i.id} sx={{ cursor: 'pointer' }}>
-              <ListItemText
-                onClick={() => updateCount(i)}
-                primary={
-                  <React.Fragment>
-                    {i.name}
-                    {i.count && (
-                      <span>
-                        :<strong> {i.count}</strong>
-                      </span>
-                    )}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-          ))}
-          <ListItem />
-        </List>
-      </Paper>
-    </Container>
+    <React.Fragment>
+      <Container maxWidth="xs">
+        <Paper elevation={3} sx={{ marginTop: '24px' }}>
+          <Typography variant="h4" align="center">
+            Item Count
+          </Typography>
+          <List>
+            {items.map((i) => (
+              <ListItem key={i.id} sx={{ cursor: 'pointer' }}>
+                <ListItemText
+                  onClick={() => updateCount(i)}
+                  primary={
+                    <React.Fragment>
+                      {i.name}
+                      {i.count && (
+                        <span>
+                          :<strong> {i.count}</strong>
+                          <Button variant="outlined" sx={{ float: 'right' }}>
+                            Clear Count
+                          </Button>
+                        </span>
+                      )}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            ))}
+            <ListItem />
+          </List>
+        </Paper>
+      </Container>
+      <Container maxWidth="md">
+        <Paper sx={{ marginTop: '24px' }}>
+          <ItemSearchForm />
+        </Paper>
+      </Container>
+    </React.Fragment>
   );
 };
 

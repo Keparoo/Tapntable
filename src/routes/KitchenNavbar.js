@@ -18,6 +18,7 @@ const KitchenNavbar = () => {
         >
           Tapntable
         </Typography>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}

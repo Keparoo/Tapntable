@@ -70,7 +70,7 @@ const ItemList = ({ items }) => {
     <Container>
       <Paper elevation={3}>
         <Typography ml={2} mt={2} variant="h3" component="h1">
-          Restaurant Items
+          Find item to set count
         </Typography>
         <List>
           {items.map((i) => (

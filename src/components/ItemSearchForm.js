@@ -10,6 +10,7 @@ const ItemSearchForm = ({ save, cancel }) => {
   const [ filtered, setFiltered ] = useState(items);
   const [ item, setItem ] = useState('');
 
+  // Filter items comparing keyword to item.name and item.description
   const filter = (e) => {
     e.preventDefault();
     const keyword = e.target.value;

@@ -18,6 +18,7 @@ const ServiceBarNavbar = () => {
         >
           Tapntable
         </Typography>
+
         <Link
           color="inherit"
           sx={{ mr: 2 }}
@@ -27,6 +28,7 @@ const ServiceBarNavbar = () => {
         >
           Login
         </Link>
+
         {user.role === MANAGER || user.role === OWNER ? (
           <Link
             color="inherit"

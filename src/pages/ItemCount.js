@@ -58,7 +58,7 @@ const ItemCount = () => {
         </Paper>
       </Container>
       <Container maxWidth="md">
-        <Paper sx={{ marginTop: '24px' }}>
+        <Paper sx={{ marginTop: '24px', padding: '24px' }}>
           <ItemSearchForm />
         </Paper>
       </Container>

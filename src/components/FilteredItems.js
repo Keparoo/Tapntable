@@ -59,8 +59,8 @@ const ItemList = ({ items }) => {
     return (
       <Container>
         <Paper elevation={3}>
-          <Typography ml={2} mt={2} variant="h3" component="h1">
-            No items match
+          <Typography align="center" ml={2} mt={2} variant="h4" component="h1">
+            No matching items
           </Typography>
         </Paper>
       </Container>
@@ -68,9 +68,16 @@ const ItemList = ({ items }) => {
 
   return (
     <Container>
-      <Paper elevation={3}>
-        <Typography ml={2} mt={2} variant="h3" component="h1">
-          Find item to set count
+      <Paper elevation={3} sx={{ height: '45vh', overflow: 'auto' }}>
+        <Typography
+          align="center"
+          ml={2}
+          mt={2}
+          pt={2}
+          variant="h4"
+          component="h1"
+        >
+          Tap an item to set the count
         </Typography>
         <List>
           {items.map((i) => (

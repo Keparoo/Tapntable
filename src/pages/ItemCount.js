@@ -59,7 +59,7 @@ const ItemCount = () => {
       </Container>
       <Container maxWidth="md">
         <Paper sx={{ marginTop: '24px', padding: '24px' }}>
-          <ItemSearchForm />
+          <ItemSearchForm updateCount={updateCount} />
         </Paper>
       </Container>
     </React.Fragment>

@@ -19,11 +19,9 @@ import {
 /*  Render page with list of items in db where isActive=true
  *
  *   On mount, renders list of all items in API
- *
- *   Routed to /items
 */
 
-const ItemList = ({ items }) => {
+const ItemList = ({ items, click }) => {
   console.debug('ItemList');
 
   // const items = useSelector((st) => st.items);
@@ -81,32 +79,25 @@ const ItemList = ({ items }) => {
         </Typography>
         <List>
           {items.map((i) => (
-            <Link
-              key={i.id}
-              to={`/items/${i.id}`}
-              component={RouterLink}
-              underline="none"
-            >
-              <ListItem>
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <strong>{i.name}</strong>, Id: {i.id}
-                    </React.Fragment>
-                  }
-                  secondary={
-                    <React.Fragment>
-                      <strong>${i.price}</strong>, Category:{' '}
-                      <strong>{i.category}</strong>, Destination:{' '}
-                      <strong>{i.destination}</strong> Count:{' '}
-                      <strong>{i.count || 'None'}</strong> isActive:{' '}
-                      <strong>{i.isActive ? 'true' : 'false'}</strong> <br />
-                      {i.description}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            </Link>
+            <ListItem key={i.id} onClick={() => click(i)}>
+              <ListItemText
+                primary={
+                  <React.Fragment>
+                    <strong>{i.name}</strong>, Id: {i.id}
+                  </React.Fragment>
+                }
+                secondary={
+                  <React.Fragment>
+                    <strong>${i.price}</strong>, Category:{' '}
+                    <strong>{i.category}</strong>, Destination:{' '}
+                    <strong>{i.destination}</strong> Count:{' '}
+                    <strong>{i.count || 'None'}</strong> isActive:{' '}
+                    <strong>{i.isActive ? 'true' : 'false'}</strong> <br />
+                    {i.description}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
           ))}
         </List>
       </Paper>

@@ -9,7 +9,7 @@ The front end is implemented using React and Redux.
 
 ## Deployment
 The frontend is currently deployed to surge:
-https://zonked-board.surge.sh/
+https://tapntable.surge.sh/
 
 ## Pages
 * / -- Page allows a user to enter their pin to clock-in/clock-out. Entering a correct pin will display a page asking if the user wants to clock-in. If the user clocks in they are greeted by a welcome message. If the user's role indicates that they can create/manager orders, after the welcome page they will be directed to a screen where they can create/manage orders. Otherwise the screen will redirect to the login pin form.

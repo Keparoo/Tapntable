@@ -51,6 +51,7 @@ class TapntableApi {
 
   static async setCount(itemId, count) {
     console.debug('setCount', itemId, count);
+    if (count) count = +count;
     let res = await this.request(`items/${itemId}`, { count }, 'patch');
     return res.item.count;
   }

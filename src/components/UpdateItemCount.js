@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 
-/* Alert Component for showing updating item count
+/* Modal form for updating  or clearing the item count
 
 Color of Title:
 type=error: red
@@ -24,10 +24,11 @@ Called by OrderCats, Current Check
 */
 
 const UpdateItemCount = ({
-  type = 'Success',
+  type = 'default',
   title = 'Update Item Count',
   message,
   item,
+  clearCount,
   agreeButton = 'Update',
   disagreeButton = 'Cancel',
   agree,
@@ -48,7 +49,7 @@ const UpdateItemCount = ({
   );
 
   const [ open, setOpen ] = useState(true);
-  const [ count, setCount ] = useState('');
+  const [ count, setCount ] = useState(item.count);
 
   // Send back disagree=false
   const handleAgree = () => {
@@ -103,7 +104,7 @@ const UpdateItemCount = ({
           {item.description && item.description}
         </DialogContentText>
       </DialogContent>
-      <Box sx={{ width: '400px', margin: 'auto' }}>
+      <Box sx={{ width: '400px', marginLeft: '24px' }}>
         <TextField
           type="number"
           id="count"
@@ -115,12 +116,24 @@ const UpdateItemCount = ({
           autoFocus={true}
           size="medium"
         />
+        {item.count && (
+          <Button
+            onClick={() => clearCount(item)}
+            variant="contained"
+            color="secondary"
+            sx={{ float: 'right', marginTop: '8px' }}
+          >
+            Clear Count
+          </Button>
+        )}
       </Box>
       <DialogActions>
         {disagreeButton && (
-          <Button onClick={handleDisagree}>{disagreeButton}</Button>
+          <Button variant="outlined" onClick={handleDisagree}>
+            {disagreeButton}
+          </Button>
         )}
-        <Button onClick={handleAgree} autoFocus>
+        <Button variant="contained" onClick={handleAgree} autoFocus>
           {agreeButton}
         </Button>
       </DialogActions>

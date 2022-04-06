@@ -79,7 +79,11 @@ const ItemList = ({ items, click }) => {
         </Typography>
         <List>
           {items.map((i) => (
-            <ListItem key={i.id} onClick={() => click(i)}>
+            <ListItem
+              key={i.id}
+              onClick={() => click(i)}
+              sx={{ cursor: 'pointer' }}
+            >
               <ListItemText
                 primary={
                   <React.Fragment>

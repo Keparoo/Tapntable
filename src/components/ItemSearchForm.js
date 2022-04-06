@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItemsFromAPI } from '../actions/items';
+
 import {
   TextField,
   Button,
@@ -11,7 +14,7 @@ import {
   Stack
 } from '@mui/material';
 import FilteredItems from '../components/FilteredItems';
-import { useSelector } from 'react-redux';
+import Spinner from './Spinner';
 
 const ItemSearchForm = ({ updateCount }) => {
   console.debug('ItemSearchForm');
@@ -20,6 +23,24 @@ const ItemSearchForm = ({ updateCount }) => {
   const [ filtered, setFiltered ] = useState(items);
   const [ item, setItem ] = useState('');
   const [ category, setCategory ] = useState(null);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(
+    () => {
+      console.debug('ItemList useEffect on Mount');
+
+      async function fetchItem() {
+        dispatch(fetchItemsFromAPI());
+        setIsLoading(false);
+      }
+      if (isLoading) {
+        fetchItem();
+      }
+      setIsLoading(false);
+    },
+    [ dispatch, isLoading ]
+  );
 
   // Filter items comparing keyword to item.name and item.description
   const filter = (e) => {
@@ -64,6 +85,12 @@ const ItemSearchForm = ({ updateCount }) => {
     }
     console.log(e.target.value);
   };
+
+  if (isLoading) return <Spinner />;
+
+  if (!isLoading && items.length === 0) {
+    return <b>No items in database</b>;
+  }
 
   return (
     <React.Fragment>

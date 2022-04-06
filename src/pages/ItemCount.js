@@ -1,6 +1,11 @@
 import React, { useState, memo, useCallback } from 'react';
+
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItemsFromAPI } from '../actions/items';
+
+// Material UI
 import {
-  Button,
   Container,
   List,
   ListItem,
@@ -8,23 +13,29 @@ import {
   Paper,
   Typography
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+
+// Utilities
+import TapntableApi from '../api/api';
+
+// React Components
 import ItemSearchForm from '../components/ItemSearchForm';
 import UpdateItemCount from '../components/UpdateItemCount';
-import TapntableApi from '../api/api';
 
 const ItemCount = () => {
   console.debug('ItemCount');
 
-  const items = useSelector((st) => st.items.filter((i) => i.count));
+  const items = useSelector((st) => st.items);
   const [ showUpdateItemCount, setShowUpdateItemCount ] = useState(false);
   const [ currentItem, setCurrentItem ] = useState({});
+  const dispatch = useDispatch();
 
-  const clearCount = (item) => {
+  const clearCount = async (item) => {
     console.debug('clearCount', item);
+
+    dispatch(fetchItemsFromAPI());
     setShowUpdateItemCount(false);
 
-    const returnedCount = TapntableApi.setCount(item.id, null);
+    const returnedCount = await TapntableApi.setCount(item.id, null);
     console.debug('New Item Count', returnedCount);
   };
 
@@ -42,9 +53,9 @@ const ItemCount = () => {
   const updateItemCount = async (item, count) => {
     console.debug('updateItemCount', item, count);
 
-    const returnedCount = TapntableApi.setCount(item.id, count);
+    const returnedCount = await TapntableApi.setCount(item.id, count);
     console.debug('New Item Count', returnedCount);
-
+    dispatch(fetchItemsFromAPI());
     setShowUpdateItemCount(false);
   };
 
@@ -65,7 +76,7 @@ const ItemCount = () => {
             Tap item to adjust or clear
           </Typography>
           <List>
-            {items.map((i) => (
+            {items.filter((i) => i.count).map((i) => (
               <ListItem
                 key={i.id}
                 onClick={() => updateCount(i)}

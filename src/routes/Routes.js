@@ -16,6 +16,7 @@ import CloseDay from '../pages/CloseDay';
 import OrderTickets from '../components/OrderTickets';
 import SplitCheck from '../pages/SplitCheck';
 import ItemCount from '../pages/ItemCount';
+import NewItemForm from '../components/NewItemForm';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');
@@ -76,6 +77,10 @@ const Routes = ({ login, logout }) => {
 
       <Route exact path="/itemcount">
         <ItemCount />
+      </Route>
+
+      <Route exact path="/newitem">
+        <NewItemForm />
       </Route>
 
       <ManagerRoute exact path="/closeday">

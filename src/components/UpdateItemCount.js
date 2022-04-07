@@ -116,8 +116,7 @@ const UpdateItemCount = ({
           autoFocus={true}
           size="medium"
         />
-        {item.count !== null &&
-        item.count !== 0 && (
+        {item.count !== null && (
           <Button
             onClick={() => clearCount(item)}
             variant="contained"

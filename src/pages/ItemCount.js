@@ -32,11 +32,11 @@ const ItemCount = () => {
   const clearCount = async (item) => {
     console.debug('clearCount', item);
 
-    dispatch(fetchItemsFromAPI());
     setShowUpdateItemCount(false);
 
     const returnedCount = await TapntableApi.setCount(item.id, null);
     console.debug('New Item Count', returnedCount);
+    dispatch(fetchItemsFromAPI());
   };
 
   const updateCount = (item) => {
@@ -71,7 +71,7 @@ const ItemCount = () => {
     <React.Fragment>
       <Container maxWidth="xs">
         <Paper elevation={3} sx={{ marginTop: '24px' }}>
-          <Typography variant="h4" align="center">
+          <Typography pt={2} variant="h4" align="center">
             Item Count
           </Typography>
           <Typography variant="body1" align="center">

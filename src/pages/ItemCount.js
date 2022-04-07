@@ -78,7 +78,7 @@ const ItemCount = () => {
             Tap item to adjust or clear
           </Typography>
           <List>
-            {items.filter((i) => i.count).map((i) => (
+            {items.filter((i) => i.count !== null).map((i) => (
               <ListItem
                 key={i.id}
                 onClick={() => updateCount(i)}
@@ -88,7 +88,7 @@ const ItemCount = () => {
                   primary={
                     <React.Fragment>
                       {i.name}
-                      {i.count && (
+                      {i.count !== null && (
                         <span>
                           &#8212;<strong>{i.count}</strong>
                         </span>

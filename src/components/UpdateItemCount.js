@@ -97,7 +97,7 @@ const UpdateItemCount = ({
           <strong>${item.price}</strong>
           <br /> Category: <strong>{item.category}</strong>, Destination:{' '}
           <strong>{item.destination}</strong>, Count:{' '}
-          <strong>{item.count}</strong>
+          <strong>{item.count}</strong>, {'  '}
           <strong>{item.count || 'None'}</strong>, isActive:{' '}
           <strong>{item.isActive ? 'true' : 'false'}</strong>
           <br />
@@ -116,7 +116,8 @@ const UpdateItemCount = ({
           autoFocus={true}
           size="medium"
         />
-        {item.count && (
+        {item.count !== null &&
+        item.count !== 0 && (
           <Button
             onClick={() => clearCount(item)}
             variant="contained"

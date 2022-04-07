@@ -18,5 +18,8 @@
   "terminal": {
     "id": "server-main",
     "localPrinter": "server-main-printer"
+  },
+  "daily": {
+    "employeeMessage": "Remind our customers about 2-for Tuesdays and happy hour half price appetizers."
   }
 }

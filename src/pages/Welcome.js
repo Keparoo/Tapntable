@@ -1,3 +1,11 @@
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+
+// Redux
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { clearUserPin } from '../actions/user';
+
+// Material UI
 import {
   Typography,
   Button,
@@ -7,13 +15,23 @@ import {
   List,
   ListItem
 } from '@mui/material';
-import React from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { clearUserPin } from '../actions/user';
+import { Box } from '@mui/system';
+
+// Utilities
 import { isClockInOnly } from '../utils/helpers';
 import restaurantConfig from '../restaurantConfig.json';
-import { Box } from '@mui/system';
+
+/**
+ * 
+ * This component renders a welcome screen employess see on first signin of the day
+ * 
+ * A standard welcome is displayed
+ * It the restaurantconfig file contains an employeeMessage, it is displayed
+ * The current 86/Count list is displayed
+ * 
+ * It is called by Routes and routed to /welcome
+ * 
+ */
 
 const Welcome = () => {
   const user = useSelector((state) => state.user, shallowEqual);
@@ -38,13 +56,20 @@ const Welcome = () => {
   return (
     <div>
       <Container maxWidth="md">
-        <Paper sx={{ padding: '24px', marginTop: '30vh' }}>
+        <Paper sx={{ padding: '24px', marginTop: '10vh' }}>
           <Typography variant="h6" align="center">
             Welcome {user.displayName} to {restaurantConfig.restaurant.name}.<br />
             Have a great shift!
           </Typography>
           <br />
-          {itemsWithCount.length !== 0 && (
+          {restaurantConfig.daily.employeeMessage !== '' && (
+            <Typography variant="body1" align="center">
+              {restaurantConfig.daily.employeeMessage} <br />
+              <br />
+            </Typography>
+          )}
+
+          {items86.length !== 0 && (
             <Typography variant="h4" align="center">
               86 List
             </Typography>
@@ -56,15 +81,16 @@ const Welcome = () => {
                   width: '300px',
                   marginLeft: '300px'
                 }}
+                key={i.id}
               >
-                <List>
-                  <ListItem key={i.id}>{i.name}</ListItem>
+                <List dense={true}>
+                  <ListItem sx={{ color: '#fbc02d' }}>{i.name}</ListItem>
                 </List>
               </Box>
             ))}
           {itemsWithCount.length !== 0 && (
             <Typography variant="h4" align="center">
-              Items with Count
+              Items with a count
             </Typography>
           )}
           {itemsWithCount.length !== 0 &&
@@ -74,9 +100,10 @@ const Welcome = () => {
                   width: '300px',
                   marginLeft: '300px'
                 }}
+                key={i.id}
               >
-                <List>
-                  <ListItem key={i.id}>
+                <List dense={true}>
+                  <ListItem>
                     {i.name}&#8212;<strong>{i.count}</strong>
                   </ListItem>
                 </List>

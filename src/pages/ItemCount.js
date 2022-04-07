@@ -41,6 +41,8 @@ const ItemCount = () => {
 
   const updateCount = (item) => {
     console.debug('updateCount', item);
+
+    dispatch(fetchItemsFromAPI());
     setCurrentItem(item);
     setShowUpdateItemCount(true);
   };

@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
     "bootstrap": "^4.6.1",
+    "formik": "^2.2.9",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -23,7 +24,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "uuid": "^8.3.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,10 +35,17 @@
     "deploy": "REACT_APP_BASE_URL=https://tapntable.herokuapp.com npm run build && cp build/index.html build/200.html && surge --domain https://zonked-board.surge.sh build"
   },
   "eslintConfig": {
-    "extends": [ "react-app", "react-app/jest" ]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [ ">0.2%", "not dead", "not op_mini all" ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

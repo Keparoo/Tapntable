@@ -48,7 +48,7 @@ const UpdateItemCount = ({
     disagreeButton
   );
 
-  const [ open, setOpen ] = useState(true);
+  const [ open ] = useState(true);
   const [ count, setCount ] = useState(item.count);
 
   // Send back disagree=false

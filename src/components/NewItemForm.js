@@ -5,7 +5,16 @@ import * as Yup from 'yup';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { fetchItemsFromAPI } from '../actions/items';
 
-import { Button, Container, Paper, TextField } from '@mui/material';
+import {
+  Button,
+  Container,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField
+} from '@mui/material';
 import { Box } from '@mui/system';
 
 /**
@@ -54,9 +63,22 @@ const NewItemForm = () => {
   //   );
   // };
 
+  const categories = [
+    { id: 1, name: 'Appetizer' },
+    { id: 2, name: 'Soup' },
+    { id: 3, name: 'Salad' }
+  ];
+
+  const destinations = [
+    { id: 1, name: 'Kitchen-Hot' },
+    { id: 2, name: 'Kitchen-Cold' },
+    { id: 3, name: 'Bar' },
+    { id: 4, name: 'No-Send' }
+  ];
+
   return (
     <Container>
-      <Paper width="600px" sx={{ width: '800px' }}>
+      <Paper elevation={3} sx={{ width: '800px', marginTop: '24px' }}>
         <Box
           component="form"
           width="800px"
@@ -91,6 +113,11 @@ const NewItemForm = () => {
             onBlur={formik.handleBlur}
             error={formik.touched.price && Boolean(formik.errors.price)}
             helperText={formik.touched.price && formik.errors.price}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">$</InputAdornment>
+              )
+            }}
           />
           {formik.touched.price && formik.errors.price ? (
             <div>{formik.errors.price}</div>
@@ -112,7 +139,8 @@ const NewItemForm = () => {
             <div>{formik.errors.description}</div>
           ) : null}
 
-          <TextField
+          <InputLabel>Category</InputLabel>
+          <Select
             id="categoryId"
             name="categoryId"
             label="Category"
@@ -122,13 +150,19 @@ const NewItemForm = () => {
             error={
               formik.touched.categoryId && Boolean(formik.errors.categoryId)
             }
-            helperText={formik.touched.categoryId && formik.errors.categoryId}
-          />
+            helpertext={formik.touched.categoryId && formik.errors.categoryId}
+          >
+            {categories.map((c) => (
+              <MenuItem key={c.id} value={c.id}>
+                {c.name}
+              </MenuItem>
+            ))}
+          </Select>
           {formik.touched.categoryId && formik.errors.categoryId ? (
             <div>{formik.errors.categoryId}</div>
           ) : null}
 
-          <TextField
+          <Select
             id="destinationId"
             name="destinationId"
             label="Destination"
@@ -142,7 +176,13 @@ const NewItemForm = () => {
             helperText={
               formik.touched.destinationId && formik.errors.destinationId
             }
-          />
+          >
+            {destinations.map((d) => (
+              <MenuItem key={d.id} value={d.id}>
+                {d.name}
+              </MenuItem>
+            ))}
+          </Select>
           {formik.touched.destinationId && formik.errors.destinationId ? (
             <div>{formik.errors.destinationId}</div>
           ) : null}

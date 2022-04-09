@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -15,9 +15,11 @@ import {
   Paper,
   Select,
   Stack,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
+import TapntableApi from '../api/api';
 
 /**
  * Form to input the data for a new item
@@ -38,6 +40,9 @@ const NewItemForm = () => {
   console.debug('NewItemForm');
 
   // const [ inputs, setInputs ] = useState({});
+  const [ categories, setCategories ] = useState([]);
+  const [ destinations, setDestinations ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -48,8 +53,17 @@ const NewItemForm = () => {
       destinationId: ''
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, { resetForm }) => {
+      // alert(JSON.stringify(values, null, 2));
+      const itemRes = await TapntableApi.createItem(
+        values.name,
+        values.price,
+        values.categoryId,
+        values.destinationId,
+        values.description
+      );
+      console.log('createItem', itemRes);
+      resetForm({});
     }
   });
 
@@ -68,22 +82,42 @@ const NewItemForm = () => {
   //   );
   // };
 
-  const categories = [
-    { id: 1, name: 'Appetizer' },
-    { id: 2, name: 'Soup' },
-    { id: 3, name: 'Salad' }
-  ];
+  useEffect(
+    () => {
+      console.debug('useEffect on mount: get categories & destinations');
+      const fetchData = async () => {
+        const categoriesRes = await TapntableApi.getCategories();
+        setCategories(categoriesRes);
+        const destinationsRes = await TapntableApi.getDestinations();
+        setDestinations(destinationsRes);
+        setIsLoading(false);
+      };
+      if (isLoading) {
+        fetchData();
+      }
+    },
+    [ isLoading ]
+  );
 
-  const destinations = [
-    { id: 1, name: 'Kitchen-Hot' },
-    { id: 2, name: 'Kitchen-Cold' },
-    { id: 3, name: 'Bar' },
-    { id: 4, name: 'No-Send' }
-  ];
+  // const categories = [
+  //   { id: 1, name: 'Appetizer' },
+  //   { id: 2, name: 'Soup' },
+  //   { id: 3, name: 'Salad' }
+  // ];
+
+  // const destinations = [
+  //   { id: 1, name: 'Kitchen-Hot' },
+  //   { id: 2, name: 'Kitchen-Cold' },
+  //   { id: 3, name: 'Bar' },
+  //   { id: 4, name: 'No-Send' }
+  // ];
 
   return (
     <Container>
       <Paper elevation={3} sx={{ width: '800px', marginTop: '24px' }}>
+        <Typography pt={2} variant="h4" align="center">
+          Create new item
+        </Typography>
         <Box
           component="form"
           width="766px"
@@ -144,6 +178,7 @@ const NewItemForm = () => {
             id="description"
             name="description"
             label="Description"
+            placeholder="Optional description or ingredient list"
             margin="normal"
             multiline={true}
             rows={4}
@@ -177,7 +212,7 @@ const NewItemForm = () => {
               error={
                 formik.touched.categoryId && Boolean(formik.errors.categoryId)
               }
-              helpertext={formik.touched.categoryId && formik.errors.categoryId}
+              helperText={formik.touched.categoryId && formik.errors.categoryId}
             >
               {categories.map((c) => (
                 <MenuItem key={c.id} value={c.id}>

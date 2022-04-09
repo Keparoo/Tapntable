@@ -56,6 +56,35 @@ class TapntableApi {
     return res.item.count;
   }
 
+  static async getCategories() {
+    let res = await this.request(`items/categories`);
+    return res.categories;
+  }
+
+  static async getDestinations() {
+    let res = await this.request(`items/destinations`);
+    return res.destinations;
+  }
+
+  static async createItem(name, price, categoryId, destinationId, description) {
+    let res;
+    if (description === '') {
+      res = await this.request(
+        `items`,
+        { name, price, categoryId, destinationId },
+        'post'
+      );
+    } else {
+      res = await this.request(
+        `items`,
+        { name, price, categoryId, destinationId, description },
+        'post'
+      );
+    }
+
+    return res.item;
+  }
+
   //**************Mods Queries*************************************** */
 
   static async getMods(query) {

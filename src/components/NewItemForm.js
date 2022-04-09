@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 // import { fetchItemsFromAPI } from '../actions/items';
 
 import {
+  Alert,
   Button,
   Container,
   InputAdornment,
@@ -13,6 +14,7 @@ import {
   MenuItem,
   Paper,
   Select,
+  Stack,
   TextField
 } from '@mui/material';
 import { Box } from '@mui/system';
@@ -22,9 +24,12 @@ import { Box } from '@mui/system';
  */
 
 const validationSchema = Yup.object({
-  name: Yup.string('Enter item name').required('Item name is required'),
+  name: Yup.string('Enter item name')
+    .min(3)
+    .max(40, '40 characters maximum')
+    .required('Item name is required'),
   description: Yup.string('Enter a description or ingredient list'),
-  price: Yup.number('Enter the price').min(0, 'Price cannot be negative'),
+  price: Yup.number('Enter the price').positive('Price cannot be negative'),
   categoryId: Yup.number().required('Category is required'),
   destinationId: Yup.number().required('Destination is required')
 });
@@ -81,9 +86,10 @@ const NewItemForm = () => {
       <Paper elevation={3} sx={{ width: '800px', marginTop: '24px' }}>
         <Box
           component="form"
-          width="800px"
+          width="766px"
           noValidate
           autoComplete="off"
+          sx={{ marginRight: '24px', padding: '24px' }}
           onSubmit={(e) => {
             e.preventDefault();
             formik.handleSubmit(e);
@@ -93,103 +99,137 @@ const NewItemForm = () => {
             id="name"
             name="name"
             label="Name"
+            margin="normal"
+            placeholder="Enter new item name"
+            sx={{ width: '400px' }}
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}
+            autoFocus={true}
+            required
           />
-          {formik.touched.name && formik.errors.name ? (
-            <div>{formik.errors.name}</div>
-          ) : null}
 
           <TextField
             type="number"
             id="price"
             name="price"
             label="Price"
+            margin="normal"
+            sx={{ marginLeft: '24px', paddingBottom: '24px' }}
             value={formik.values.price}
+            placeholder="0.00"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.price && Boolean(formik.errors.price)}
             helperText={formik.touched.price && formik.errors.price}
+            required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
               )
             }}
           />
-          {formik.touched.price && formik.errors.price ? (
-            <div>{formik.errors.price}</div>
+
+          {formik.touched.name && formik.errors.name ? (
+            <Alert severity="error">{formik.errors.name}</Alert>
           ) : null}
+          {formik.touched.price && formik.errors.price ? (
+            <Alert severity="error">{formik.errors.price}</Alert>
+          ) : null}
+          <br />
 
           <TextField
             id="description"
             name="description"
             label="Description"
+            margin="normal"
+            multiline={true}
+            rows={4}
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            fullWidth={true}
             error={
               formik.touched.description && Boolean(formik.errors.description)
             }
             helperText={formik.touched.description && formik.errors.description}
           />
           {formik.touched.description && formik.errors.description ? (
-            <div>{formik.errors.description}</div>
+            <Alert severity="error">{formik.errors.description}</Alert>
           ) : null}
+          <Stack direction="row" mt={2}>
+            <InputLabel sx={{ marginLeft: '4px', marginTop: '16px' }}>
+              Category
+            </InputLabel>
+            <Select
+              id="categoryId"
+              name="categoryId"
+              label="Category"
+              labelId="Category"
+              placeholder="Item category"
+              value={formik.values.categoryId}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              sx={{ width: '175px', marginLeft: '8px' }}
+              required
+              error={
+                formik.touched.categoryId && Boolean(formik.errors.categoryId)
+              }
+              helpertext={formik.touched.categoryId && formik.errors.categoryId}
+            >
+              {categories.map((c) => (
+                <MenuItem key={c.id} value={c.id}>
+                  {c.name}
+                </MenuItem>
+              ))}
+            </Select>
 
-          <InputLabel>Category</InputLabel>
-          <Select
-            id="categoryId"
-            name="categoryId"
-            label="Category"
-            value={formik.values.categoryId}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.categoryId && Boolean(formik.errors.categoryId)
-            }
-            helpertext={formik.touched.categoryId && formik.errors.categoryId}
-          >
-            {categories.map((c) => (
-              <MenuItem key={c.id} value={c.id}>
-                {c.name}
-              </MenuItem>
-            ))}
-          </Select>
+            <InputLabel
+              id="destination"
+              sx={{ marginLeft: '8px', marginTop: '16px' }}
+            >
+              Destination
+            </InputLabel>
+            <Select
+              id="destinationId"
+              name="destinationId"
+              label="Destination"
+              labelId="destination"
+              value={formik.values.destinationId}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+              sx={{ width: '175px', marginLeft: '8px' }}
+              error={
+                formik.touched.destinationId &&
+                Boolean(formik.errors.destinationId)
+              }
+              helperText={
+                formik.touched.destinationId && formik.errors.destinationId
+              }
+            >
+              {destinations.map((d) => (
+                <MenuItem key={d.id} value={d.id}>
+                  {d.name}
+                </MenuItem>
+              ))}
+            </Select>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ marginLeft: '48px' }}
+            >
+              Submit
+            </Button>
+          </Stack>
           {formik.touched.categoryId && formik.errors.categoryId ? (
-            <div>{formik.errors.categoryId}</div>
+            <Alert severity="error">{formik.errors.categoryId}</Alert>
           ) : null}
-
-          <Select
-            id="destinationId"
-            name="destinationId"
-            label="Destination"
-            value={formik.values.destinationId}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.destinationId &&
-              Boolean(formik.errors.destinationId)
-            }
-            helperText={
-              formik.touched.destinationId && formik.errors.destinationId
-            }
-          >
-            {destinations.map((d) => (
-              <MenuItem key={d.id} value={d.id}>
-                {d.name}
-              </MenuItem>
-            ))}
-          </Select>
           {formik.touched.destinationId && formik.errors.destinationId ? (
-            <div>{formik.errors.destinationId}</div>
+            <Alert severity="error">{formik.errors.destinationId}</Alert>
           ) : null}
-
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
         </Box>
       </Paper>
     </Container>

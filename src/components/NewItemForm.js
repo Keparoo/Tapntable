@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-// import { useDispatch, useSelector } from 'react-redux';
-// import { fetchItemsFromAPI } from '../actions/items';
-
 import {
   Alert,
   Button,
@@ -20,18 +17,29 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import TapntableApi from '../api/api';
+import Spinner from './Spinner';
+import ModalAlert from './ModalAlert';
 
 /**
  * Form to input the data for a new item
+ * 
+ * This form calls the API to get a list of categories and destinations from items
+ * 
+ * .match(/^[0-9]*(\.[0-9]{0,2})?$/)
  */
 
 const validationSchema = Yup.object({
   name: Yup.string('Enter item name')
-    .min(3)
+    .trim()
+    .min(1)
     .max(40, '40 characters maximum')
     .required('Item name is required'),
-  description: Yup.string('Enter a description or ingredient list'),
-  price: Yup.number('Enter the price').positive('Price cannot be negative'),
+  description: Yup.string('Enter a description or ingredient list')
+    .trim()
+    .max(100, '100 character maximum'),
+  price: Yup.number('Enter the price')
+    .positive('Price cannot be negative')
+    .max(999999, 'Price limit: $999,999.99'),
   categoryId: Yup.number().required('Category is required'),
   destinationId: Yup.number().required('Destination is required')
 });
@@ -43,6 +51,7 @@ const NewItemForm = () => {
   const [ categories, setCategories ] = useState([]);
   const [ destinations, setDestinations ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(true);
+  const [ dbError, setDbError ] = useState({ state: false, err: '' });
 
   const formik = useFormik({
     initialValues: {
@@ -54,6 +63,9 @@ const NewItemForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
+      values.price = Math.floor(+values.price * 100) / 100;
+      values.name = values.name.trim();
+      values.description = values.description.trim();
       // alert(JSON.stringify(values, null, 2));
       const itemRes = await TapntableApi.createItem(
         values.name,
@@ -67,29 +79,25 @@ const NewItemForm = () => {
     }
   });
 
-  // const handleChange = (event) => {
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-  //   setInputs((values) => ({ ...values, [name]: value }));
-  // };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.debug(inputs);
-
-  //   alert(
-  //     `${inputs.name} ${inputs.description} ${inputs.price} ${inputs.categoryId} ${inputs.destinationId}`
-  //   );
-  // };
-
   useEffect(
     () => {
       console.debug('useEffect on mount: get categories & destinations');
       const fetchData = async () => {
-        const categoriesRes = await TapntableApi.getCategories();
-        setCategories(categoriesRes);
-        const destinationsRes = await TapntableApi.getDestinations();
-        setDestinations(destinationsRes);
+        try {
+          const categoriesRes = await TapntableApi.getCategories();
+          setCategories(categoriesRes);
+        } catch (err) {
+          console.log('Error getting categories', err);
+          setDbError({ state: true, err });
+        }
+        try {
+          const destinationsRes = await TapntableApi.getDestinations();
+          setDestinations(destinationsRes);
+        } catch (err) {
+          console.log('Error getting destinations', err);
+          setDbError({ state: true, err });
+        }
+
         setIsLoading(false);
       };
       if (isLoading) {
@@ -99,18 +107,15 @@ const NewItemForm = () => {
     [ isLoading ]
   );
 
-  // const categories = [
-  //   { id: 1, name: 'Appetizer' },
-  //   { id: 2, name: 'Soup' },
-  //   { id: 3, name: 'Salad' }
-  // ];
-
-  // const destinations = [
-  //   { id: 1, name: 'Kitchen-Hot' },
-  //   { id: 2, name: 'Kitchen-Cold' },
-  //   { id: 3, name: 'Bar' },
-  //   { id: 4, name: 'No-Send' }
-  // ];
+  if (dbError.state)
+    return (
+      <ModalAlert
+        title="Cannot connect to database"
+        message={dbError.err}
+        agreeButton="ok"
+      />
+    );
+  if (isLoading) return <Spinner />;
 
   return (
     <Container>
@@ -135,7 +140,7 @@ const NewItemForm = () => {
             label="Name"
             margin="normal"
             placeholder="Enter new item name"
-            sx={{ width: '400px' }}
+            sx={{ width: '425px' }}
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -151,7 +156,7 @@ const NewItemForm = () => {
             name="price"
             label="Price"
             margin="normal"
-            sx={{ marginLeft: '24px', paddingBottom: '24px' }}
+            sx={{ marginLeft: '64px', paddingBottom: '24px' }}
             value={formik.values.price}
             placeholder="0.00"
             onChange={formik.handleChange}
@@ -194,7 +199,7 @@ const NewItemForm = () => {
           {formik.touched.description && formik.errors.description ? (
             <Alert severity="error">{formik.errors.description}</Alert>
           ) : null}
-          <Stack direction="row" mt={2}>
+          <Stack direction="row" my={2}>
             <InputLabel sx={{ marginLeft: '4px', marginTop: '16px' }}>
               Category
             </InputLabel>
@@ -207,12 +212,11 @@ const NewItemForm = () => {
               value={formik.values.categoryId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              sx={{ width: '175px', marginLeft: '8px' }}
+              sx={{ width: '200px', marginLeft: '8px' }}
               required
               error={
                 formik.touched.categoryId && Boolean(formik.errors.categoryId)
               }
-              helperText={formik.touched.categoryId && formik.errors.categoryId}
             >
               {categories.map((c) => (
                 <MenuItem key={c.id} value={c.id}>
@@ -223,7 +227,7 @@ const NewItemForm = () => {
 
             <InputLabel
               id="destination"
-              sx={{ marginLeft: '8px', marginTop: '16px' }}
+              sx={{ marginLeft: '16px', marginTop: '16px' }}
             >
               Destination
             </InputLabel>
@@ -236,13 +240,10 @@ const NewItemForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               required
-              sx={{ width: '175px', marginLeft: '8px' }}
+              sx={{ width: '200px', marginLeft: '8px' }}
               error={
                 formik.touched.destinationId &&
                 Boolean(formik.errors.destinationId)
-              }
-              helperText={
-                formik.touched.destinationId && formik.errors.destinationId
               }
             >
               {destinations.map((d) => (

@@ -7,6 +7,9 @@ The front end is implemented using React and Redux.
 ## Front-end
 * Using React and Redux to create the user interface
 
+## Back-end
+* Source at https://github.com/Keparoo/tapntable-backend
+
 ## Deployment
 The frontend is currently deployed to surge:
 https://tapntable.surge.sh/

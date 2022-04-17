@@ -150,6 +150,16 @@ const Navbar = () => {
           New Item
         </Link>
 
+        <Link
+          color="inherit"
+          sx={{ mr: 2 }}
+          component={RouterLink}
+          to="/edititem"
+          underline="none"
+        >
+          Edit Item
+        </Link>
+
         {user.role === MANAGER || user.role === OWNER ? (
           <Link
             color="inherit"

@@ -85,6 +85,24 @@ class TapntableApi {
     return res.item;
   }
 
+  static async updateItem(
+    id,
+    name,
+    price,
+    description,
+    categoryId,
+    destinationId,
+    count,
+    isActive
+  ) {
+    const res = await this.request(
+      `items/${id}`,
+      { name, price, description, categoryId, destinationId, count, isActive },
+      'patch'
+    );
+    return res.item;
+  }
+
   //**************Mods Queries*************************************** */
 
   static async getMods(query) {

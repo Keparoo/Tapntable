@@ -40,7 +40,7 @@ const validationSchema = Yup.object({
     .required('Item name is required'),
   description: Yup.string('Enter a description or ingredient list')
     .trim()
-    .max(200, '200 character maximum'),
+    .max(500, '500 character maximum'),
   price: Yup.number('Enter the price')
     .positive('Price cannot be negative')
     .max(999999, 'Price limit: $999,999.99'),

@@ -18,6 +18,7 @@ import SplitCheck from '../pages/SplitCheck';
 import ItemCount from '../pages/ItemCount';
 import NewItemForm from '../components/NewItemForm';
 import EditItemForm from '../components/EditItemForm';
+import ItemDashboard from '../pages/ItemDashboard';
 
 const Routes = ({ login, logout }) => {
   console.debug('AppRoutes');
@@ -86,6 +87,10 @@ const Routes = ({ login, logout }) => {
 
       <Route exact path="/edititem">
         <EditItemForm />
+      </Route>
+
+      <Route exact path="/itemdashboard">
+        <ItemDashboard />
       </Route>
 
       <ManagerRoute exact path="/closeday">

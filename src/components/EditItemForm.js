@@ -60,20 +60,8 @@ const validationSchema = Yup.object({
   isActive: Yup.boolean().required('isActive is required')
 });
 
-const NewItemForm = (item) => {
-  console.debug('EditItemForm', item);
-  if (!item) {
-    item = {
-      id: '',
-      name: '',
-      description: '',
-      price: '',
-      categoryId: '',
-      destinationId: '',
-      count: -1,
-      isActive: true
-    };
-  }
+const NewItemForm = ({ item }) => {
+  console.debug('EditItemForm', item.name);
 
   const [ categories, setCategories ] = useState([]);
   const [ destinations, setDestinations ] = useState([]);
@@ -125,7 +113,7 @@ const NewItemForm = (item) => {
         try {
           const categoriesRes = await TapntableApi.getCategories();
           setCategories(categoriesRes);
-          const cat = categories.find((c) => c.name === items[1].category);
+          const cat = categories.find((c) => c.name === item.category);
           if (cat) formik.values.categoryId = cat.id;
         } catch (err) {
           console.log('Error getting categories', err);
@@ -134,9 +122,7 @@ const NewItemForm = (item) => {
         try {
           const destinationsRes = await TapntableApi.getDestinations();
           setDestinations(destinationsRes);
-          const dest = destinations.find(
-            (d) => d.name === items[1].destination
-          );
+          const dest = destinations.find((d) => d.name === item.destination);
           if (dest) formik.values.destinationId = dest.id;
         } catch (err) {
           console.log('Error getting destinations', err);
@@ -149,7 +135,15 @@ const NewItemForm = (item) => {
         fetchData();
       }
     },
-    [ isLoading, categories, formik.values, items, destinations ]
+    [
+      isLoading,
+      categories,
+      formik.values,
+      items,
+      destinations,
+      item.category,
+      item.destination
+    ]
   );
 
   if (dbError.state)
@@ -164,7 +158,10 @@ const NewItemForm = (item) => {
 
   return (
     <Container>
-      <Paper elevation={3} sx={{ width: '800px', marginTop: '24px' }}>
+      <Paper
+        elevation={3}
+        sx={{ marginLeft: '175px', width: '800px', marginTop: '24px' }}
+      >
         <Typography pt={2} variant="h4" align="center">
           Edit item
         </Typography>

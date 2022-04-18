@@ -154,10 +154,10 @@ const Navbar = () => {
           color="inherit"
           sx={{ mr: 2 }}
           component={RouterLink}
-          to="/edititem"
+          to="/itemdashboard"
           underline="none"
         >
-          Edit Item
+          Item Dashboard
         </Link>
 
         {user.role === MANAGER || user.role === OWNER ? (

@@ -61,7 +61,7 @@ const validationSchema = Yup.object({
 });
 
 const NewItemForm = ({ item }) => {
-  console.debug('EditItemForm', item.name);
+  console.debug('EditItemForm', item);
 
   const [ categories, setCategories ] = useState([]);
   const [ destinations, setDestinations ] = useState([]);

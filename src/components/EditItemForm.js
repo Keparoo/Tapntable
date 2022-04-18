@@ -29,6 +29,13 @@ import { useDispatch, useSelector } from 'react-redux';
  * 
  * This form calls the API to get a list of categories and destinations from items
  * 
+ * name: string, min length: 1, max length 40, required, leading and trailing whitespace trimmed
+ * price: number, min 0, max $999,999.99, required
+ * categoryId: number, required
+ * destinationId: number, required
+ * count: number (min 0) or null (-1 on form translates to null on submit)
+ * isActive: boolean, required
+ * 
  * .match(/^[0-9]*(\.[0-9]{0,2})?$/)
  */
 
@@ -47,19 +54,14 @@ const validationSchema = Yup.object({
   categoryId: Yup.number().required('Category is required'),
   destinationId: Yup.number().required('Destination is required'),
   count: Yup.lazy(
-    (value) => (value === '' ? Yup.string() : Yup.number().min(-1))
+    (value) => (value === '' ? Yup.string() : Yup.number().min(-1).max(9999))
   ),
   isActive: Yup.boolean().required('isActive is required')
 });
 
-// Yup.lazy(
-//   (value) => (value === '' ? Yup.string() : Yup.number().min(-1))
-// ),
-
 const NewItemForm = () => {
   console.debug('EditItemForm');
 
-  // const [ inputs, setInputs ] = useState({});
   const [ categories, setCategories ] = useState([]);
   const [ destinations, setDestinations ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(true);
@@ -67,6 +69,7 @@ const NewItemForm = () => {
   const dispatch = useDispatch();
   const items = useSelector((st) => st.items);
 
+  // count = -1 is transformed into count=null on submit
   const formik = useFormik({
     initialValues: {
       id: items[1].id,
@@ -85,9 +88,8 @@ const NewItemForm = () => {
       values.price = Math.floor(+values.price * 100) / 100;
       values.name = values.name.trim();
       values.description = values.description.trim();
-      // values.count = values.count === -1 ? null : values.count;
+      if (values.count === '') values.count = -1;
       const count = values.count === -1 ? null : values.count;
-      // alert(JSON.stringify(values, null, 2));
       const itemRes = await TapntableApi.updateItem(
         values.id,
         values.name,
@@ -166,7 +168,9 @@ const NewItemForm = () => {
             formik.handleSubmit(e);
           }}
         >
-          <Typography variant="span">Item ID: {formik.values.id}</Typography>
+          <Typography variant="span" ml={1}>
+            Item ID: {formik.values.id}
+          </Typography>
           <span style={{ float: 'right' }}>
             <FormControlLabel
               control={
@@ -306,7 +310,7 @@ const NewItemForm = () => {
               label="Count"
               placeholder="Count"
               margin="normal"
-              InputProps={{ inputProps: { min: -1 } }}
+              InputProps={{ inputProps: { min: -1, max: 9999 } }}
               value={formik.values.count === -1 ? '' : formik.values.count}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

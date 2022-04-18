@@ -85,10 +85,6 @@ const Routes = ({ login, logout }) => {
         <NewItemForm />
       </Route>
 
-      <Route exact path="/edititem">
-        <EditItemForm />
-      </Route>
-
       <Route exact path="/itemdashboard">
         <ItemDashboard />
       </Route>

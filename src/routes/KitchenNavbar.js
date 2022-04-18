@@ -85,6 +85,16 @@ const KitchenNavbar = () => {
           color="inherit"
           sx={{ mr: 2 }}
           component={RouterLink}
+          to="/itemcount"
+          underline="none"
+        >
+          Item Count
+        </Link>
+
+        <Link
+          color="inherit"
+          sx={{ mr: 2 }}
+          component={RouterLink}
           to="/items"
           underline="none"
         >

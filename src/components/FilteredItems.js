@@ -21,8 +21,8 @@ import {
  *   On mount, renders list of all items in API
 */
 
-const ItemList = ({ items, click }) => {
-  console.debug('ItemList');
+const ItemList = ({ items, click, message }) => {
+  console.debug('ItemList', message);
 
   // const items = useSelector((st) => st.items);
   // const user = useSelector((st) => st.user);
@@ -75,7 +75,7 @@ const ItemList = ({ items, click }) => {
           variant="h4"
           component="h1"
         >
-          Tap an item to set the count
+          {message}
         </Typography>
         <List>
           {items.map((i) => (

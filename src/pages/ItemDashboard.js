@@ -34,7 +34,7 @@ const ItemDashboard = () => {
       {showEditForm && <EditItemForm item={currentItem} />}
       <Container maxWidth="md">
         <Paper sx={{ marginTop: '24px', padding: '24px' }}>
-          <ItemSearchForm updateCount={editItem} />
+          <ItemSearchForm updateItem={editItem} message="Tap an item to edit" />
         </Paper>
       </Container>
     </React.Fragment>

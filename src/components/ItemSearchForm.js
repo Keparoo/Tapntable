@@ -16,8 +16,8 @@ import {
 import FilteredItems from '../components/FilteredItems';
 import Spinner from './Spinner';
 
-const ItemSearchForm = ({ updateCount }) => {
-  console.debug('ItemSearchForm');
+const ItemSearchForm = ({ updateItem, message }) => {
+  console.debug('ItemSearchForm', message);
 
   const items = useSelector((st) => st.items);
   const [ filtered, setFiltered ] = useState(items);
@@ -146,7 +146,7 @@ const ItemSearchForm = ({ updateCount }) => {
           </FormControl>
         </Box>
       </Stack>
-      <FilteredItems items={filtered} click={updateCount} />
+      <FilteredItems items={filtered} click={updateItem} message={message} />
     </React.Fragment>
   );
 };

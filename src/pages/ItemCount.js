@@ -104,7 +104,10 @@ const ItemCount = () => {
       </Container>
       <Container maxWidth="md">
         <Paper sx={{ marginTop: '24px', padding: '24px' }}>
-          <ItemSearchForm updateCount={updateCount} />
+          <ItemSearchForm
+            updateItem={updateCount}
+            message="Tap an item to set count"
+          />
         </Paper>
       </Container>
       {showUpdateItemCount && (

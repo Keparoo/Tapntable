@@ -4,7 +4,7 @@ import { AppBar, Link, Toolbar, Typography } from '@mui/material';
 
 const NoUserNavbar = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Typography
           variant="h6"

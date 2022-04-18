@@ -8,7 +8,7 @@ const KitchenNavbar = () => {
   const user = useSelector((st) => st.user, shallowEqual);
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Typography
           variant="h6"

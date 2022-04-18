@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -22,7 +24,6 @@ import { Box } from '@mui/system';
 import TapntableApi from '../api/api';
 import Spinner from './Spinner';
 import ModalAlert from './ModalAlert';
-import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * Form to edit the data for an existing item
@@ -59,8 +60,20 @@ const validationSchema = Yup.object({
   isActive: Yup.boolean().required('isActive is required')
 });
 
-const NewItemForm = () => {
-  console.debug('EditItemForm');
+const NewItemForm = (item) => {
+  console.debug('EditItemForm', item);
+  if (!item) {
+    item = {
+      id: '',
+      name: '',
+      description: '',
+      price: '',
+      categoryId: '',
+      destinationId: '',
+      count: -1,
+      isActive: true
+    };
+  }
 
   const [ categories, setCategories ] = useState([]);
   const [ destinations, setDestinations ] = useState([]);
@@ -72,14 +85,14 @@ const NewItemForm = () => {
   // count = -1 is transformed into count=null on submit
   const formik = useFormik({
     initialValues: {
-      id: items[1].id,
-      name: items[1].name,
-      description: items[1].description,
-      price: items[1].price,
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      price: item.price,
       categoryId: '',
       destinationId: '',
-      count: items[1].count || -1,
-      isActive: items[1].isActive
+      count: item.count || -1,
+      isActive: item.isActive
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {

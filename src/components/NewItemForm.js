@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchItemsFromAPI } from '../actions/items';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -25,6 +28,11 @@ import ModalAlert from './ModalAlert';
  * 
  * This form calls the API to get a list of categories and destinations from items
  * 
+ * name: string, min length: 1, max length 40, required, leading and trailing whitespace trimmed
+ * price: number, min 0, max $999,999.99, required
+ * categoryId: number, required
+ * destinationId: number, required
+ * 
  * .match(/^[0-9]*(\.[0-9]{0,2})?$/)
  */
 
@@ -36,9 +44,9 @@ const validationSchema = Yup.object({
     .required('Item name is required'),
   description: Yup.string('Enter a description or ingredient list')
     .trim()
-    .max(100, '100 character maximum'),
+    .max(500, '500 character maximum'),
   price: Yup.number('Enter the price')
-    .positive('Price cannot be negative')
+    .min(0, 'Price cannot be negative')
     .max(999999, 'Price limit: $999,999.99'),
   categoryId: Yup.number().required('Category is required'),
   destinationId: Yup.number().required('Destination is required')
@@ -47,11 +55,11 @@ const validationSchema = Yup.object({
 const NewItemForm = () => {
   console.debug('NewItemForm');
 
-  // const [ inputs, setInputs ] = useState({});
   const [ categories, setCategories ] = useState([]);
   const [ destinations, setDestinations ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ dbError, setDbError ] = useState({ state: false, err: '' });
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -75,6 +83,7 @@ const NewItemForm = () => {
         values.description
       );
       console.log('createItem', itemRes);
+      dispatch(fetchItemsFromAPI());
       resetForm({});
     }
   });

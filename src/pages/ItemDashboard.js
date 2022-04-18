@@ -1,9 +1,10 @@
-import { Container, Paper, Typography } from '@mui/material';
+import { Container, Grid, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import EditItemForm from '../components/EditItemForm';
 import ItemSearchForm from '../components/ItemSearchForm';
+import DashboardFunctions from '../components/DashboardFunctions';
 
 const ItemDashboard = () => {
   console.debug('ItemDashboard');
@@ -27,17 +28,25 @@ const ItemDashboard = () => {
   // };
 
   return (
-    <React.Fragment>
-      <Typography variant="h3" align="center">
-        Item Dashboard
-      </Typography>
-      {showEditForm && <EditItemForm item={currentItem} />}
-      <Container maxWidth="md">
-        <Paper sx={{ marginTop: '24px', padding: '24px' }}>
-          <ItemSearchForm updateItem={editItem} message="Tap an item to edit" />
-        </Paper>
-      </Container>
-    </React.Fragment>
+    <Grid container>
+      <Grid item xs={11}>
+        <Typography variant="h3" align="center">
+          Item Dashboard
+        </Typography>
+        {showEditForm && <EditItemForm item={currentItem} />}
+        <Container maxWidth="md">
+          <Paper sx={{ marginTop: '24px', padding: '24px' }}>
+            <ItemSearchForm
+              updateItem={editItem}
+              message="Tap an item to edit"
+            />
+          </Paper>
+        </Container>
+      </Grid>
+      <Grid item xs={1}>
+        <DashboardFunctions />
+      </Grid>
+    </Grid>
   );
 };
 

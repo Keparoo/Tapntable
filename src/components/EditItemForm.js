@@ -48,7 +48,8 @@ const validationSchema = Yup.object({
     .required('Item name is required'),
   description: Yup.string('Enter a description or ingredient list')
     .trim()
-    .max(500, '500 character maximum'),
+    .max(500, '500 character maximum')
+    .nullable(),
   price: Yup.number('Enter the price')
     .min(0, 'Price cannot be negative')
     .max(999999, 'Price limit: $999,999.99'),
@@ -68,27 +69,47 @@ const NewItemForm = ({ item }) => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ dbError, setDbError ] = useState({ state: false, err: '' });
   const dispatch = useDispatch();
-  const items = useSelector((st) => st.items);
+  // const items = useSelector((st) => st.items);
+
+  const getCategory = (categories) => {
+    if (categories !== []) {
+      const cat = categories.find((c) => c.name === item.category);
+      if (cat) return cat.id;
+      else return '';
+    }
+    return '';
+  };
+
+  const getDestination = (destinations) => {
+    if (destinations !== []) {
+      const dest = destinations.find((c) => c.name === item.destination);
+      if (dest) return dest.id;
+      else return '';
+    }
+    return '';
+  };
 
   // count = -1 is transformed into count=null on submit
   const formik = useFormik({
     initialValues: {
       id: item.id,
       name: item.name,
-      description: item.description,
+      description: item.description || '',
       price: item.price,
-      categoryId: '',
-      destinationId: '',
+      categoryId: getCategory(categories),
+      destinationId: getDestination(destinations),
       count: item.count || -1,
       isActive: item.isActive
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.debug('Formik onSubmit', values);
 
       values.price = Math.floor(+values.price * 100) / 100;
       values.name = values.name.trim();
-      values.description = values.description.trim();
+      if (values.description) values.description = values.description.trim();
+      if (values.description === '') values.description = null;
       if (values.count === '') values.count = -1;
       const count = values.count === -1 ? null : values.count;
       const itemRes = await TapntableApi.updateItem(
@@ -138,9 +159,8 @@ const NewItemForm = ({ item }) => {
     [
       isLoading,
       categories,
-      formik.values,
-      items,
       destinations,
+      formik.values,
       item.category,
       item.destination
     ]

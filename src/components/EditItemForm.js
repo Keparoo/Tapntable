@@ -42,7 +42,7 @@ const validationSchema = Yup.object({
     .trim()
     .max(500, '500 character maximum'),
   price: Yup.number('Enter the price')
-    .positive('Price cannot be negative')
+    .min(0, 'Price cannot be negative')
     .max(999999, 'Price limit: $999,999.99'),
   categoryId: Yup.number().required('Category is required'),
   destinationId: Yup.number().required('Destination is required'),
@@ -51,6 +51,10 @@ const validationSchema = Yup.object({
   ),
   isActive: Yup.boolean().required('isActive is required')
 });
+
+// Yup.lazy(
+//   (value) => (value === '' ? Yup.string() : Yup.number().min(-1))
+// ),
 
 const NewItemForm = () => {
   console.debug('EditItemForm');
@@ -62,10 +66,6 @@ const NewItemForm = () => {
   const [ dbError, setDbError ] = useState({ state: false, err: '' });
   const dispatch = useDispatch();
   const items = useSelector((st) => st.items);
-
-  // const cat = categories.find((c) => c.name === items[1].category);
-  // // setCategory(cat.id);
-  // console.log('Category', cat);
 
   const formik = useFormik({
     initialValues: {
@@ -85,7 +85,8 @@ const NewItemForm = () => {
       values.price = Math.floor(+values.price * 100) / 100;
       values.name = values.name.trim();
       values.description = values.description.trim();
-      values.count = values.count === -1 ? null : values.count;
+      // values.count = values.count === -1 ? null : values.count;
+      const count = values.count === -1 ? null : values.count;
       // alert(JSON.stringify(values, null, 2));
       const itemRes = await TapntableApi.updateItem(
         values.id,
@@ -94,7 +95,7 @@ const NewItemForm = () => {
         values.description,
         values.categoryId,
         values.destinationId,
-        values.count,
+        count,
         values.isActive
       );
       console.log('updateItem', itemRes);
@@ -160,26 +161,27 @@ const NewItemForm = () => {
           autoComplete="off"
           sx={{ marginRight: '24px', padding: '24px' }}
           onSubmit={(e) => {
-            console.log('onSubmit');
+            console.log('onSubmit', e);
             e.preventDefault();
             formik.handleSubmit(e);
           }}
         >
           <Typography variant="span">Item ID: {formik.values.id}</Typography>
-          {formik.values.count !== null ? (
-            <Typography variant="span">Count: {formik.values.count}</Typography>
-          ) : (
-            <Typography variant="span">No Count</Typography>
-          )}
           <span style={{ float: 'right' }}>
             <FormControlLabel
-              value={formik.values.isActive}
-              onChange={formik.handleChange}
-              control={<Switch color="primary" />}
+              control={
+                <Switch
+                  color="primary"
+                  id="isActive"
+                  name="isActive"
+                  value={formik.values.isActive}
+                  checked={formik.values.isActive}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                />
+              }
               label="Active"
               labelPlacement="end"
-              onBlur={formik.handleBlur}
-              checked={formik.values.isActive}
             />
           </span>
           <br />
@@ -302,7 +304,7 @@ const NewItemForm = () => {
               id="count"
               name="count"
               label="Count"
-              placeholder="Number of items left"
+              placeholder="Count"
               margin="normal"
               InputProps={{ inputProps: { min: -1 } }}
               value={formik.values.count === -1 ? '' : formik.values.count}

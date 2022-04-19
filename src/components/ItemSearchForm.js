@@ -66,6 +66,8 @@ const ItemSearchForm = ({ updateItem, message }) => {
     if (e.target.name === 'item-category') {
       console.log('Radio Button', e.target.value, keyword);
       setCategory(e.target.value);
+      keyword = undefined;
+      setItem('');
     } else if (e.target.name === 'item') {
       console.log('Keyword', e.target.value, e);
       keyword = e.target.value;
@@ -109,6 +111,19 @@ const ItemSearchForm = ({ updateItem, message }) => {
       results = filtered.filter((item) => {
         const re = new RegExp(`${keyword}`, 'i');
         if (category) {
+          if (category === 'All') {
+            return (
+              item.name.search(re) !== -1 ||
+              (item.description && item.description.search(re) !== -1)
+            );
+          }
+          if (category === 'Food') {
+            return (
+              foodBev.has(item.category) &&
+              (item.name.search(re) !== -1 ||
+                (item.description && item.description.search(re) !== -1))
+            );
+          }
           return (
             item.category === category &&
             (item.name.search(re) !== -1 ||

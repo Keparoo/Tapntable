@@ -16,6 +16,22 @@ import {
 import FilteredItems from '../components/FilteredItems';
 import Spinner from './Spinner';
 
+/**
+ * 
+ * ItemSearchForm Component
+ * 
+ * Display a list of items filtered by the following:
+ *  categories: All, Liquor, Beer, Wine
+ *    Food & Bev returns all food and non-alchoholic beverages
+ * keywords: characters in the item filter field will filter by both
+ *  selected category and characaters found in either the name or description
+ *  this is case insensitive
+ * 
+ * Called by ItemDashboard, ItemCount
+ * Calls FilteredItems (component to display the filtered items), Spinner
+ * 
+ */
+
 const ItemSearchForm = ({ updateItem, message }) => {
   console.debug('ItemSearchForm', message);
 
@@ -42,7 +58,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
     [ dispatch, isLoading ]
   );
 
-  // Filter items comparing keyword to item.name and item.description
+  // Filter items by category and by comparing keyword to item.name and item.description
   const filter = (e) => {
     e.preventDefault();
     let keyword;

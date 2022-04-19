@@ -64,23 +64,29 @@ const ItemSearchForm = ({ updateItem, message }) => {
     let keyword;
 
     if (e.target.name === 'item-category') {
-      console.log('Radio Button', e.target.value, keyword);
+      // Handle Radio button selected
+      console.debug('Radio Button', e.target.value);
+
       setCategory(e.target.value);
       keyword = undefined;
       setItem('');
     } else if (e.target.name === 'item') {
-      console.log('Keyword', e.target.value, e);
+      // Handle chars typed into filter
+      console.debug('Keyword', e.target.value);
+
       keyword = e.target.value;
     } else {
+      // Handle clear button clicked
       // e.target.name === 'clear'
-      console.log('Clear', category);
+      console.debug('Clear', category);
+
       keyword = undefined;
       e.target.name = 'clear';
       e.target.value = category;
       setItem('');
     }
 
-    let results;
+    // List of item categories for Food & Bev
     const foodBev = new Set([
       'Appetizer',
       'Soup',
@@ -94,8 +100,11 @@ const ItemSearchForm = ({ updateItem, message }) => {
       'Children'
     ]);
 
+    let results;
+
     if (e.target.name)
       if (!keyword) {
+        // Radio button and no keyword
         results = items.filter((item) => {
           if (e.target.value === 'All') return true;
           if (e.target.value === 'Food') {
@@ -104,10 +113,11 @@ const ItemSearchForm = ({ updateItem, message }) => {
           return item.category === e.target.value;
         });
         setFiltered(results);
-        console.log('Filtered Results', results);
       }
 
-    const keywordMatch = (item, re) => {
+    // Case insensitive search in item name and description
+    const keywordMatch = (item) => {
+      const re = new RegExp(`${keyword}`, 'i');
       return (
         item.name.search(re) !== -1 ||
         (item.description && item.description.search(re) !== -1)
@@ -116,14 +126,13 @@ const ItemSearchForm = ({ updateItem, message }) => {
 
     if (keyword !== undefined) {
       results = filtered.filter((item) => {
-        const re = new RegExp(`${keyword}`, 'i');
         if (category) {
-          if (category === 'All') return keywordMatch(item, re);
+          if (category === 'All') return keywordMatch(item);
           if (category === 'Food')
-            return foodBev.has(item.category) && keywordMatch(item, re);
-          return item.category === category && keywordMatch(item, re);
+            return foodBev.has(item.category) && keywordMatch(item);
+          return item.category === category && keywordMatch(item);
         } else {
-          return keywordMatch(item, re);
+          return keywordMatch(item);
         }
       });
       setFiltered(results);
@@ -155,6 +164,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
             value={item}
             onChange={filter}
             autoFocus={true}
+            sx={{ width: '205px' }}
           />
 
           <Button

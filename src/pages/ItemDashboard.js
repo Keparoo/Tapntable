@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
 // import { useSelector } from 'react-redux';
 
@@ -40,13 +40,9 @@ const ItemDashboard = () => {
     setShowEditForm(true);
   };
 
-  // const updateCount = (item) => {
-  //   console.debug('updateCount', item);
-
-  //   dispatch(fetchItemsFromAPI());
-  //   setCurrentItem(item);
-  //   setShowUpdateItemCount(true);
-  // };
+  const toggleNewItem = () => {
+    setShowNewItemForm(!showNewItemForm);
+  };
 
   return (
     <React.Fragment>
@@ -58,26 +54,26 @@ const ItemDashboard = () => {
           {showNewItemForm && <NewItemForm />}
           {showEditForm && <EditItemForm item={currentItem} />}
           <Container maxWidth="md">
-            <Paper sx={{ marginTop: '24px', padding: '24px' }}>
+            <Box sx={{ marginTop: '24px', padding: '24px' }}>
               <ItemSearchForm
                 updateItem={editItem}
                 message="Tap an item to edit"
               />
-            </Paper>
+            </Box>
           </Container>
         </Grid>
         <Grid item xs={5}>
           <Container maxWidth="md">
-            <Paper sx={{ marginTop: '24px', padding: '24px' }}>
+            <Box sx={{ marginTop: '24px', padding: '24px' }}>
               <ItemSearchForm
                 updateItem={editItem}
                 message="Tap an item to edit"
               />
-            </Paper>
+            </Box>
           </Container>
         </Grid>
         <Grid item xs={2}>
-          <DashboardFunctions showNewItem={setShowNewItemForm} />
+          <DashboardFunctions showNewItem={toggleNewItem} />
         </Grid>
       </Grid>
     </React.Fragment>

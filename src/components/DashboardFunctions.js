@@ -1,22 +1,28 @@
 import { Button, Divider, Paper, Stack } from '@mui/material';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useHistory } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
 import React from 'react';
-import {
-  decrementCourse,
-  decrementSeat,
-  incrementCourse,
-  incrementSeat
-} from '../actions/currentCheck';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
-const DashboardFunctions = () => {
+/**
+ * 
+ * Component with buttons to control view of Item Dashboard Components
+ * New Item
+ * New Item Category
+ * Edit Item Category
+ * New Mod
+ * Edit Mod
+ * New Mod Category
+ * Edit Mod Category
+ * New Mod Group
+ * Edit Mod Group
+ * 
+ */
+
+const DashboardFunctions = ({ showNewItem }) => {
   console.debug('DashboardFunctions');
 
-  const dispatch = useDispatch();
-  const check = useSelector((state) => state.currentCheck);
-  const history = useHistory();
+  // const dispatch = useDispatch();
+  // const history = useHistory();
 
   const setShowNewItem = () => {
     console.debug('setShowNewItem');
@@ -34,19 +40,25 @@ const DashboardFunctions = () => {
         }}
       >
         <Button
-          onClick={() => setShowNewItem(true)}
+          onClick={() => showNewItem(true)}
           variant="contained"
           color="primary"
         >
           New Item
         </Button>
         <Button variant="outlined">New Item Category</Button>
+        <Button variant="outlined">Edit Item Category</Button>
 
         <Divider />
 
         <Button variant="outlined">New Mod</Button>
         <Button variant="outlined">New Mod Category</Button>
+        <Button variant="outlined">Edit Mod Category</Button>
+
+        <Divider />
+
         <Button variant="outlined">New Mod Group</Button>
+        <Button variant="outlined">Edit Mod Group</Button>
       </Stack>
     </Paper>
   );

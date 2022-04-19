@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchItemsFromAPI } from '../actions/items';
 
 import { useFormik } from 'formik';
@@ -69,7 +69,6 @@ const NewItemForm = ({ item }) => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ dbError, setDbError ] = useState({ state: false, err: '' });
   const dispatch = useDispatch();
-  // const items = useSelector((st) => st.items);
 
   const getCategory = (categories) => {
     if (categories !== []) {

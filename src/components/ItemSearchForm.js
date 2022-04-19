@@ -107,33 +107,23 @@ const ItemSearchForm = ({ updateItem, message }) => {
         console.log('Filtered Results', results);
       }
 
+    const keywordMatch = (item, re) => {
+      return (
+        item.name.search(re) !== -1 ||
+        (item.description && item.description.search(re) !== -1)
+      );
+    };
+
     if (keyword !== undefined) {
       results = filtered.filter((item) => {
         const re = new RegExp(`${keyword}`, 'i');
         if (category) {
-          if (category === 'All') {
-            return (
-              item.name.search(re) !== -1 ||
-              (item.description && item.description.search(re) !== -1)
-            );
-          }
-          if (category === 'Food') {
-            return (
-              foodBev.has(item.category) &&
-              (item.name.search(re) !== -1 ||
-                (item.description && item.description.search(re) !== -1))
-            );
-          }
-          return (
-            item.category === category &&
-            (item.name.search(re) !== -1 ||
-              (item.description && item.description.search(re) !== -1))
-          );
+          if (category === 'All') return keywordMatch(item, re);
+          if (category === 'Food')
+            return foodBev.has(item.category) && keywordMatch(item, re);
+          return item.category === category && keywordMatch(item, re);
         } else {
-          return (
-            item.name.search(re) !== -1 ||
-            (item.description && item.description.search(re) !== -1)
-          );
+          return keywordMatch(item, re);
         }
       });
       setFiltered(results);

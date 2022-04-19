@@ -179,7 +179,7 @@ const NewItemForm = ({ item }) => {
     <Container>
       <Paper
         elevation={3}
-        sx={{ marginLeft: '175px', width: '800px', marginTop: '24px' }}
+        sx={{ marginLeft: '105px', width: '800px', marginTop: '24px' }}
       >
         <Typography pt={2} variant="h4" align="center">
           Edit item

@@ -22,7 +22,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
   const items = useSelector((st) => st.items);
   const [ filtered, setFiltered ] = useState(items);
   const [ item, setItem ] = useState('');
-  const [ category, setCategory ] = useState(null);
+  const [ category, setCategory ] = useState('All');
   const [ isLoading, setIsLoading ] = useState(true);
   const dispatch = useDispatch();
 
@@ -45,23 +45,60 @@ const ItemSearchForm = ({ updateItem, message }) => {
   // Filter items comparing keyword to item.name and item.description
   const filter = (e) => {
     e.preventDefault();
-    const keyword = e.target.value;
+    let keyword;
 
-    // if (category !== 'All')
-    //   setFiltered(filtered.filter((i) => i.category === category));
+    if (e.target.name === 'item-category') {
+      console.log('Radio Button', e.target.value, keyword);
+      setCategory(e.target.value);
+    } else if (e.target.name === 'item') {
+      console.log('Keyword', e.target.value, e);
+      keyword = e.target.value;
+    } else {
+      // e.target.name === 'clear'
+      console.log('Clear', category);
+      keyword = undefined;
+      e.target.name = 'clear';
+      e.target.value = category;
+      setItem('');
+    }
 
-    if (keyword !== '') {
-      const results = filtered.filter((item) => {
+    let results;
+    const foodBev = new Set([
+      'Appetizer',
+      'Soup',
+      'Salad',
+      'Sandwich',
+      'Entree',
+      'Addition',
+      'Dessert',
+      'Favorites',
+      'Beverage',
+      'Children'
+    ]);
+
+    if (e.target.name)
+      if (!keyword) {
+        results = items.filter((item) => {
+          if (e.target.value === 'All') return true;
+          if (e.target.value === 'Food') {
+            return foodBev.has(item.category);
+          }
+          return item.category === e.target.value;
+        });
+        setFiltered(results);
+        console.log('Filtered Results', results);
+      }
+
+    if (keyword !== undefined) {
+      results = filtered.filter((item) => {
         const re = new RegExp(`${keyword}`, 'i');
         if (category) {
-          console.log('category', category);
           return (
             item.category === category &&
             (item.name.search(re) !== -1 ||
               (item.description && item.description.search(re) !== -1))
           );
         } else {
-          console.log('no category');
           return (
             item.name.search(re) !== -1 ||
             (item.description && item.description.search(re) !== -1)
@@ -69,21 +106,8 @@ const ItemSearchForm = ({ updateItem, message }) => {
         }
       });
       setFiltered(results);
-    } else {
-      // If the text field is empty, show all items
-      setFiltered(items);
+      setItem(keyword);
     }
-
-    setItem(keyword);
-  };
-
-  const handleRadio = (e) => {
-    if (e.target.value === 'All') setCategory(null);
-    else {
-      console.log('There is no category');
-      setCategory(e.target.value);
-    }
-    console.log(e.target.value);
   };
 
   if (isLoading) return <Spinner />;
@@ -114,6 +138,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
 
           <Button
             onClick={filter}
+            name="clear"
             variant="contained"
             sx={{ marginLeft: '8px', marginTop: '10px' }}
           >
@@ -126,7 +151,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
               row
               aria-labelledby="item-category-buttons"
               name="item-category"
-              onChange={handleRadio}
+              onChange={filter}
               defaultValue="All"
             >
               <FormControlLabel value="All" control={<Radio />} label="All" />

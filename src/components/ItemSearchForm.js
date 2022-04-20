@@ -67,7 +67,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
     setHideInactive(e.target.checked);
   };
 
-  // Filter items by category and by comparing keyword to item.name and item.description
+  // Filter items by category, isActive and by comparing keyword to item.name and item.description.
   const filter = (e) => {
     e.preventDefault();
     let keyword;

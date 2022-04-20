@@ -50,19 +50,9 @@ const ItemDashboard = () => {
         Item Dashboard
       </Typography>
       <Grid container>
-        <Grid item xs={5}>
+        <Grid item xs={10}>
           {showNewItemForm && <NewItemForm />}
           {showEditForm && <EditItemForm item={currentItem} />}
-          <Container maxWidth="md">
-            <Box sx={{ marginTop: '24px', padding: '24px' }}>
-              <ItemSearchForm
-                updateItem={editItem}
-                message="Tap an item to edit"
-              />
-            </Box>
-          </Container>
-        </Grid>
-        <Grid item xs={5}>
           <Container maxWidth="md">
             <Box sx={{ marginTop: '24px', padding: '24px' }}>
               <ItemSearchForm

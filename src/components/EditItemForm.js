@@ -24,6 +24,7 @@ import { Box } from '@mui/system';
 import TapntableApi from '../api/api';
 import Spinner from './Spinner';
 import ModalAlert from './ModalAlert';
+import { useHistory } from 'react-router-dom';
 
 /**
  * Form to edit the data for an existing item
@@ -69,6 +70,7 @@ const NewItemForm = ({ item }) => {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ dbError, setDbError ] = useState({ state: false, err: '' });
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const getCategory = (categories) => {
     if (categories !== []) {
@@ -104,6 +106,12 @@ const NewItemForm = ({ item }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.debug('Formik onSubmit', values);
+
+      // This is an artificial way to refresh the page
+      // Find another way
+      // history.go(0) will re render the page?
+      history.push('/servers');
+      history.push('/itemdashboard');
 
       values.price = Math.floor(+values.price * 100) / 100;
       values.name = values.name.trim();

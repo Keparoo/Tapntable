@@ -32,8 +32,8 @@ import Spinner from './Spinner';
  * 
  */
 
-const ItemSearchForm = ({ updateItem, message }) => {
-  console.debug('ItemSearchForm', message);
+const ItemSearchForm = ({ updateItem, message, refresh }) => {
+  console.debug('ItemSearchForm', message, refresh);
 
   const items = useSelector((st) => st.items);
   const [ filtered, setFiltered ] = useState(items);

@@ -11,7 +11,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Stack
+  Stack,
+  Switch
 } from '@mui/material';
 import FilteredItems from '../components/FilteredItems';
 import Spinner from './Spinner';
@@ -32,13 +33,14 @@ import Spinner from './Spinner';
  * 
  */
 
-const ItemSearchForm = ({ updateItem, message, refresh }) => {
-  console.debug('ItemSearchForm', message, refresh);
+const ItemSearchForm = ({ updateItem, message }) => {
+  console.debug('ItemSearchForm', message);
 
   const items = useSelector((st) => st.items);
   const [ filtered, setFiltered ] = useState(items);
   const [ item, setItem ] = useState('');
   const [ category, setCategory ] = useState('All');
+  const [ hideInactive, setHideInactive ] = useState(true);
   const [ isLoading, setIsLoading ] = useState(true);
   const dispatch = useDispatch();
 
@@ -57,6 +59,13 @@ const ItemSearchForm = ({ updateItem, message, refresh }) => {
     },
     [ dispatch, isLoading ]
   );
+
+  const handleSwitch = (e) => {
+    e.preventDefault();
+    console.debug('handleSwitch', e.target.checked);
+
+    setHideInactive(e.target.checked);
+  };
 
   // Filter items by category and by comparing keyword to item.name and item.description
   const filter = (e) => {
@@ -199,6 +208,20 @@ const ItemSearchForm = ({ updateItem, message, refresh }) => {
               <FormControlLabel value="Beer" control={<Radio />} label="Beer" />
               <FormControlLabel value="Wine" control={<Radio />} label="Wine" />
             </RadioGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  color="primary"
+                  id="isActive"
+                  name="isActive"
+                  value={hideInactive}
+                  checked={hideInactive}
+                  onChange={handleSwitch}
+                />
+              }
+              label="Hide Inactive"
+              labelPlacement="end"
+            />
           </FormControl>
         </Box>
       </Stack>

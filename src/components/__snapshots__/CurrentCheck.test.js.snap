@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg css-fgc9rm-MuiContainer-root"
+  >
+    <div
+      class="MuiBox-root css-6zxm88"
+      style="overflow: auto;"
+    >
+      <header
+        class="CurrentCheck-Header"
+      >
+        <h6
+          class="MuiTypography-root MuiTypography-h6 MuiTypography-alignCenter css-1kgxqm0-MuiTypography-root"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-19z22rr-MuiTypography-root"
+        />
+      </header>
+      <ul
+        class="MuiList-root MuiList-dense SentItems css-1mk9mw3-MuiList-root"
+      />
+      <ul
+        class="MuiList-root MuiList-dense SentItems css-1mk9mw3-MuiList-root"
+      />
+      <ul
+        class="MuiList-root MuiList-dense SentItems css-1mk9mw3-MuiList-root"
+      />
+      <ul
+        class="MuiList-root MuiList-dense CurrentCheck-NewItems css-1mk9mw3-MuiList-root"
+      />
+      <div />
+    </div>
+    <footer>
+      <div
+        class="CurrentCheck-Totals"
+      >
+        <div
+          class="CurrentCheck-Payments"
+        />
+        <span
+          class="MuiTypography-root MuiTypography-p css-409jjv-MuiTypography-root"
+        >
+          <span
+            style="float: right; padding-right: 16px;"
+          >
+            Subtotal: 
+            <strong>
+              $0.00
+            </strong>
+          </span>
+        </span>
+        <br />
+        <span
+          class="MuiTypography-root MuiTypography-p css-409jjv-MuiTypography-root"
+        />
+        <span
+          class="MuiTypography-root MuiTypography-p css-409jjv-MuiTypography-root"
+        />
+        <br />
+      </div>
+    </footer>
+    <div
+      class="CurrentCheck-Buttons"
+    >
+      <div
+        class="css-1clyo4s-MuiStack-root"
+      >
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          disabled=""
+          tabindex="-1"
+          type="button"
+        >
+          Send Order
+        </button>
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Cancel
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          disabled=""
+          tabindex="-1"
+          type="button"
+        >
+          Print Check
+        </button>
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          disabled=""
+          tabindex="-1"
+          type="button"
+        >
+          Pay
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

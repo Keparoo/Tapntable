@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-13ju1y4-MuiPaper-root"
+      >
+        <h6
+          class="MuiTypography-root MuiTypography-h6 MuiTypography-alignCenter css-1kgxqm0-MuiTypography-root"
+        >
+          Welcome  to The Duck Inn Pub.
+          <br />
+          Have a great shift!
+        </h6>
+        <br />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1uwgr7b-MuiTypography-root"
+        >
+          Remind our customers about 2-for Tuesdays and happy hour half price appetizers. 
+          <br />
+          <br />
+        </p>
+        <br />
+        <div
+          class="css-nen11g-MuiStack-root"
+        >
+          <button
+            class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Ok
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

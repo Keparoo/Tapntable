@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers/root';
+import rootReducer from '../reducers/root';
 import thunk from 'redux-thunk';
-import App from './App';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { MemoryRouter } from 'react-router-dom';
+import CurrentCheck from './CurrentCheck';
 
 const store = createStore(
   rootReducer,
@@ -13,20 +13,22 @@ const store = createStore(
 );
 
 it('renders without crashing', function() {
+  Element.prototype.scrollIntoView = jest.fn();
   render(
     <Provider store={store}>
       <MemoryRouter>
-        <App />
+        <CurrentCheck />
       </MemoryRouter>
     </Provider>
   );
 });
 
 it('matches snapshot', function() {
+  Element.prototype.scrollIntoView = jest.fn();
   const { asFragment } = render(
     <Provider store={store}>
       <MemoryRouter>
-        <App />
+        <CurrentCheck />
       </MemoryRouter>
     </Provider>
   );

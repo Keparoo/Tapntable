@@ -1,0 +1,332 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+  >
+    <div>
+      <h3
+        class="MuiTypography-root MuiTypography-h3 MuiTypography-alignCenter css-47suzj-MuiTypography-root"
+      >
+        Close Day!
+      </h3>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+      >
+        Day Opened: 
+      </p>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      >
+        Checks
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-11xur9t-MuiPaper-root-MuiTableContainer-root"
+      >
+        <table
+          aria-label="Checks Table"
+          class="MuiTable-root css-11s79tv-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                Id
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                Server
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Guests
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Created
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Closed
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Subtotal
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Tax
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Total
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Void
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+          />
+        </table>
+      </div>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      >
+        Payments
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-11xur9t-MuiPaper-root-MuiTableContainer-root"
+      >
+        <table
+          aria-label="Checks Table"
+          class="MuiTable-root css-11s79tv-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                Id
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Check Id
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Type
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Subtotal
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Tip
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Void
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+          />
+        </table>
+      </div>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      >
+        Ordered Items
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-11xur9t-MuiPaper-root-MuiTableContainer-root"
+      >
+        <table
+          aria-label="Checks Table"
+          class="MuiTable-root css-11s79tv-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                Id
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Item
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Price
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Check Id
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Created
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Note
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Void
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+          />
+        </table>
+      </div>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      >
+        User Logs
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-11xur9t-MuiPaper-root-MuiTableContainer-root"
+      >
+        <table
+          aria-label="Checks Table"
+          class="MuiTable-root css-11s79tv-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                Id
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Display
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                First
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Last
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Role
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Event
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Created
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Tips
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                Entity Id
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+          />
+        </table>
+      </div>
+    </div>
+    <div
+      class="css-13f3otb-MuiStack-root"
+    >
+      <button
+        class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Close Day
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Open Day
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

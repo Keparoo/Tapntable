@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-1u9m4ct-MuiPaper-root"
+  >
+    <h3
+      class="MuiTypography-root MuiTypography-h3 MuiTypography-alignCenter MuiTypography-gutterBottom css-1le49ku-MuiTypography-root"
+    >
+      Mod Groups
+    </h3>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-1kdpkep-MuiGrid-root"
+    />
+  </div>
+</DocumentFragment>
+`;

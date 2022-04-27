@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthXs css-nzinn5-MuiContainer-root"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-1sah9pl-MuiPaper-root"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter css-1jyofo9-MuiTypography-root"
+      >
+        Item Count
+      </h4>
+      <p
+        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1uwgr7b-MuiTypography-root"
+      >
+        Tap item to adjust or clear
+      </p>
+      <ul
+        class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+      >
+        <li
+          class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+        />
+      </ul>
+    </div>
+  </div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-kqmfy8-MuiPaper-root"
+    >
+      <b>
+        No items in database
+      </b>
+    </div>
+  </div>
+</DocumentFragment>
+`;

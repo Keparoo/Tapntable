@@ -83,9 +83,15 @@ const CheckFunctions = () => {
         <Button onClick={() => history.push('/splitcheck')} variant="outlined">
           Split
         </Button>
-        <Button variant="outlined">Merge</Button>
-        <Button variant="outlined">Transfer</Button>
-        <Button variant="outlined">Discount</Button>
+        <Button variant="outlined" disabled>
+          Merge
+        </Button>
+        <Button variant="outlined" disabled>
+          Transfer
+        </Button>
+        <Button variant="outlined" disabled>
+          Discount
+        </Button>
       </Stack>
     </Paper>
   );

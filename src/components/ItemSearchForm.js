@@ -214,6 +214,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
                   color="primary"
                   id="isActive"
                   name="isActive"
+                  disabled
                   value={hideInactive}
                   checked={hideInactive}
                   onChange={handleSwitch}

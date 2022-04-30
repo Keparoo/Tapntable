@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <ul
+    class="MuiList-root MuiList-dense SentItems css-1mk9mw3-MuiList-root"
+  />
+</DocumentFragment>
+`;

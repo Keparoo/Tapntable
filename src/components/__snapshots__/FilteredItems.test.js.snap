@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter css-11jlvvb-MuiTypography-root"
+      >
+        No matching items
+      </h1>
+    </div>
+  </div>
+</DocumentFragment>
+`;

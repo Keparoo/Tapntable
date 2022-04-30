@@ -62,7 +62,7 @@ const validationSchema = Yup.object({
   isActive: Yup.boolean().required('isActive is required')
 });
 
-const NewItemForm = ({ item }) => {
+const EditItemForm = ({ item }) => {
   console.debug('EditItemForm', item);
 
   const [ categories, setCategories ] = useState([]);
@@ -382,4 +382,4 @@ const NewItemForm = ({ item }) => {
   );
 };
 
-export default NewItemForm;
+export default EditItemForm;

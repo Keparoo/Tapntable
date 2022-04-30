@@ -65,12 +65,17 @@ const ItemSearchForm = ({ updateItem, message }) => {
     console.debug('handleSwitch', e.target.checked);
 
     setHideInactive(e.target.checked);
+    filter(e);
   };
 
   // Filter items by category, isActive and by comparing keyword to item.name and item.description.
   const filter = (e) => {
+    console.debug('filter', e);
+
     e.preventDefault();
     let keyword;
+
+    // if (e.target.name === 'isActive') setHideInactive(e.target.checked);
 
     if (e.target.name === 'item-category') {
       // Handle Radio button selected
@@ -84,6 +89,11 @@ const ItemSearchForm = ({ updateItem, message }) => {
       console.debug('Keyword', e.target.value);
 
       keyword = e.target.value;
+    } else if (e.target.name === 'isActive') {
+      // Handle isActive switch
+      console.debug('isActive Switch', e.target.value);
+
+      setHideInactive(e.target.checked);
     } else {
       // Handle clear button clicked
       // e.target.name === 'clear'

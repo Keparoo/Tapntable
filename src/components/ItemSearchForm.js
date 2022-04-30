@@ -191,7 +191,6 @@ const ItemSearchForm = ({ updateItem, message }) => {
           </Button>
 
           <FormControl sx={{ marginLeft: '24px' }}>
-            <FormLabel id="item-category-group-label">Item Category</FormLabel>
             <RadioGroup
               row
               aria-labelledby="item-category-buttons"
@@ -213,6 +212,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
               <FormControlLabel value="Beer" control={<Radio />} label="Beer" />
               <FormControlLabel value="Wine" control={<Radio />} label="Wine" />
             </RadioGroup>
+
             <FormControlLabel
               control={
                 <Switch
@@ -225,7 +225,8 @@ const ItemSearchForm = ({ updateItem, message }) => {
                 />
               }
               label="Hide Inactive"
-              labelPlacement="end"
+              labelPlacement="start"
+              sx={{ width: '430px' }}
             />
           </FormControl>
         </Box>

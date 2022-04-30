@@ -111,6 +111,11 @@ const ItemSearchForm = ({ updateItem, message }) => {
 
     let results;
 
+    const filterIsActive = (items) => {
+      if (!hideInactive) return items;
+      else return items.filter((item) => item.isActive === true);
+    };
+
     if (e.target.name)
       if (!keyword) {
         // Radio button and no keyword
@@ -121,7 +126,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
           }
           return item.category === e.target.value;
         });
-        setFiltered(results);
+        setFiltered(filterIsActive(results));
       }
 
     // Case insensitive search in item name and description
@@ -144,7 +149,7 @@ const ItemSearchForm = ({ updateItem, message }) => {
           return keywordMatch(item);
         }
       });
-      setFiltered(results);
+      setFiltered(filterIsActive(results));
       setItem(keyword);
     }
   };
@@ -214,7 +219,6 @@ const ItemSearchForm = ({ updateItem, message }) => {
                   color="primary"
                   id="isActive"
                   name="isActive"
-                  disabled
                   value={hideInactive}
                   checked={hideInactive}
                   onChange={handleSwitch}

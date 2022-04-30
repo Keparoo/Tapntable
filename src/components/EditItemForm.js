@@ -107,12 +107,6 @@ const EditItemForm = ({ item }) => {
     onSubmit: async (values) => {
       console.debug('Formik onSubmit', values);
 
-      // This is an artificial way to refresh the page
-      // Find another way
-      // history.go(0) will re render the page?
-      history.push('/servers');
-      history.push('/itemdashboard');
-
       values.price = Math.floor(+values.price * 100) / 100;
       values.name = values.name.trim();
       if (values.description) values.description = values.description.trim();
@@ -131,6 +125,13 @@ const EditItemForm = ({ item }) => {
       );
       console.log('updateItem', itemRes);
       dispatch(fetchItemsFromAPI());
+      // This is an artificial way to refresh the page
+      // Find another way
+      // history.go(0) will re render the page?
+      setTimeout(() => {
+        history.push('/servers');
+        history.push('/itemdashboard');
+      }, 0);
     }
   });
 

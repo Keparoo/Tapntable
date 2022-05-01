@@ -24,10 +24,6 @@ const DashboardFunctions = ({ toggleNewItem, showSearch }) => {
   // const dispatch = useDispatch();
   // const history = useHistory();
 
-  const setShowNewItem = () => {
-    console.debug('setShowNewItem');
-  };
-
   return (
     <Paper elevation={3} sx={{ margin: '0px', width: '117px' }}>
       <Stack

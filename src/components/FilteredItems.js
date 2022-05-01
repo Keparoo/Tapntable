@@ -1,58 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchItemsFromAPI } from '../actions/items';
-import { Link as RouterLink } from 'react-router-dom';
+import React from 'react';
 
-import Spinner from '../components/Spinner';
-import { clearCurrentCheck } from '../actions/currentCheck';
-import { useHistory } from 'react-router-dom';
 import {
   Container,
   List,
   ListItem,
   ListItemText,
   Paper,
-  Typography,
-  Link
+  Typography
 } from '@mui/material';
 
-/*  Render page with list of items in db where isActive=true
- *
- *   On mount, renders list of all items in API
+/*  Render a list of the passed in items in a scrolling container
+ *  Passed in message renders as a title above the list
+ *  When an item in the list is clicked, passed in click function fires
+ *   
 */
 
-const ItemList = ({ items, click, message }) => {
+const FilteredItems = ({ items, click, message }) => {
   console.debug('ItemList', message);
 
-  // const items = useSelector((st) => st.items);
-  // const user = useSelector((st) => st.user);
-  // const dispatch = useDispatch();
-  // const history = useHistory();
-  // const [ isLoading, setIsLoading ] = useState(true);
-
-  // if (!user.pin) history.push('/');
-
-  // useEffect(
-  //   () => {
-  //     console.debug('ItemList useEffect on Mount');
-
-  //     dispatch(clearCurrentCheck());
-  //     async function fetchItem() {
-  //       await dispatch(fetchItemsFromAPI());
-  //       setIsLoading(false);
-  //     }
-  //     if (isLoading) {
-  //       fetchItem();
-  //     }
-  //   },
-  //   [ dispatch, isLoading ]
-  // );
-
-  // if (isLoading) return <Spinner />;
-
-  // if (!isLoading && items.length === 0) {
-  //   return <b>No items in database</b>;
-  // }
   if (items.length === 0)
     return (
       <Container>
@@ -87,7 +52,8 @@ const ItemList = ({ items, click, message }) => {
               <ListItemText
                 primary={
                   <React.Fragment>
-                    <strong>{i.name}</strong>, Id: {i.id}
+                    <strong>{i.name}</strong>,{' '}
+                    <span style={{ color: 'gray' }}>Id: {i.id}</span>
                   </React.Fragment>
                 }
                 secondary={
@@ -109,4 +75,4 @@ const ItemList = ({ items, click, message }) => {
   );
 };
 
-export default ItemList;
+export default FilteredItems;

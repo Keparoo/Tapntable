@@ -6,7 +6,7 @@ import Homepage from '../pages/Homepage';
 import UserLoginForm from '../auth/UserLogInForm';
 import UserLogoutForm from '../auth/UserLogoutForm';
 import Servers from '../pages/Servers';
-import ItemsList from '../pages/ItemsList';
+import ItemList from '../pages/ItemList';
 import Payments from '../pages/Payments';
 import CashOut from '../pages/CashOut';
 import ClockOut from '../pages/ClockOut';
@@ -38,7 +38,7 @@ const Routes = ({ login, logout }) => {
       </Route>
 
       <Route exact path="/items">
-        <ItemsList />
+        <ItemList />
       </Route>
 
       <Route exact path="/login">

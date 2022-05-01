@@ -2,17 +2,17 @@
 
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
-  <h4
-    class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter css-149xwtl-MuiTypography-root"
-  >
-    Item Dashboard
-  </h4>
   <div
     class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
     >
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter css-149xwtl-MuiTypography-root"
+      >
+        Item Dashboard
+      </h4>
       <div
         class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
       >
@@ -39,7 +39,9 @@ exports[`matches snapshot 1`] = `
             tabindex="0"
             type="button"
           >
-            New Item
+            <span>
+              New Item
+            </span>
             <span
               class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />

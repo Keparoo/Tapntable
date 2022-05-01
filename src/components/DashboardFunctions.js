@@ -18,7 +18,7 @@ import React from 'react';
  * 
  */
 
-const DashboardFunctions = ({ showNewItem }) => {
+const DashboardFunctions = ({ toggleNewItem, showSearch }) => {
   console.debug('DashboardFunctions');
 
   // const dispatch = useDispatch();
@@ -40,11 +40,11 @@ const DashboardFunctions = ({ showNewItem }) => {
         }}
       >
         <Button
-          onClick={() => showNewItem(true)}
+          onClick={() => toggleNewItem()}
           variant="contained"
           color="primary"
         >
-          New Item
+          {showSearch ? <span>New Item</span> : <span>Edit Item</span>}
         </Button>
         <Button variant="outlined">New Item Category</Button>
         <Button variant="outlined">Edit Item Category</Button>

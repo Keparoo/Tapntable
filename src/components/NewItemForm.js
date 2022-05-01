@@ -130,7 +130,7 @@ const NewItemForm = () => {
     <Container>
       <Paper
         elevation={3}
-        sx={{ width: '800px', marginLeft: '105px', marginTop: '24px' }}
+        sx={{ width: '800px', marginLeft: '200px', marginTop: '48px' }}
       >
         <Typography pt={2} variant="h4" align="center">
           Create new item

@@ -32,6 +32,7 @@ const ItemDashboard = () => {
 
   const [ currentItem, setCurrentItem ] = useState({});
   const [ showEditForm, setShowEditForm ] = useState(false);
+  const [ showItemSearchForm, setShowItemSearchForm ] = useState(true);
   const [ showNewItemForm, setShowNewItemForm ] = useState(false);
 
   const editItem = (item) => {
@@ -42,28 +43,34 @@ const ItemDashboard = () => {
 
   const toggleNewItem = () => {
     setShowNewItemForm(!showNewItemForm);
+    setShowItemSearchForm(!showItemSearchForm);
   };
 
   return (
     <React.Fragment>
-      <Typography variant="h4" align="center">
-        Item Dashboard
-      </Typography>
       <Grid container>
         <Grid item xs={10}>
+          <Typography variant="h4" align="center">
+            Item Dashboard
+          </Typography>
           {showNewItemForm && <NewItemForm />}
           {showEditForm && <EditItemForm item={currentItem} />}
-          <Container maxWidth="md">
-            <Box sx={{ marginTop: '24px', padding: '24px' }}>
-              <ItemSearchForm
-                updateItem={editItem}
-                message="Tap an item to edit"
-              />
-            </Box>
-          </Container>
+          {showItemSearchForm && (
+            <Container maxWidth="md">
+              <Box sx={{ marginTop: '24px', padding: '24px' }}>
+                <ItemSearchForm
+                  updateItem={editItem}
+                  message="Tap an item to edit"
+                />
+              </Box>
+            </Container>
+          )}
         </Grid>
         <Grid item xs={2}>
-          <DashboardFunctions showNewItem={toggleNewItem} />
+          <DashboardFunctions
+            toggleNewItem={toggleNewItem}
+            showSearch={showItemSearchForm}
+          />
         </Grid>
       </Grid>
     </React.Fragment>

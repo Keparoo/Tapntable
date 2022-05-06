@@ -5,7 +5,7 @@ Tapntable is a web app implementing a restaurant Point of Sale (POS). The backen
 The front end is implemented using React and Redux.  
 
 ## Front-end
-* Using React and Redux to create the user interface
+* Implemented using React, Redux, and Material UI
 
 ## Back-end
 * Source at https://github.com/Keparoo/tapntable-backend

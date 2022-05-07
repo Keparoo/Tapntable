@@ -1,4 +1,4 @@
-# Tapntable
+# Tapntable - frontend
 
 ## Description
 

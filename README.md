@@ -1,27 +1,33 @@
 # Tapntable
 
-# Description
+## Description
+
 Tapntable is a web app implementing a restaurant Point of Sale (POS). The backend is a RESTful API implemented in Node.js and Javascript using a Posgresql database.  
 The front end is implemented using React and Redux.  
 
-## Front-end
+## Frontend
+
 * Implemented using React, Redux, and Material UI
 
-## Back-end
+## Backend
+
 * Source at https://github.com/Keparoo/tapntable-backend
 
 ## Deployment
+
 The frontend is currently deployed to surge:
 https://tapntable.surge.sh/
 
 ## Pages
+
 * / -- Page allows a user to enter their pin to clock-in/clock-out. Entering a correct pin will display a page asking if the user wants to clock-in. If the user clocks in they are greeted by a welcome message. If the user's role indicates that they can create/manager orders, after the welcome page they will be directed to a screen where they can create/manage orders. Otherwise the screen will redirect to the login pin form.
 
 * Once a day a manger needs to log into a terminal to authorize the terminal to be able to communicate with the backend and function for the employees for that day. Login is with a standard username and password. The token is stored in local storage for 23 hours. After 23 hours, a manager must log in to start the next day. This may be done after closing out a day as well. This keeps token expirations short.
 
-
 ----
+
 ### Components
+
 * Servers
 * OrderCategories
 * OpenChecks
@@ -32,7 +38,8 @@ https://tapntable.surge.sh/
 * ItemCardList
 * ItemCard
 
-### Redux store:
+### Redux store
+
 * user
 * items
 * checks
@@ -40,7 +47,8 @@ https://tapntable.surge.sh/
 * currentCheck
 * totals
 
-### Dependencies:
+### Dependencies
+
 * axios
 * jwt-decode
 * moment
@@ -54,15 +62,17 @@ https://tapntable.surge.sh/
 * @mui/material
 * @mui/icons-material
 
-### Deployment using surge:
+### Deployment using surge
+
 Install surge globally:
-```
-$ npm install --global surge
+
+```bash
+npm install --global surge
 ```
 
 In the Tapntable.js and anywhere else there are requests to localhost:3001 use the following:
 
-```
+```javascript
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 ```
 
@@ -70,15 +80,15 @@ Define the environment variable for the frontend app. YOUR_HEROKU_BACKEND_URL sh
 
 Run the following commands in the jobly-frontend folder
 
-```
-$ REACT_APP_BASE_URL=YOUR_HEROKU_BACKEND_URL npm run build
-$ cp build/index.html build/200.html
-$ surge build
+```bash
+REACT_APP_BASE_URL=YOUR_HEROKU_BACKEND_URL npm run build
+cp build/index.html build/200.html
+surge build
 ```
 
----
+----
 
-# Create React App Info
+## Create React App Info
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

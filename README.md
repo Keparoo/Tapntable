@@ -11,16 +11,16 @@ The front end is implemented using React and Redux.
 
 ## Backend
 
-* Source at https://github.com/Keparoo/tapntable-backend
+* Source at <https://github.com/Keparoo/tapntable-backend>
 
 ## Deployment
 
 The frontend is currently deployed to surge:
-https://tapntable.surge.sh/
+<https://tapntable.surge.sh/>
 
 ## Pages
 
-* Wecome
+* Welcome
 * Homepage
 * Servers
 * Payments
@@ -65,18 +65,27 @@ https://tapntable.surge.sh/
 
 ### Dependencies
 
+* react 17.0.2
+* react-dom
+* react-redux 7.2.6
+* react-router-dom 5.2.1
+* redux
+* redux-thunk
+* redux-devtools-extension
 * axios
 * jwt-decode
 * moment
-* react
-* react-dom
-* react-redux
-* react-router-dom
-* redux
-* redux-thunk
+* formik
 * uuid
 * @mui/material
 * @mui/icons-material
+* yup
+
+### Testing Dependencies
+
+@testing-library/jest-dom
+@testing-library/react
+@testing-library/user-event
 
 ### Deployment using surge
 
@@ -92,7 +101,7 @@ In the Tapntable.js and anywhere else there are requests to localhost:3001 use t
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 ```
 
-Define the environment variable for the frontend app. YOUR_HEROKU_BACKEND_URL should be something like https://YOUR_BACKEND_APP_NAME.herokuapp.com.
+Define the environment variable for the frontend app. YOUR_HEROKU_BACKEND_URL should be something like <https://YOUR_BACKEND_APP_NAME.herokuapp.com>.
 
 Run the following commands in the jobly-frontend folder
 

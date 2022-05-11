@@ -2,7 +2,7 @@
 
 ## Description
 
-Tapntable is a web app implementing a restaurant Point of Sale (POS). It is a web-based app designed to manage the operations of a restaurant: Employee timeclock, manage checks and orders, track payments, track servers sales &  cash bank, track and manage items sold and availability. This would be used as a terminal or terminals in a restaurant for servers & bartenders to use or with tableside tablets.
+**Tapntable** is a web app implementing a restaurant Point of Sale (POS). It is a web-based app designed to manage the operations of a restaurant: Employee timeclock, manage checks and orders, track payments, track servers sales &  cash bank, track and manage items sold and availability. This would be used as a terminal or terminals in a restaurant for servers & bartenders to use or with tableside tablets.
 
 At a high level, the app's backend is implemented with a PostgreSQL database and a RESTful API implemented in Javascript and Express. The frontend is implemented in React, using a Redux store and Google’s Material UI for design elements.
 

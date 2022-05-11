@@ -12,12 +12,12 @@ At a high level, the app's backend is implemented with a PostgreSQL database and
 
 ## Backend
 
-* Source at <https://github.com/Keparoo/tapntable-backend>
+* Source: <https://github.com/Keparoo/tapntable-backend>
+* The backend is currently deployed to Heroku: <https://tapntable.herokuapp.com/>
 
 ## Deployment
 
-The frontend is currently deployed to surge:
-<https://tapntable.surge.sh/>
+The frontend is currently deployed to Surge: <https://tapntable.surge.sh/>
 
 ### Dependencies
 

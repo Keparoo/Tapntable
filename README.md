@@ -2,8 +2,9 @@
 
 ## Description
 
-Tapntable is a web app implementing a restaurant Point of Sale (POS). The backend is a RESTful API implemented in Node.js and Javascript using a Posgresql database.  
-The front end is implemented using React and Redux.  
+Tapntable is a web app implementing a restaurant Point of Sale (POS). It is a web-based app designed to manage the operations of a restaurant: Employee timeclock, manage checks and orders, track payments, track servers sales &  cash bank, track and manage items sold and availability. This would be used as a terminal or terminals in a restaurant for servers & bartenders to use or with tableside tablets.
+
+At a high level, the app is implemented with a  PostgreSQL database with a RESTful API implemented in Javascript and Express backend. The frontend is implemented in React, using a Redux store and Google’s Material UI for design elements  
 
 ## Frontend
 
@@ -83,9 +84,13 @@ The frontend is currently deployed to surge:
 
 ### Testing Dependencies
 
-@testing-library/jest-dom
-@testing-library/react
-@testing-library/user-event
+* @testing-library/jest-dom
+* @testing-library/react
+* @testing-library/user-event
+
+### Custom Hooks
+
+* useLocalStorage: Used to stor the authorization token in local storage one a day by a manager authorizing the device to access the API.
 
 ### Deployment using surge
 
@@ -154,36 +159,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
 ----
 
 ## Author
@@ -192,4 +167,4 @@ Kep Kaeppeler is the author of this project, code, documentation, test suite, an
 
 ## License
 
-Copyright © 2022 Kep Kaeppeler
+Copyright © February 2022 Kep Kaeppeler

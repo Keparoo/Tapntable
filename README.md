@@ -52,7 +52,7 @@ The frontend is currently deployed to Surge: <https://tapntable.surge.sh/>
     * Servers, Bartenders and Managers are directed to current orders once logged in
     * Otherwise the screen will redirect to the login pin form.
 
-  * Once a day a manger needs to log into a terminal to authorize the terminal to be able to communicate with the backend and function for the employees for that day. Login is with a standard username and password. The token is stored in local storage for 23 hours.
+  * Once a day a manger needs to log into a terminal to authorize the device to access backend API. Login is with a standard username and password. The token is stored in local storage for 23 hours.
 * Welcome
   * Displays a welcome message to user and shows the 86 list (List of items with limited or no availability)
 * Servers

@@ -6,6 +6,11 @@
 
 At a high level, the app's backend is implemented with a PostgreSQL database and a RESTful API implemented in Javascript and Express. The frontend is implemented in React, using a Redux store and Google’s Material UI for design elements.
 
+## Current Updates
+
+* Add a demo-user account for demonstration
+* Add tooltips to interface
+
 ## Frontend
 
 * Implemented using React, Redux, and Material UI

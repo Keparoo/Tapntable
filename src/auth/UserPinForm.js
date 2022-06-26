@@ -69,6 +69,8 @@ const UserPinForm = ({ errors, clearErrors, login }) => {
           </Button>
         </Box>
 
+        <Typography>To login with Demo mode, enter the PIN 12345</Typography>
+
         <Stack sx={{ width: '57%' }} spacing={2}>
           {errors.length !== 0 && console.log('Errors: ', errors)}
           {errors.length !== 0 &&

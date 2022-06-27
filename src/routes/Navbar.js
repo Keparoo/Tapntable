@@ -18,26 +18,29 @@ const Navbar = () => {
         >
           Tapntable
         </Typography>
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/login"
-          underline="none"
-        >
-          Login
-        </Link>
 
         {user.role === MANAGER || user.role === OWNER ? (
-          <Link
-            color="inherit"
-            sx={{ mr: 2 }}
-            component={RouterLink}
-            to="/logout"
-            underline="none"
-          >
-            Logout
-          </Link>
+          <React.Fragment>
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/login"
+              underline="none"
+            >
+              Login
+            </Link>
+
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/logout"
+              underline="none"
+            >
+              Logout
+            </Link>
+          </React.Fragment>
         ) : null}
 
         <Link
@@ -48,26 +51,6 @@ const Navbar = () => {
           underline="none"
         >
           Home
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/welcome"
-          underline="none"
-        >
-          Welcome
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/servers"
-          underline="none"
-        >
-          Servers
         </Link>
 
         <Link
@@ -94,36 +77,6 @@ const Navbar = () => {
           color="inherit"
           sx={{ mr: 2 }}
           component={RouterLink}
-          to="/kitchen"
-          underline="none"
-        >
-          Kitchen Hot
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/kitchencold"
-          underline="none"
-        >
-          Kitchen Cold
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/servicebar"
-          underline="none"
-        >
-          Service Bar
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
           to="/items"
           underline="none"
         >
@@ -144,31 +97,83 @@ const Navbar = () => {
           color="inherit"
           sx={{ mr: 2 }}
           component={RouterLink}
-          to="/newitem"
+          to="/welcome"
           underline="none"
         >
-          New Item
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/itemdashboard"
-          underline="none"
-        >
-          Item Dashboard
+          Welcome
         </Link>
 
         {user.role === MANAGER || user.role === OWNER ? (
-          <Link
-            color="inherit"
-            component={RouterLink}
-            to="/closeday"
-            underline="none"
-          >
-            Close Day
-          </Link>
+          <React.Fragment>
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/servers"
+              underline="none"
+            >
+              Servers
+            </Link>
+
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/kitchen"
+              underline="none"
+            >
+              Kitchen Hot
+            </Link>
+
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/kitchencold"
+              underline="none"
+            >
+              Kitchen Cold
+            </Link>
+
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/servicebar"
+              underline="none"
+            >
+              Service Bar
+            </Link>
+
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/newitem"
+              underline="none"
+            >
+              New Item
+            </Link>
+
+            <Link
+              color="inherit"
+              sx={{ mr: 2 }}
+              component={RouterLink}
+              to="/itemdashboard"
+              underline="none"
+            >
+              Item Dashboard
+            </Link>
+
+            <Link
+              color="inherit"
+              component={RouterLink}
+              to="/closeday"
+              underline="none"
+            >
+              Close Day
+            </Link>
+          </React.Fragment>
         ) : null}
       </Toolbar>
     </AppBar>

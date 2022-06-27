@@ -46,7 +46,6 @@ const App = () => {
   useEffect(
     () => {
       console.debug('App useEffect loadUserInfo', 'token=', token);
-      console.debug('**************Token', DEMO_TOKEN);
 
       // Set manager token short circuiting auth for demo purposes
       setToken(DEMO_TOKEN);

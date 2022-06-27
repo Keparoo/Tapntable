@@ -23,6 +23,7 @@ At a high level, the app's backend is implemented with a PostgreSQL database and
 ## Deployment
 
 The frontend is currently deployed to Surge: <https://tapntable.surge.sh/>
+The currently deployed version is in a demo mode for demonstration purposes in order to allow users to try out the interface without login credentials.
 
 ### Dependencies
 

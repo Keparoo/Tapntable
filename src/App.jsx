@@ -23,6 +23,8 @@ import NoUserNavbar from './routes/NoUserNavbar';
 // Local storage key name for token: log in persistence
 export const TOKEN_STORAGE_ID = 'tapntable-token';
 
+const DEMO_TOKEN = process.env.REACT_APP_DEMO_TOKEN;
+
 const App = () => {
   console.debug('App');
   console.log(restaurantConfig);
@@ -44,6 +46,10 @@ const App = () => {
   useEffect(
     () => {
       console.debug('App useEffect loadUserInfo', 'token=', token);
+      console.debug('**************Token', DEMO_TOKEN);
+
+      // Set manager token short circuiting auth for demo purposes
+      setToken(DEMO_TOKEN);
 
       const getCurrentUser = async () => {
         if (token) {
@@ -61,7 +67,7 @@ const App = () => {
       };
       getCurrentUser();
     },
-    [ token ]
+    [ token, setToken ]
   );
 
   // Log out user sitewide: Clear token. Users will not be able to use POS

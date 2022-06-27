@@ -10,7 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
  */
 
 class TapntableApi {
-  // the token for interactive with the API will be stored here.
+  // the token for interacting with the API will be stored here.
   static token;
 
   static async request(endpoint, data = {}, method = 'get') {
@@ -434,6 +434,7 @@ class TapntableApi {
 // for development, put token ("manager" / "password" on class)
 
 // role='manager'
-// TapntableApi.token = '';
+// Manager token with no expiration for demo purposes
+// TapntableApi.token ='';
 
 export default TapntableApi;

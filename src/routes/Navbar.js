@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
 import { MANAGER, OWNER } from '../constants';
-import { AppBar, Link, Toolbar, Typography } from '@mui/material';
+import { AppBar, Link, Toolbar, Tooltip, Typography } from '@mui/material';
 
 const Navbar = () => {
   const user = useSelector((st) => st.user, shallowEqual);
@@ -42,66 +42,77 @@ const Navbar = () => {
             </Link>
           </React.Fragment>
         ) : null}
+        <Tooltip title="Return to open checks page">
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/"
+            underline="none"
+          >
+            Home
+          </Link>
+        </Tooltip>
 
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/"
-          underline="none"
-        >
-          Home
-        </Link>
+        <Tooltip title="View credit card payments that have not been settled with tip and closed">
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/payments"
+            underline="none"
+          >
+            Payments
+          </Link>
+        </Tooltip>
 
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/payments"
-          underline="none"
-        >
-          Payments
-        </Link>
+        <Tooltip title="If all payments are closed, display summary of server's payments, cash owed/due and allow server to declare cash tips and clock out">
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/cashout"
+            underline="none"
+          >
+            Cash Out
+          </Link>
+        </Tooltip>
 
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/cashout"
-          underline="none"
-        >
-          Cash Out
-        </Link>
+        <Tooltip title="Display an alphbetical listing and description of all items">
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/items"
+            underline="none"
+          >
+            Items
+          </Link>
+        </Tooltip>
 
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/items"
-          underline="none"
-        >
-          Items
-        </Link>
+        <Tooltip title="Enter a count for limited or currently unavailable items">
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/itemcount"
+            underline="none"
+          >
+            Item Count
+          </Link>
+        </Tooltip>
 
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/itemcount"
-          underline="none"
-        >
-          Item Count
-        </Link>
-
-        <Link
-          color="inherit"
-          sx={{ mr: 2 }}
-          component={RouterLink}
-          to="/welcome"
-          underline="none"
-        >
-          Welcome
-        </Link>
+        <Tooltip title="Go to welcome page view with to see any daily messages and current availability of items">
+          <Link
+            color="inherit"
+            sx={{ mr: 2 }}
+            component={RouterLink}
+            to="/welcome"
+            underline="none"
+          >
+            Welcome
+          </Link>
+        </Tooltip>
 
         {user.role === MANAGER || user.role === OWNER ? (
           <React.Fragment>

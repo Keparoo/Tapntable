@@ -19,7 +19,14 @@ import {
 // Utilities
 import TapntableApi from '../api/api';
 
-import { Typography, Stack, Button, Container, Paper } from '@mui/material';
+import {
+  Typography,
+  Stack,
+  Button,
+  Container,
+  Paper,
+  Tooltip
+} from '@mui/material';
 
 // React Components
 import PayAmountForm from './PayAmountForm';
@@ -142,52 +149,58 @@ const Payment = ({ showPayment }) => {
             Payment
           </Typography>
 
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Button onClick={() => credit(MASTER_CARD)} variant="contained">
-              Master Card
-            </Button>
-            <Button onClick={() => credit(VISA)} variant="contained">
-              Visa
-            </Button>
-            <Button
-              onClick={() => credit(AMERICAN_EXPRESS)}
-              variant="contained"
-            >
-              Amex
-            </Button>
-            <Button onClick={() => credit(DISCOVER)} variant="contained">
-              Discover
-            </Button>
-          </Stack>
+          <Tooltip title="Select credit type and enter amount to charge when prompted. Multiple credit card payments can be done and must be done before cash">
+            <Stack direction="row" spacing={2} justifyContent="center">
+              <Button onClick={() => credit(MASTER_CARD)} variant="contained">
+                Master Card
+              </Button>
+              <Button onClick={() => credit(VISA)} variant="contained">
+                Visa
+              </Button>
+              <Button
+                onClick={() => credit(AMERICAN_EXPRESS)}
+                variant="contained"
+              >
+                Amex
+              </Button>
+              <Button onClick={() => credit(DISCOVER)} variant="contained">
+                Discover
+              </Button>
+            </Stack>
+          </Tooltip>
           <br />
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Button
-              onClick={() => credit(GOOGLE_PAY)}
-              variant="contained"
-              color="secondary"
-            >
-              Google Pay
-            </Button>
-            <Button
-              onClick={() => credit(APPLE_PAY)}
-              variant="contained"
-              color="secondary"
-            >
-              Apple Pay
-            </Button>
-            <Button
-              onClick={() => credit(VENMO)}
-              variant="contained"
-              color="secondary"
-            >
-              Venmo
-            </Button>
-          </Stack>
+          <Tooltip title="Select smart phone payment and enter amount to charge when prompted. Multiple smart phone payments can be done and must be done before cash">
+            <Stack direction="row" spacing={2} justifyContent="center">
+              <Button
+                onClick={() => credit(GOOGLE_PAY)}
+                variant="contained"
+                color="secondary"
+              >
+                Google Pay
+              </Button>
+              <Button
+                onClick={() => credit(APPLE_PAY)}
+                variant="contained"
+                color="secondary"
+              >
+                Apple Pay
+              </Button>
+              <Button
+                onClick={() => credit(VENMO)}
+                variant="contained"
+                color="secondary"
+              >
+                Venmo
+              </Button>
+            </Stack>
+          </Tooltip>
           <br />
           <Stack spacing={2} justifyContent="center">
-            <Button onClick={cash} variant="contained">
-              Cash
-            </Button>
+            <Tooltip title="Process all credit cards first. Selecting cash will pay the remainder of the check in cash and close the payment">
+              <Button onClick={cash} variant="contained">
+                Cash
+              </Button>
+            </Tooltip>
             <Button onClick={cancelPayment}>Cancel Payment</Button>
           </Stack>
 

@@ -19,7 +19,7 @@ import Payment from '../components/Payment';
 import Spinner from '../components/Spinner';
 // import SplitCheck from '../components/SplitCheck';
 
-import { Button, Stack, Grid } from '@mui/material';
+import { Button, Stack, Grid, Tooltip } from '@mui/material';
 import './Servers.css';
 
 import CheckFunctions from '../components/CheckFunctions';
@@ -158,12 +158,17 @@ const Servers = () => {
       </Grid>
       <div className="Servers-ActionArea">
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={createNewCheck} variant="contained">
-            New Check
-          </Button>
-          <Button onClick={exit} variant="contained" color="secondary">
-            Exit
-          </Button>
+          <Tooltip title="Create a new check and open it to add items">
+            <Button onClick={createNewCheck} variant="contained">
+              New Check
+            </Button>
+          </Tooltip>
+
+          <Tooltip title="Exit to login screen">
+            <Button onClick={exit} variant="contained" color="secondary">
+              Exit
+            </Button>
+          </Tooltip>
         </Stack>
       </div>
     </div>

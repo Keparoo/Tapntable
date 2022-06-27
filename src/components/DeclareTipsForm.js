@@ -4,7 +4,8 @@ import {
   Button,
   Box,
   Container,
-  InputAdornment
+  InputAdornment,
+  Tooltip
 } from '@mui/material';
 // import  TextField from '@mui/material/TextField';
 
@@ -53,13 +54,17 @@ const DeclaredTipsForm = ({ save, cancel }) => {
           value={form.declaredTips}
           onChange={handleChange}
         />
+        <Tooltip title="Submit declared cash tips (or zero) to view clock out button">
+          <Button type="submit" onClick={handleSubmit} variant="contained">
+            Submit
+          </Button>
+        </Tooltip>
 
-        <Button type="submit" onClick={handleSubmit} variant="contained">
-          Submit
-        </Button>
-        <Button onClick={cancel} variant="contained">
-          Cancel
-        </Button>
+        <Tooltip title="Cancel declaring cash tips and return to open checks view">
+          <Button onClick={cancel} variant="contained">
+            Cancel
+          </Button>
+        </Tooltip>
       </Box>
     </Container>
   );

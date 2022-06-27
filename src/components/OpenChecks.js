@@ -6,7 +6,8 @@ import {
   Container,
   Card,
   CardActionArea,
-  CardContent
+  CardContent,
+  Tooltip
 } from '@mui/material';
 import './OpenChecks.css';
 
@@ -33,37 +34,39 @@ const OpenChecks = ({ open }) => {
         </Typography>
 
         {checks.map((c) => (
-          <Card
-            key={c.id}
-            onClick={() => open(c)}
-            sx={{
-              width: 275,
-              float: 'left',
-              marginBottom: '2em',
-              marginRight: '1em'
-            }}
-          >
-            <CardActionArea>
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Num Guests: {c.numGuests}{' '}
-                  <span style={{ float: 'right' }}>Check Id: {c.id}</span>
-                </Typography>
-                <Typography variant="h5" component="div">
-                  Table: {c.tableNum}
-                  <span>{c.customer !== undefined && c.customer}</span>
-                </Typography>
+          <Tooltip title="Click check to add items or make a payment">
+            <Card
+              key={c.id}
+              onClick={() => open(c)}
+              sx={{
+                width: 275,
+                float: 'left',
+                marginBottom: '2em',
+                marginRight: '1em'
+              }}
+            >
+              <CardActionArea>
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    Num Guests: {c.numGuests}{' '}
+                    <span style={{ float: 'right' }}>Check Id: {c.id}</span>
+                  </Typography>
+                  <Typography variant="h5" component="div">
+                    Table: {c.tableNum}
+                    <span>{c.customer !== undefined && c.customer}</span>
+                  </Typography>
 
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Check Created: {moment(c.createdAt).format('LT')}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Check Created: {moment(c.createdAt).format('LT')}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Tooltip>
         ))}
       </Container>
     </div>

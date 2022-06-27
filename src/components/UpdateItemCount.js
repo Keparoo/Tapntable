@@ -6,7 +6,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField
+  TextField,
+  Tooltip
 } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -117,14 +118,16 @@ const UpdateItemCount = ({
           size="medium"
         />
         {item.count !== null && (
-          <Button
-            onClick={() => clearCount(item)}
-            variant="contained"
-            color="secondary"
-            sx={{ float: 'right', marginTop: '8px' }}
-          >
-            Clear Count
-          </Button>
+          <Tooltip title="Clear the item count. (meaning there is currently enough of the item for the current shift)">
+            <Button
+              onClick={() => clearCount(item)}
+              variant="contained"
+              color="secondary"
+              sx={{ float: 'right', marginTop: '8px' }}
+            >
+              Clear Count
+            </Button>
+          </Tooltip>
         )}
       </Box>
       <DialogActions>
@@ -133,9 +136,11 @@ const UpdateItemCount = ({
             {disagreeButton}
           </Button>
         )}
-        <Button variant="contained" onClick={handleAgree} autoFocus>
-          {agreeButton}
-        </Button>
+        <Tooltip title="Update item count with 0 for sold or a number for a specific count. Clicking update with the box empty will clear the item count (meaning there is currently enough of the item for the current shift)">
+          <Button variant="contained" onClick={handleAgree} autoFocus>
+            {agreeButton}
+          </Button>
+        </Tooltip>
       </DialogActions>
     </Dialog>
   );

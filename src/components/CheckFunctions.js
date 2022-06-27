@@ -1,4 +1,4 @@
-import { Button, Divider, Paper, Stack } from '@mui/material';
+import { Button, Divider, Paper, Stack, Tooltip } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
@@ -30,49 +30,70 @@ const CheckFunctions = () => {
         }}
       >
         {check.currentSeatNum ? (
-          <Button
-            onClick={() => dispatch(incrementSeat())}
-            variant="contained"
-            color="secondary"
-          >
-            Seat {check.currentSeatNum}
-          </Button>
+          <Tooltip title="Display and increment seat number">
+            <Button
+              onClick={() => dispatch(incrementSeat())}
+              variant="contained"
+              color="secondary"
+            >
+              Seat {check.currentSeatNum}
+            </Button>
+          </Tooltip>
         ) : (
-          <Button onClick={() => dispatch(incrementSeat())} variant="contained">
-            Seat
-          </Button>
+          <Tooltip title="Display and increment seat number">
+            <Button
+              onClick={() => dispatch(incrementSeat())}
+              variant="contained"
+            >
+              Seat
+            </Button>
+          </Tooltip>
         )}
-
-        <Button variant="outlined" onClick={() => dispatch(incrementSeat())}>
-          <ArrowUpwardIcon />
-        </Button>
-        {check.currentSeatNum > 0 ? (
-          <Button variant="outlined" onClick={() => dispatch(decrementSeat())}>
-            <ArrowDownwardIcon />
+        <Tooltip title="Increment customer seat number">
+          <Button variant="outlined" onClick={() => dispatch(incrementSeat())}>
+            <ArrowUpwardIcon />
           </Button>
+        </Tooltip>
+        {check.currentSeatNum > 0 ? (
+          <Tooltip title="Decrement customer seat number">
+            <Button
+              variant="outlined"
+              onClick={() => dispatch(decrementSeat())}
+            >
+              <ArrowDownwardIcon />
+            </Button>
+          </Tooltip>
         ) : (
           <Button variant="outlined" disabled>
             <ArrowDownwardIcon />
           </Button>
         )}
-
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => dispatch(incrementCourse())}
-        >
-          Course {check.currentCourse}
-        </Button>
-        <Button variant="outlined" onClick={() => dispatch(incrementCourse())}>
-          <ArrowUpwardIcon />
-        </Button>
-        {check.currentCourse > 1 ? (
+        <Tooltip title="Display and increment course number">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => dispatch(incrementCourse())}
+          >
+            Course {check.currentCourse}
+          </Button>
+        </Tooltip>
+        <Tooltip title="Increment course number">
           <Button
             variant="outlined"
-            onClick={() => dispatch(decrementCourse())}
+            onClick={() => dispatch(incrementCourse())}
           >
-            <ArrowDownwardIcon />
+            <ArrowUpwardIcon />
           </Button>
+        </Tooltip>
+        {check.currentCourse > 1 ? (
+          <Tooltip title="Decrement course number">
+            <Button
+              variant="outlined"
+              onClick={() => dispatch(decrementCourse())}
+            >
+              <ArrowDownwardIcon />
+            </Button>
+          </Tooltip>
         ) : (
           <Button variant="outlined" disabled>
             <ArrowDownwardIcon />
@@ -80,9 +101,14 @@ const CheckFunctions = () => {
         )}
 
         <Divider />
-        <Button onClick={() => history.push('/splitcheck')} variant="outlined">
-          Split
-        </Button>
+        <Tooltip title="Split check">
+          <Button
+            onClick={() => history.push('/splitcheck')}
+            variant="outlined"
+          >
+            Split
+          </Button>
+        </Tooltip>
         <Button variant="outlined" disabled>
           Merge
         </Button>

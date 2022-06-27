@@ -30,7 +30,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  IconButton
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -251,7 +252,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           {check.course2Items && (
             <React.Fragment>
               {check.course2Items.length !== 0 && (
-                <Divider>Sent Items, Course 2</Divider>
+                <Tooltip title="Click on a course 2 item to send a Fire Course 2 to kitchen">
+                  <Divider>Sent Items, Course 2</Divider>
+                </Tooltip>
               )}
 
               <SentItems items={check.course2Items} fireCourse={fireCourse} />
@@ -261,7 +264,9 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
           {check.course3Items && (
             <React.Fragment>
               {check.course3Items.length !== 0 && (
-                <Divider>Sent Items, Course 3</Divider>
+                <Tooltip title="Click on a course 3 item to send a Fire Course 2 to kitchen">
+                  <Divider>Sent Items, Course 3</Divider>
+                </Tooltip>
               )}
 
               <SentItems items={check.course3Items} fireCourse={fireCourse} />
@@ -279,68 +284,72 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
               <React.Fragment key={uuid()}>
                 <ListItem key={uuid()} alignItems="flex-start">
                   <IconButton key={uuid()} onClick={() => removeItem(arr, idx)}>
-                    <DeleteIcon />
+                    <Tooltip title="Delete this item from check">
+                      <DeleteIcon />
+                    </Tooltip>
                   </IconButton>
-                  <ListItemText
-                    sx={{ cursor: 'pointer' }}
-                    onClick={() => addNote(arr, idx)}
-                    primary={
-                      <React.Fragment>
-                        <strong>{i.name}</strong>{' '}
-                        <span style={{ float: 'right' }}>${i.price}</span>
-                        <br />
-                        <span>
-                          Course: {i.courseNum}{' '}
-                          {i.seatNum && <span>, Seat:{i.seatNum}</span>}
-                        </span>
-                      </React.Fragment>
-                    }
-                    secondary={
-                      <React.Fragment key={uuid()}>
-                        {(i.mods.length !== 0 || i.itemNote) && (
-                          <List
-                            component="span"
-                            dense={true}
-                            disablePadding={true}
-                          >
-                            {i.mods.map((m) => (
-                              <ListItem
-                                sx={{
-                                  display: 'inline',
-                                  marginLeft: '1.3em'
-                                }}
-                                variant="body2"
-                                color="text.secondary"
-                                key={uuid()}
-                                component="span"
-                              >
-                                {m.modName}
-                                {m.modPrice && (
-                                  <span style={{ float: 'right' }}>
-                                    ${m.modPrice}
-                                  </span>
-                                )}
-                                <br />
-                              </ListItem>
-                            ))}
-                            {i.itemNote && (
-                              <ListItem
-                                sx={{
-                                  display: 'inline',
-                                  marginLeft: '1.3em'
-                                }}
-                                variant="body2"
-                                color="text.secondary"
-                                key={uuid()}
-                              >
-                                <strong>****{i.itemNote}</strong>
-                              </ListItem>
-                            )}
-                          </List>
-                        )}
-                      </React.Fragment>
-                    }
-                  />
+                  <Tooltip title="Click item to add or update an item note">
+                    <ListItemText
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => addNote(arr, idx)}
+                      primary={
+                        <React.Fragment>
+                          <strong>{i.name}</strong>{' '}
+                          <span style={{ float: 'right' }}>${i.price}</span>
+                          <br />
+                          <span>
+                            Course: {i.courseNum}{' '}
+                            {i.seatNum && <span>, Seat:{i.seatNum}</span>}
+                          </span>
+                        </React.Fragment>
+                      }
+                      secondary={
+                        <React.Fragment key={uuid()}>
+                          {(i.mods.length !== 0 || i.itemNote) && (
+                            <List
+                              component="span"
+                              dense={true}
+                              disablePadding={true}
+                            >
+                              {i.mods.map((m) => (
+                                <ListItem
+                                  sx={{
+                                    display: 'inline',
+                                    marginLeft: '1.3em'
+                                  }}
+                                  variant="body2"
+                                  color="text.secondary"
+                                  key={uuid()}
+                                  component="span"
+                                >
+                                  {m.modName}
+                                  {m.modPrice && (
+                                    <span style={{ float: 'right' }}>
+                                      ${m.modPrice}
+                                    </span>
+                                  )}
+                                  <br />
+                                </ListItem>
+                              ))}
+                              {i.itemNote && (
+                                <ListItem
+                                  sx={{
+                                    display: 'inline',
+                                    marginLeft: '1.3em'
+                                  }}
+                                  variant="body2"
+                                  color="text.secondary"
+                                  key={uuid()}
+                                >
+                                  <strong>****{i.itemNote}</strong>
+                                </ListItem>
+                              )}
+                            </List>
+                          )}
+                        </React.Fragment>
+                      }
+                    />
+                  </Tooltip>
                 </ListItem>
                 <ListItem>
                   {showItemNoteForm &&
@@ -406,26 +415,34 @@ const CurrentCheck = ({ showOrderCats, reload, showPayment }) => {
                 Send Order
               </Button>
             ) : (
-              <Button onClick={sendAndClear} variant="contained">
-                Send Order
-              </Button>
+              <Tooltip title="Send order to destination and return to open checks view">
+                <Button onClick={sendAndClear} variant="contained">
+                  Send Order
+                </Button>
+              </Tooltip>
             )}
-            <Button onClick={cancel} color="secondary" variant="contained">
-              Cancel
-            </Button>
-            {check.id ? (
-              <Button onClick={printCheck} variant="contained">
-                Print Check
+            <Tooltip title="Cancel adding to check, do not add new items, return to open checks view">
+              <Button onClick={cancel} color="secondary" variant="contained">
+                Cancel
               </Button>
+            </Tooltip>
+            {check.id ? (
+              <Tooltip title="Calculate current check and send to printer">
+                <Button onClick={printCheck} variant="contained">
+                  Print Check
+                </Button>
+              </Tooltip>
             ) : (
               <Button onClick={printCheck} variant="contained" disabled>
                 Print Check
               </Button>
             )}
             {check.id ? (
-              <Button onClick={pay} variant="contained">
-                Pay
-              </Button>
+              <Tooltip title="Open pay screen to enter a payment">
+                <Button onClick={pay} variant="contained">
+                  Pay
+                </Button>
+              </Tooltip>
             ) : (
               <Button onClick={pay} variant="contained" disabled>
                 Pay

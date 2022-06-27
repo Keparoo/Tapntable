@@ -1,4 +1,4 @@
-import { Paper, Container, TextField, Button } from '@mui/material';
+import { Paper, Container, TextField, Button, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 // import './NewCheckForm.css';
 
@@ -55,7 +55,7 @@ const NewCheckForm = ({
           variant="outlined"
           autoFocus={true}
           required={true}
-          helperText="Please enter the table nubmer"
+          helperText="Please enter the table number"
           value={form.tableNum}
           onChange={handleChange}
           error={tableNumFormError}
@@ -72,12 +72,18 @@ const NewCheckForm = ({
           onChange={handleChange}
           error={numGuestsFormError}
         />
-        <Button type="submit" onClick={handleSubmit} variant="contained">
-          Create New Check
-        </Button>
-        <Button onClick={cancel} color="secondary">
-          Cancel
-        </Button>
+        <Tooltip
+          title={`Confirm new check creattion and open new check to add items`}
+        >
+          <Button type="submit" onClick={handleSubmit} variant="contained">
+            Create New Check
+          </Button>
+        </Tooltip>
+        <Tooltip title="Cancel new check creation and return to open checks view">
+          <Button onClick={cancel} color="secondary">
+            Cancel
+          </Button>
+        </Tooltip>
       </Paper>
     </Container>
   );

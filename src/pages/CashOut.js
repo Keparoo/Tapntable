@@ -11,7 +11,14 @@ import TapntableApi from '../api/api';
 import { DECLARE_CASH_TIPS } from '../constants';
 import { calculateShift } from '../utils/helpers';
 
-import { Typography, Button, Stack, Container, Paper } from '@mui/material';
+import {
+  Typography,
+  Button,
+  Stack,
+  Container,
+  Paper,
+  Tooltip
+} from '@mui/material';
 
 // import Payments from './Payments';
 import Spinner from '../components/Spinner';
@@ -94,37 +101,39 @@ const CashOut = () => {
       <Typography variant="h3" align="center">
         Cash Out
       </Typography>
-      <Paper elevation={6} sx={{ marginTop: 4, marginBottom: 4 }}>
-        <Typography variant="body1" mx={10} pt={4}>
-          MC Sales ${shiftResults.masterCardSales.toFixed(2)} <br />
-          Visa Sales ${shiftResults.visaSales.toFixed(2)} <br />
-          Amex Sales ${shiftResults.amexSales.toFixed(2)} <br />
-          Discover Sales ${shiftResults.discSales.toFixed(2)} <br />
-          Google Pay Sales ${shiftResults.googleSales.toFixed(2)} <br />
-          Apple Pay Sales ${shiftResults.appleSales.toFixed(2)} <br />
-          Venmo Sales ${shiftResults.venmoSales.toFixed(2)}
-        </Typography>
-        <br />
+      <Tooltip title="If in demo mode, note that other demo user's sales may be reflected in this summary in addition to yours">
+        <Paper elevation={6} sx={{ marginTop: 4, marginBottom: 4 }}>
+          <Typography variant="body1" mx={10} pt={4}>
+            MC Sales ${shiftResults.masterCardSales.toFixed(2)} <br />
+            Visa Sales ${shiftResults.visaSales.toFixed(2)} <br />
+            Amex Sales ${shiftResults.amexSales.toFixed(2)} <br />
+            Discover Sales ${shiftResults.discSales.toFixed(2)} <br />
+            Google Pay Sales ${shiftResults.googleSales.toFixed(2)} <br />
+            Apple Pay Sales ${shiftResults.appleSales.toFixed(2)} <br />
+            Venmo Sales ${shiftResults.venmoSales.toFixed(2)}
+          </Typography>
+          <br />
 
-        <Typography variant="h6" mx={10}>
-          Credit Sales ${shiftResults.creditSales.toFixed(2)} <br />
-          Credit Tips ${shiftResults.totalCreditTip.toFixed(2)} <br />
-          Cash Sales ${shiftResults.cashSales.toFixed(2)} <br />
-          Total Sales ${shiftResults.totalSales.toFixed(2)}
-        </Typography>
-        <br />
-        <Typography variant="h6" mx={10} pb={4}>
-          {shiftResults.serverCashDue > 0 ? (
-            <span>
-              Owed to Restaurant ${shiftResults.serverCashDue.toFixed(2)}
-            </span>
-          ) : (
-            <span>
-              Owed to Server ${(shiftResults.serverCashDue * -1).toFixed(2)}
-            </span>
-          )}
-        </Typography>
-      </Paper>
+          <Typography variant="h6" mx={10}>
+            Credit Sales ${shiftResults.creditSales.toFixed(2)} <br />
+            Credit Tips ${shiftResults.totalCreditTip.toFixed(2)} <br />
+            Cash Sales ${shiftResults.cashSales.toFixed(2)} <br />
+            Total Sales ${shiftResults.totalSales.toFixed(2)}
+          </Typography>
+          <br />
+          <Typography variant="h6" mx={10} pb={4}>
+            {shiftResults.serverCashDue > 0 ? (
+              <span>
+                Owed to Restaurant ${shiftResults.serverCashDue.toFixed(2)}
+              </span>
+            ) : (
+              <span>
+                Owed to Server ${(shiftResults.serverCashDue * -1).toFixed(2)}
+              </span>
+            )}
+          </Typography>
+        </Paper>
+      </Tooltip>
       <br />
 
       {showDeclaredTipsForm && (
@@ -138,9 +147,11 @@ const CashOut = () => {
       )}
       {showClockOut && (
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button onClick={clockOut} variant="contained">
-            Clock Out
-          </Button>
+          <Tooltip title="Close server's shift and clock out. Return to login screen">
+            <Button onClick={clockOut} variant="contained">
+              Clock Out
+            </Button>
+          </Tooltip>
         </Stack>
       )}
     </Container>

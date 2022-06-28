@@ -6,10 +6,16 @@
 
 At a high level, the app's backend is implemented with a PostgreSQL database and a RESTful API implemented in Javascript and Express. The frontend is implemented in React, using a Redux store and Google’s Material UI for design elements.
 
-## Current Updates
+## Features under development
 
-* Add a demo-user account for demonstration
-* Add tooltips to interface
+* Add Tooltips for manager functions
+* Create Demo mode login button that creates a new token
+* Continue separation of concerns refactor
+* Manage users page
+* Look at update count clear count button. Rerender on change
+* Redesign look of Welcome page
+* Migrate deployment URL to tapntable.com
+* Add help button to server page
 
 ## Frontend
 
@@ -23,7 +29,7 @@ At a high level, the app's backend is implemented with a PostgreSQL database and
 ## Deployment
 
 The frontend is currently deployed to Surge: <https://tapntable.surge.sh/>
-The currently deployed version is in a demo mode for demonstration purposes in order to allow users to try out the interface without login credentials.
+Code has been added to the currently deployed version to enable a demonstration mode in order to allow users to try out the interface without login credentials.
 
 ### Dependencies
 

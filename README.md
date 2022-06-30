@@ -13,7 +13,7 @@ At a high level, the app's backend is implemented with a PostgreSQL database and
 * Continue separation of concerns refactor
 * Manage users page
 * Look at update count clear count button. Rerender on change
-* Redesign look of Welcome page
+* Redesign look of Welcome page with more information
 * Migrate deployment URL to tapntable.com
 * Add help button to server page
 

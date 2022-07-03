@@ -22,6 +22,9 @@ const OpenChecks = ({ open }) => {
         <Typography variant="h4" align="center">
           No open Checks
         </Typography>
+        <Typography variant="h5" align="center">
+        Click <em>New Check</em> to create a new check and add items
+      </Typography>
       </Container>
     );
   }

@@ -23,7 +23,8 @@ const OpenChecks = ({ open }) => {
           No open Checks
         </Typography>
         <Typography variant="h5" align="center">
-        Click <em>New Check</em> to create a new check and add items
+        Click <em>New Check</em> to create a new check and add items.<br/>
+        Click <em>Exit</em> to return to login screen.
       </Typography>
       </Container>
     );

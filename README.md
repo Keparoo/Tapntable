@@ -9,7 +9,7 @@ At a high level, the app's backend is implemented with a PostgreSQL database and
 ## Features under development
 
 - Add Tooltips for manager functions
-- Create Demo mode login button that creates a new token
+- Create Demo mode login button that creates a new token that expires
 - Continue separation of concerns refactor
 - Manage users page: Add and edit
 - Look at update count clear count button. Rerender on change
